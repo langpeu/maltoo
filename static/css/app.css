@@ -233,7 +233,15 @@ body {
 
 .talk-who { flex: 1; }
 .talk-name { font-size: 22px; font-weight: 900; }
-.turn-count { font-weight: 900; border: 2px solid var(--ink); border-radius: 999px; padding: 4px 12px; }
+.turn-count { font-weight: 900; border: 2px solid var(--ink); border-radius: 999px; padding: 4px 12px;
+  display: flex; align-items: center; gap: 8px; background: var(--paper); white-space: nowrap; }
+.turn-count small { font-weight: 700; color: var(--muted); font-size: 12px; }
+.turn-dots { display: inline-flex; gap: 4px; }
+.turn-dots i { width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--ink); background: #fff; }
+.turn-dots i.done { background: var(--ink); }
+.turn-dots i.now { background: var(--yellow); }
+.turn-count.last { background: #ffe3e3; border-color: var(--danger); }
+.turn-count.last small { color: var(--danger); }
 .bubble {
   position: relative; margin: 18px 0 12px; padding: 18px 20px; font-size: 20px; font-weight: 700; line-height: 1.55;
   border: var(--line); border-radius: 16px; background: var(--paper); box-shadow: var(--shadow); min-height: 70px;
@@ -526,7 +534,7 @@ code { background: var(--yellow-soft); border: 1px solid var(--ink); border-radi
 .game-result h2 { margin: 0 0 6px; font-size: 22px; font-weight: 900; }
 .grade { display: inline-grid; place-items: center; width: 56px; height: 56px; font-size: 32px; font-weight: 900;
   border: var(--line); border-radius: 12px; margin-right: 10px; vertical-align: middle; }
-.grade.A { background: #d3f9d8; } .grade.C { background: var(--yellow); } .grade.D { background: #ffc9c9; }
+.grade.A { background: #d3f9d8; } .grade.B { background: #d0ebff; } .grade.C { background: var(--yellow); } .grade.D { background: #ffc9c9; }
 .game-result .big { font-size: 20px; font-weight: 900; }
 @media (max-width: 900px) { .game-result { grid-template-columns: 1fr; } }
 .result-badge.resign, .result-badge.team_quit { background: #ffc9c9; }
@@ -549,3 +557,4 @@ code { background: var(--yellow-soft); border: 1px solid var(--ink); border-radi
 .ev-line.done code::before { content: "✅ "; }
 .ev-line.busy { opacity: .6; }
 #eleven-modal .check { display: flex; gap: 8px; align-items: center; font-size: 14px; font-weight: 700; }
+.grade-reason { margin: 0 0 6px; font-weight: 700; color: var(--muted); }

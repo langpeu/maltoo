@@ -136,6 +136,7 @@ export class Conversation {
         let nag = 0;
         let rec, tracker;
         const turnAudio = { blob: null }; // 체크포인트 핀에서 "이 구간 듣기"용
+        this.ui.turnStart && this.ui.turnStart(this.history.filter((h) => h.speaker === "me").length + 1);
         for (;;) {
           this.ui.status("listen");
           this.phase("silence");

@@ -196,6 +196,13 @@ def parse(raw: str, s: dict, turn_index: int, user_text: str = "", valid_ids: se
     done = match_checklist(raw_c if isinstance(raw_c, list) else [raw_c] if raw_c else [], s["checklist"])
     progress, done = goal_state(s, max(_clamp(raw_p, default=0), _clamp(prev_progress, default=0)),
                                 done, prev_done, ending)
+    # 결말을 체크리스트와 맞춘다: 체크리스트를 다 채웠거나, 마지막 턴에 핵심(마지막) 항목 포함 한 개 빼고 다 채웠으면 성공
+    cl = s["checklist"]
+    if ending in (None, "partial") and cl:
+        core_done = cl[-1] in done and len(done) >= len(cl) - 1
+        if len(done) == len(cl) or (turn_index >= MAX_TURNS and core_done):
+            ending = "success"
+            progress, done = 100, list(cl)
     cps = []
     for c in (data.get("checkpoints") or [])[:3]:
         if not isinstance(c, dict) or c.get("type") not in CP_TYPES:

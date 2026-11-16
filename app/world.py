@@ -305,7 +305,7 @@ def apply_turn(s: dict, parsed: dict, prev: dict | None, tone: dict | None, nag:
 
 # ---------- 시나리오 종료 ----------
 
-def finish(s: dict, ending: str | None, sess: dict | None) -> dict:
+def finish(s: dict, ending: str | None, sess: dict | None, progress: int = 0) -> dict:
     rules = game_cfg()
     sess = {"cut": 0, "recovered": 0, **(sess or {})}
     if s["kind"] != "boss":
@@ -314,15 +314,23 @@ def finish(s: dict, ending: str | None, sess: dict | None) -> dict:
                 "loss_text": rules["resign"]["loss_text"] if st["resigned"] else ""}
     rv = rules["review"]
     net_cut = sess["cut"] - sess["recovered"]
+    won = lambda v: f"{round(v / 10000):,}만 원"
+    b_min = rv.get("B_min_progress", 67)
     if ending == "success" and net_cut <= rv["A_max_cut"]:
-        grade = "A"
+        grade, reason = "A", f"목표를 이뤘고 감액이 적었습니다 ({won(net_cut)})"
+    elif ending == "success" and net_cut <= rv["C_max_cut"]:
+        grade, reason = "B", f"목표는 이뤘지만 대화 중 연봉이 {won(net_cut)} 깎였습니다"
+    elif ending == "partial" and progress >= b_min and net_cut <= rv["C_max_cut"]:
+        grade, reason = "B", f"목표를 끝까지 받아내진 못했지만 달성도 {progress}%로 거의 왔습니다"
     elif ending in ("success", "partial") and net_cut <= rv["C_max_cut"]:
-        grade = "C"
+        grade, reason = "C", f"목표 달성도 {progress}% — 핵심 약속을 받아내지 못했습니다"
+    elif ending in ("success", "partial"):
+        grade, reason = "D", f"대화 중 연봉이 {won(net_cut)}이나 깎였습니다"
     else:
-        grade = "D"
+        grade, reason = "D", "목표를 이루지 못했습니다"
     meeting = ending in ("fail", "noresp") and net_cut >= rv["meeting_min_cut"]
     before = salary()
     change = _round10k(base_salary() * rules["review_grades"][grade])
     set_salary(before + change)
-    return {"kind": "boss", "grade": grade, "meeting": meeting, "salary_before": before,
+    return {"kind": "boss", "grade": grade, "reason": reason, "meeting": meeting, "salary_before": before,
             "salary_after": salary(), "grade_change": change, "session_cut": net_cut}

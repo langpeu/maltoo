@@ -158,11 +158,12 @@ class WorldFinishIn(BaseModel):
     scenario_id: str
     ending: str | None = None
     session: dict | None = None
+    goal_progress: int = 0
 
 
 @router.post("/world/finish")
 def world_finish(body: WorldFinishIn):
-    return world.finish(scenarios.get(body.scenario_id), body.ending, body.session)
+    return world.finish(scenarios.get(body.scenario_id), body.ending, body.session, body.goal_progress)
 
 
 @router.post("/world/reset")

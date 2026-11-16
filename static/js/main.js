@@ -238,7 +238,7 @@ async function startTalk() {
   showCharacter(s);
   setBreathing(true);
   $("talk-goal").textContent = `🎯 ${s.goal}`;
-  $("turn-count").textContent = "답변 0 / 5";
+  renderTurn(1);
   $("npc-bubble").textContent = "…";
   $("talk-log").innerHTML = "";
   $("state-title").textContent = `${s.character.name}의 감정`;
@@ -533,6 +533,17 @@ function setStatus(kind, text) {
   setSpeaking(kind === "npc");
 }
 
+// 몇 번째 턴인지: "턴 2 / 5 ●●○○○ · 5턴 안에 목표 달성", 마지막 턴은 강조
+const MAX_TURNS = 5;
+function renderTurn(n) {
+  const el = $("turn-count");
+  const dots = Array.from({ length: MAX_TURNS }, (_, i) => `<i class="${i < n - 1 ? "done" : i === n - 1 ? "now" : ""}"></i>`).join("");
+  const last = n >= MAX_TURNS;
+  el.className = `turn-count ${last ? "last" : ""}`;
+  el.innerHTML = `<b>턴 ${Math.min(n, MAX_TURNS)} / ${MAX_TURNS}</b><span class="turn-dots">${dots}</span>` +
+    `<small>${last ? "⚠️ 마지막 턴! 지금 목표를 받아내세요" : `${MAX_TURNS}턴 안에 목표 달성 · ${MAX_TURNS - n + 1}번 남음`}</small>`;
+}
+
 function setGauges(emo, reason, progress, done) {
   for (const [k, id] of [["anger", "g-anger"], ["trust", "g-trust"], ["defensiveness", "g-def"]]) {
     const v = emo[k];
@@ -586,12 +597,12 @@ const talkUI = {
       $("talk-status").classList.toggle("urgent", sec <= 1);
     }
   },
+  turnStart(n) { renderTurn(n); },
   nagged(n) {
     addLog("nag", `<small>⏰ 3초 안에 대답하지 않음 (재촉 ${n}/2)</small>`);
   },
   meSays(text, { nag, seconds, tone, face }) {
     myTurns += 1;
-    $("turn-count").textContent = `답변 ${myTurns} / 5`;
     const meta = [`${(seconds || 0).toFixed(1)}초`];
     if (nag) meta.push(`재촉 ${nag}번 받음`);
     return addLog("me", `<small>나 · ${meta.join(" · ")}</small><span class="said">${esc(text)}</span>` +
@@ -742,7 +753,8 @@ async function finishWorld(r) {
   let fin = null;
   try {
     fin = await api("/api/world/finish", { method: "POST",
-      body: { scenario_id: current.id, ending: r.worldEnding || r.ending, session: r.gameSession || null } });
+      body: { scenario_id: current.id, ending: r.worldEnding || r.ending, session: r.gameSession || null,
+              goal_progress: r.goal_progress || 0 } });
   } catch { /* 게임 장치 없이 */ }
   renderGameResult(r, fin);
   loadWorld();
@@ -768,6 +780,7 @@ function renderGameResult(r, fin) {
     if (worst) caption = `<figcaption>${worst.icon} ${esc(worst.label)} · ${esc(PHASE_LABEL[worst.phase] || "")}<br><small>가장 안 좋았던 내 표정</small></figcaption>`;
     const diff = fin.salary_after - fin.salary_before;
     html = `<h2><span class="grade ${fin.grade}">${fin.grade}</span>인사고과 ${fin.grade}등급</h2>
+      ${fin.reason ? `<p class="grade-reason">${esc(fin.reason)}</p>` : ""}
       <p class="big">연봉 ${won(fin.salary_before)} → ${won(fin.salary_after)} 원
         <span class="salary-delta ${diff < 0 ? "minus" : diff > 0 ? "plus" : ""}">${diff ? (diff > 0 ? "+" : "−") + won(Math.abs(diff)) : "동결"}</span></p>
       <p>이번 대화에서 깎인 금액: <b>${won(fin.session_cut || 0)} 원</b></p>

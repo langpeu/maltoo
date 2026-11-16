@@ -16,7 +16,7 @@ def turn(client, sid, **kw):
 
 def test_overview_defaults(client):
     w = client.get("/api/world").json()
-    assert w["salary"] == 47_000_000 == w["base_salary"]
+    assert w["salary"] == 35_000_000 == w["base_salary"]
     assert w["characters"]["yoon"]["resign_risk"] == 35 and w["characters"]["yoon"]["team"] == 30
     assert w["characters"]["kim"]["kind"] == "boss" and not w["characters"]["kim"]["rumor_pending"]
 
@@ -27,7 +27,7 @@ def test_boss_salary_rules(client, fake_openai):
     d = turn(client, "kim", prev_emotion={"anger": 40, "trust": 50}, nag_count=1, tone={"loud_n": 1})
     g = d["game"]
     assert g["salary_delta"] == -900_000 - 400_000 - 800_000 - 500_000
-    assert g["salary"] == 47_000_000 + g["salary_delta"]
+    assert g["salary"] == 35_000_000 + g["salary_delta"]
     assert len(g["reasons"]) == 4 and g["session"]["cut"] == 2_600_000
 
     # 잘한 대응: +20만, 이번 판 감액의 50%까지만 회복
@@ -35,7 +35,7 @@ def test_boss_salary_rules(client, fake_openai):
                           "checkpoints": [{"type": "good", "text_span": "", "note": ""}]})
     d2 = turn(client, "kim", prev_emotion={"anger": 70, "trust": 30}, game_session={"cut": 100_000, "recovered": 40_000})
     assert d2["game"]["salary_delta"] == 10_000  # 회복 한도 5만 중 4만은 이미 회복
-    assert client.get("/api/world").json()["salary"] == 47_000_000 - 2_600_000 + 10_000
+    assert client.get("/api/world").json()["salary"] == 35_000_000 - 2_600_000 + 10_000
 
 
 def test_sub_resign_and_override(client, fake_openai):
@@ -114,22 +114,37 @@ def test_rumor_lines_are_fixed_audio():
         assert "rumor_0" in lines and "rumor_1" in lines
 
 
-@pytest.mark.parametrize("ending,cut,grade,meeting", [
-    ("success", 300_000, "A", False), ("success", 1_000_000, "C", False), ("partial", 1_600_000, "D", False),
-    ("fail", 3_500_000, "D", True), ("fail", 100_000, "D", False),
+@pytest.mark.parametrize("ending,cut,progress,grade,meeting", [
+    ("success", 300_000, 100, "A", False), ("success", 1_000_000, 100, "B", False),
+    ("partial", 700_000, 70, "B", False), ("partial", 700_000, 50, "C", False), ("partial", 1_600_000, 70, "D", False),
+    ("fail", 3_500_000, 0, "D", True), ("fail", 100_000, 0, "D", False),
 ])
-def test_review_grade(client, ending, cut, grade, meeting):
-    r = client.post("/api/world/finish", json={"scenario_id": "kim", "ending": ending,
+def test_review_grade(client, ending, cut, progress, grade, meeting):
+    r = client.post("/api/world/finish", json={"scenario_id": "kim", "ending": ending, "goal_progress": progress,
                                                "session": {"cut": cut, "recovered": 0}}).json()
-    assert r["grade"] == grade and r["meeting"] is meeting
-    assert r["salary_after"] - r["salary_before"] == {"A": 1_410_000, "C": 0, "D": -2_350_000}[grade]
+    assert r["grade"] == grade and r["meeting"] is meeting and r["reason"]
+    assert r["salary_after"] - r["salary_before"] == {"A": 1_050_000, "B": 520_000, "C": 0, "D": -1_750_000}[grade]
+
+
+def test_ending_follows_checklist():
+    """마지막 턴에 핵심 항목(마지막) 포함 한 개 빼고 다 채웠으면 성공, 전부 채우면 바로 성공."""
+    import json
+    from app import scenarios
+    from app.prompts import character
+    s = scenarios.get("kim")
+    r = character.parse(json.dumps({"reply": "음", "goal_progress": 70, "checklist_done": [1, 3]}), s, 5)
+    assert r["ending"] == "success" and r["goal_progress"] == 100
+    r = character.parse(json.dumps({"reply": "음", "goal_progress": 70, "checklist_done": [1, 2]}), s, 5)
+    assert r["ending"] == "partial"
+    r = character.parse(json.dumps({"reply": "음", "checklist_done": [1, 2, 3]}), s, 2)
+    assert r["ending"] == "success"
 
 
 def test_reset(client, fake_openai):
     turn(client, "kim", prev_emotion={"anger": 0, "trust": 100})
-    assert client.get("/api/world").json()["salary"] != 47_000_000
+    assert client.get("/api/world").json()["salary"] != 35_000_000
     w = client.post("/api/world/reset").json()
-    assert w["salary"] == 47_000_000 and w["characters"]["kim"]["trust"] == 45
+    assert w["salary"] == 35_000_000 and w["characters"]["kim"]["trust"] == 45
 
 
 def test_ending_images_in_setup(client, fake_openai):
