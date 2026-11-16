@@ -51,6 +51,15 @@ class FakeOpenAI:
         class _Completions:
             def create(self_inner, **kw):
                 outer.calls.append(("chat", kw))
+                if kw.get("response_format") and "커뮤니케이션 코치" in kw["messages"][0]["content"]:
+                    import json
+
+                    class RR(FakeResp):
+                        class _C:
+                            class message:
+                                content = json.dumps(REPORT_JSON, ensure_ascii=False)
+                        choices = [_C()]
+                    return RR()
                 if kw.get("response_format"):
                     import json
 
@@ -123,6 +132,21 @@ class FakeOpenAI:
 
 
 FAKE_CALLS: list = []
+
+REPORT_JSON = {
+    "words_score": 72,
+    "summary": "사실을 짚은 건 좋았지만 끝 억양이 단정적으로 들렸습니다.",
+    "strengths": ["2주 전 보고 사실을 구체적으로 말함"],
+    "habits": ["문장 끝을 뚝 떨어뜨림", "듣는 동안 눈을 굴림"],
+    "fixes": [
+        {"turn": 1, "original": "2주 전에 보고드렸습니다", "problem": "변명처럼 들림",
+         "better": "상무님, 2주 전에 위험을 보고드렸는데 제가 더 강하게 알렸어야 했습니다. 대책부터 말씀드려도 될까요?",
+         "tone_tip": "속도를 20% 늦추고 문장 끝을 살짝 올리세요", "face_tip": "상무님 눈을 보세요"},
+        {"turn": 9, "original": "x", "problem": "y", "better": "범위 밖 턴", "tone_tip": "", "face_tip": ""},
+        {"turn": 1, "original": "x", "problem": "대안 없음", "better": "", "tone_tip": "", "face_tip": ""},
+    ],
+    "next_practice": "첫 문장에서 사과 없이 사실+대책 순서로 말하기",
+}
 
 
 @pytest.fixture()

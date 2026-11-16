@@ -8,9 +8,12 @@ import { analyzeFrame, ToneTracker } from "./audio/tone.js";
 class Stopped extends Error {}
 
 export class Conversation {
-  constructor(scenario, { mic, ui, baseline = null, face = null }) {
+  constructor(scenario, { mic, ui, baseline = null, face = null, difficulty = "normal", answerMs = 3000 }) {
     this.s = scenario;
     this.face = face; // { cam, tracker } | null
+    this.difficulty = difficulty;
+    this.answerMs = answerMs;
+    this.startedAt = new Date().toISOString();
     this.baseline = baseline;
     this.mic = mic;
     this.ui = ui;
@@ -130,6 +133,7 @@ export class Conversation {
           });
           let lastLive = 0;
           rec = await this.mic.listen({
+            startTimeoutMs: this.answerMs,
             onTick: (t) => {
               if (t.spoke) this.phase("speak");
               const f = tracker.push(analyzeFrame(t.buf, t.sampleRate), t.elapsed);
@@ -174,16 +178,19 @@ export class Conversation {
         this.ui.refreshUsage();
 
         // 3) 상대 응답 + 판정
-        const prior = this.history.slice();
-        this.history.push({ speaker: "me", text: myText });
+        const prior = this.history.map(({ speaker, text }) => ({ speaker, text }));
+        const meEntry = { speaker: "me", text: myText, tone, face };
+        this.history.push(meEntry);
         const r = await api("/api/turn", {
           method: "POST",
-          body: { scenario_id: this.s.id, history: prior, user_text: myText, nag_count: nag, tone, face },
+          body: { scenario_id: this.s.id, history: prior, user_text: myText, nag_count: nag, tone, face,
+                  difficulty: this.difficulty },
         });
         this.guard();
         await reacting;
         this.guard();
         this.lastResult = r;
+        meEntry.checkpoints = r.checkpoints || [];
         this.mood = Conversation.moodOf(r.emotion);
         this.ui.turnResult(r, myLog);
         if (r.ending) {
@@ -200,7 +207,7 @@ export class Conversation {
   }
 
   finish(r) {
-    this.ui.end({ ...r, history: this.history });
+    this.ui.end({ ...r, history: this.history, startedAt: this.startedAt, difficulty: this.difficulty });
   }
 }
 

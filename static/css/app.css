@@ -439,3 +439,54 @@ code { background: var(--yellow-soft); border: 1px solid var(--ink); border-radi
 .fm-row b { text-align: right; }
 .selfview.ok { border-color: #2b8a3e; }
 .selfview.warn, .selfview.error { border-color: var(--danger); }
+
+/* ========== Phase 6: 리포트 · 기록 ========== */
+.report { margin: 16px 0; }
+.report-loading { border: 2px dashed var(--ink); border-radius: 12px; padding: 18px; text-align: center; font-weight: 800; background: var(--yellow-soft); }
+.scores { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 14px; }
+.score { border: var(--line); border-radius: 12px; padding: 10px; text-align: center; box-shadow: 3px 3px 0 var(--ink); }
+.score.main { background: var(--yellow); }
+.score .s-label { font-size: 13px; font-weight: 800; }
+.score .s-val { font-size: 32px; font-weight: 900; line-height: 1.1; }
+.score .s-val small { font-size: 14px; }
+.score .s-sub { font-size: 11px; color: var(--muted); }
+.report-summary { font-size: 17px; line-height: 1.7; font-weight: 600; margin: 0 0 14px; }
+.report-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 900px) { .report-cols, .scores { grid-template-columns: 1fr 1fr; } }
+.report-box { border: 2px solid var(--ink); border-radius: 10px; padding: 10px 14px; }
+.report-box h3 { margin: 0 0 6px; font-size: 15px; }
+.report-box ul { margin: 0; padding-left: 18px; line-height: 1.6; }
+.fix { border: var(--line); border-radius: 14px; padding: 14px 16px; margin-bottom: 12px; box-shadow: var(--shadow); background: var(--paper); }
+.fix-turn { display: inline-block; font-size: 12px; font-weight: 900; background: var(--ink); color: var(--yellow); border-radius: 6px; padding: 1px 8px; }
+.fix-orig { margin: 8px 0 4px; color: #c92a2a; font-weight: 700; text-decoration: line-through; text-decoration-color: rgba(201,42,42,.4); }
+.fix-problem { font-size: 14px; color: #444; margin-bottom: 8px; line-height: 1.5; }
+.fix-better { font-size: 19px; font-weight: 800; line-height: 1.55; background: #ebfbee; border: 2px solid #2b8a3e; border-radius: 10px; padding: 10px 12px; }
+.fix-tips { font-size: 14px; line-height: 1.6; margin: 8px 0; }
+.fix-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.fix-compare { margin-top: 10px; border: 2px dashed var(--ink); border-radius: 10px; padding: 10px 12px; font-size: 14px; }
+.fix-compare table { width: 100%; border-collapse: collapse; margin: 6px 0; }
+.fix-compare td, .fix-compare th { padding: 4px 6px; border-bottom: 1px dashed #bbb; text-align: left; }
+.fix-compare .up { color: #2b8a3e; font-weight: 800; }
+.fix-compare .down { color: #c92a2a; font-weight: 800; }
+.verdict { font-weight: 900; font-size: 16px; }
+.next-practice { margin-top: 6px; border: 3px solid var(--ink); border-radius: 12px; padding: 12px 14px; background: var(--yellow); font-weight: 800; }
+.log-details { margin: 12px 0; }
+.log-details summary { cursor: pointer; font-weight: 800; }
+
+.history { padding: 28px; }
+.history h1 { font-size: 28px; font-weight: 900; margin: 8px 0; }
+.chart-wrap { border: var(--line); border-radius: 14px; padding: 12px; margin-bottom: 16px; }
+#history-chart { width: 100%; height: 240px; display: block; }
+.chart-legend { display: flex; gap: 14px; font-size: 13px; font-weight: 700; flex-wrap: wrap; }
+.chart-legend i { display: inline-block; width: 14px; height: 4px; vertical-align: middle; margin-right: 4px; }
+.history-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+.history-list li { border: 2px solid var(--ink); border-radius: 10px; padding: 10px 14px; display: grid; grid-template-columns: 1fr auto; gap: 4px 10px; }
+.history-list .h-score { font-size: 24px; font-weight: 900; grid-row: span 2; align-self: center; }
+.history-list small { color: var(--muted); }
+
+.difficulty { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin: 10px 0; font-weight: 800; }
+.difficulty button { font: inherit; font-weight: 800; border: 2px solid var(--ink); border-radius: 999px; padding: 6px 12px; background: var(--paper); cursor: pointer; }
+.difficulty button small { font-weight: 600; color: var(--muted); }
+.difficulty button.on { background: var(--yellow); box-shadow: 2px 2px 0 var(--ink); }
+.guide-list { line-height: 1.6; padding-left: 20px; margin: 0; display: grid; gap: 6px; }
+.guide-list b { display: block; }

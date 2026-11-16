@@ -24,6 +24,8 @@ def public_config():
         "krw_per_usd": cfg["krw_per_usd"],
         "limits": usage.limits(),
         "face": cfg.get("face", {}),
+        "difficulty": {k: {"label": v["label"], "answer_seconds": v["answer_seconds"]}
+                       for k, v in cfg.get("difficulty", {}).items()},
     }
 
 

@@ -81,5 +81,26 @@
     "model_url": "https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task",
     "local_model": "assets/models/face_landmarker.task",
     "fps": 12
+  },
+  "coach": {
+    "voice": "marin",
+    "instructions": "30대 한국인 직장인. 차분하고 따뜻한 톤, 적당한 속도, 또박또박. 문장 끝을 내리꽂지 말고 부드럽게 살짝 올린다. 단호해야 할 부분은 차분하지만 분명하게."
+  },
+  "difficulty": {
+    "mild": {
+      "label": "순한 맛",
+      "answer_seconds": 5,
+      "prompt": "난이도: 순한 맛. 상대는 성격은 유지하되 비교적 너그럽다. 과장이 조금만 잘해도 누그러지고, 막히면 힌트가 될 만한 질문을 던져준다."
+    },
+    "normal": {
+      "label": "보통",
+      "answer_seconds": 3,
+      "prompt": "난이도: 보통. 현실적인 수준으로 반응한다."
+    },
+    "spicy": {
+      "label": "매운 맛",
+      "answer_seconds": 3,
+      "prompt": "난이도: 매운 맛. 상대는 성격이 더 강하게 드러나고 쉽게 설득되지 않는다. 말꼬리를 잡고, 사소한 톤 실수도 바로 지적한다. 다만 욕설·인신공격은 하지 않는다."
+    }
   }
 }

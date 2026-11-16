@@ -31,7 +31,12 @@ checkpoints 는 0~3개. text_span 은 반드시 과장 발언 원문에 있는 �
 aggressive=공격적·명령조, excuse=변명조, cold=차갑고 무뚝뚝함, sarcasm=비꼼, good=잘한 표현."""
 
 
-def system_prompt(s: dict, turn_index: int) -> str:
+def difficulty_line(difficulty: str) -> str:
+    d = get_config().get("difficulty", {})
+    return (d.get(difficulty) or d.get("normal") or {}).get("prompt", "")
+
+
+def system_prompt(s: dict, turn_index: int, difficulty: str = "normal") -> str:
     company = get_config()["company"]
     c = s["character"]
     relation = "상사" if s["kind"] == "boss" else "부하 직원"
@@ -47,6 +52,7 @@ def system_prompt(s: dict, turn_index: int) -> str:
 [사용자의 목표] {s['goal']}
 [체크리스트] {', '.join(s['checklist'])}
 [실패 조건] {', '.join(s['fail_conditions'])}
+[{difficulty_line(difficulty)}]
 
 판단 규칙 (말 + 목소리 톤 + 표정):
 - 과장의 대사 뒤에 [목소리 톤 측정]과 [표정 측정]이 붙어 있다. 같은 말이라도 톤이 공격적이면(언성 상승, 끝 억양 뚝, 빠름, 강세, 한숨) 상대는 기분 나쁘게 받아들인다.
@@ -68,8 +74,8 @@ def system_prompt(s: dict, turn_index: int) -> str:
 
 
 def build_messages(s: dict, history: list[dict], user_text: str, turn_index: int,
-                   tone: dict | None = None, face: dict | None = None) -> list[dict]:
-    msgs = [{"role": "system", "content": system_prompt(s, turn_index)}]
+                   tone: dict | None = None, face: dict | None = None, difficulty: str = "normal") -> list[dict]:
+    msgs = [{"role": "system", "content": system_prompt(s, turn_index, difficulty)}]
     if not history or history[0].get("text") != s["opening"]:
         msgs.append({"role": "assistant", "content": json.dumps({"reply": s["opening"]}, ensure_ascii=False)})
     for h in history:

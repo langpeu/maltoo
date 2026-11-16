@@ -98,6 +98,7 @@ class TurnIn(BaseModel):
     nag_count: int = 0
     tone: dict | None = None  # 브라우저가 측정한 목소리 톤 요약 (녹음 원본 아님)
     face: dict | None = None  # 브라우저가 측정한 표정 요약 (영상 아님)
+    difficulty: str = "normal"  # mild | normal | spicy
 
 
 @router.post("/turn")
@@ -109,6 +110,7 @@ def turn(body: TurnIn, caller: Caller = Depends(get_caller)):
     user_text = body.user_text.strip()
     if body.nag_count:
         user_text = f"{user_text}\n(참고: 과장은 {body.nag_count}번 재촉을 받은 뒤에야 대답했다)"
-    msgs = character.build_messages(s, [h.model_dump() for h in body.history], user_text, turn_index, body.tone, body.face)
+    msgs = character.build_messages(s, [h.model_dump() for h in body.history], user_text, turn_index, body.tone, body.face,
+                                     body.difficulty)
     raw = caller.chat(msgs, max_tokens=600, feature="chat", response_format={"type": "json_object"})
     return character.parse(raw, s, turn_index, body.user_text.strip())

@@ -19,6 +19,8 @@
     </div>
     <div class="topbar-right">
       <span class="tag">나 · 과장</span>
+      <button class="btn btn-ghost" type="button" data-go="history">📈 기록</button>
+      <button class="btn btn-ghost" id="btn-guide" type="button">❔ 안내</button>
       <button class="btn btn-ghost" id="btn-settings" type="button">⚙ 설정</button>
     </div>
   </header>
@@ -64,10 +66,16 @@
           <p class="muted small" id="brief-fail"></p>
         </div>
         <ul class="rules">
-          <li>상대가 말을 마치면 바로 <b>3초 카운트</b>가 시작됩니다. 생각할 시간은 없습니다.</li>
+          <li>상대가 말을 마치면 바로 <b><span id="brief-sec">3</span>초 카운트</b>가 시작됩니다. 생각할 시간은 없습니다.</li>
           <li>말을 멈추고 <b>1.5초</b>가 지나면 대답이 끝난 것으로 봅니다.</li>
           <li>대답은 최대 <b>5번</b>입니다. 그 안에 목표를 이루세요.</li>
         </ul>
+        <div class="difficulty" id="difficulty">
+          <span>난이도</span>
+          <button type="button" data-d="mild">🌱 순한 맛 <small>5초</small></button>
+          <button type="button" data-d="normal">🌶 보통 <small>3초</small></button>
+          <button type="button" data-d="spicy">🔥 매운 맛 <small>3초</small></button>
+        </div>
         <p class="bl-line" id="brief-baseline"></p>
         <div class="brief-actions">
           <button class="btn btn-primary btn-big" id="btn-start" type="button">🎙 마이크 켜고 시작</button>
@@ -166,17 +174,45 @@
           <b id="result-progress-text">0%</b>
         </div>
         <ul class="checklist" id="result-checklist"></ul>
+
+        <section class="report" id="report">
+          <div class="report-loading" id="report-loading">📝 말·톤·표정을 종합해서 교정 리포트를 쓰는 중…</div>
+          <p class="error" id="report-error" hidden></p>
+          <div id="report-body" hidden>
+            <div class="scores" id="report-scores"></div>
+            <p class="report-summary" id="report-summary"></p>
+            <div class="report-cols">
+              <div class="report-box"><h3>👍 잘한 점</h3><ul id="report-strengths"></ul></div>
+              <div class="report-box"><h3>🔁 반복되는 습관</h3><ul id="report-habits"></ul></div>
+            </div>
+            <h2 class="section-title">✍️ 이렇게 바꿔 말해보세요</h2>
+            <div id="report-fixes"></div>
+            <div class="next-practice" id="report-next"></div>
+          </div>
+        </section>
+
         <div id="result-captures-wrap" hidden>
           <h3>📸 표정 하이라이트 <small class="muted">(이 브라우저에만 있고 서버로 보내지 않습니다)</small></h3>
           <div class="captures" id="result-captures"></div>
         </div>
-        <h3>대화 기록</h3>
-        <ol class="log" id="result-log"></ol>
-        <p class="muted small">말투·톤·표정 상세 분석과 교정 안내는 다음 단계에서 추가됩니다.</p>
+        <details class="log-details">
+          <summary>대화 기록 보기</summary>
+          <ol class="log" id="result-log"></ol>
+        </details>
         <div class="talk-actions">
-          <button class="btn btn-primary" id="btn-retry" type="button">다시 하기</button>
+          <button class="btn btn-primary" id="btn-retry" type="button">같은 상대와 다시 하기</button>
           <button class="btn" type="button" data-go="select">다른 상대 고르기</button>
+          <button class="btn btn-ghost" type="button" data-go="history">📈 내 기록</button>
         </div>
+      </section>
+      <!-- 5. 기록 -->
+      <section class="view card history" id="view-history" hidden>
+        <button class="btn btn-ghost back" type="button" data-go="select">← 목록</button>
+        <h1>📈 내 기록</h1>
+        <p class="lead" id="history-lead">연습할수록 점수가 어떻게 변하는지 보여줍니다.</p>
+        <div class="chart-wrap"><svg id="history-chart" role="img" aria-label="점수 추이"></svg>
+          <div class="chart-legend" id="history-legend"></div></div>
+        <ol class="history-list" id="history-list"></ol>
       </section>
     </main>
 
@@ -247,6 +283,27 @@
     <div class="band-body"><canvas id="band-canvas"></canvas><div class="band-tip" id="band-tip" hidden></div><span class="band-empty" id="band-empty">대화를 시작하면 음성 파형이 여기에 표시됩니다. (회색: 상대 · 검정: 나)</span></div>
     <div class="band-notice">상대 인물의 음성과 이미지는 AI로 생성되었습니다 · 연봉·채용 비용은 가상 수치입니다</div>
   </footer>
+
+  <!-- 첫 방문 안내 -->
+  <dialog class="modal modal-wide" id="guide-modal">
+    <div class="modal-body">
+      <img src="/assets/brand/logo.jpg" alt="" class="modal-logo">
+      <h2>말투에 오신 걸 환영합니다</h2>
+      <p>랑프두잇의 과장이 되어, 까다로운 상사·부하 직원과 <b>음성으로</b> 대화하며 말투·톤·표정을 연습합니다.</p>
+      <ol class="guide-list">
+        <li><b>🎙 마이크·📷 카메라 권한</b> 대화 중 목소리와 표정을 분석합니다. 브라우저가 물으면 "허용"을 눌러주세요. 카메라는 없어도 됩니다.</li>
+        <li><b>🎧 이어폰 권장</b> 스피커 소리가 마이크로 들어가면 3초 대답 감지가 틀어질 수 있습니다.</li>
+        <li><b>🔒 내 정보</b> 영상은 서버로 보내지 않고 수치만 분석합니다. 녹음은 글자로 바꿀 때만 쓰고, 연습 기록은 내 PC(data.db)에만 저장됩니다.</li>
+        <li><b>🤖 AI 고지</b> 상대 인물의 얼굴 사진과 목소리는 AI로 생성되었습니다. 인물과 회사는 모두 가상이며, 연봉·채용 비용은 게임용 가상 수치입니다.</li>
+        <li><b>💳 비용</b> 내 OpenAI API 키로 동작합니다. 한 판에 보통 10~30원 정도이고, 오른쪽에서 실시간으로 확인하고 한도를 정할 수 있습니다.</li>
+      </ol>
+      <p class="note">이 분석은 연습용 참고 자료이며 심리 진단이 아닙니다.</p>
+      <div class="modal-actions">
+        <span></span>
+        <button type="button" class="btn btn-primary" id="btn-guide-ok">시작하기</button>
+      </div>
+    </div>
+  </dialog>
 
   <!-- API 키 입력 -->
   <dialog class="modal" id="key-modal">
