@@ -4,7 +4,7 @@ import { renderCost, resetCost } from "./ui/cost-panel.js";
 import { setVoiceFxConfig, setVoiceFxStrength, voiceFxStrength } from "./audio/voicefx.js";
 import { initEleven } from "./ui/eleven.js";
 import { $, esc, showError, toast } from "./util.js";
-import { loadHistory } from "./views/history.js";
+import { initHistory, loadHistory } from "./views/history.js";
 import { checkSetup, initSetup, refreshSetupInfo, setKrwRate } from "./views/setup.js";
 import { initReport } from "./views/report.js";
 import { closeCamera, media, mic } from "./media.js";
@@ -216,6 +216,7 @@ $("btn-test-chat").addEventListener("click", async () => {
 
 // ---------- 시작 ----------
 initSetup({ loadScenarios, refreshUsage });
+initHistory({ go });
 initTalk({
   current: () => current, difficulty: () => difficulty, answerSeconds,
   refreshUsage, go, openBrief, openKeyModal,

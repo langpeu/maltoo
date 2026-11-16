@@ -558,3 +558,5 @@ code { background: var(--yellow-soft); border: 1px solid var(--ink); border-radi
 .ev-line.busy { opacity: .6; }
 #eleven-modal .check { display: flex; gap: 8px; align-items: center; font-size: 14px; font-weight: 700; }
 .grade-reason { margin: 0 0 6px; font-weight: 700; color: var(--muted); }
+.history-list li[data-id] { cursor: pointer; transition: transform .1s, box-shadow .1s; }
+.history-list li[data-id]:hover { transform: translate(-1px, -1px); box-shadow: 3px 3px 0 var(--ink); background: #fffdf5; }

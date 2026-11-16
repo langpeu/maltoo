@@ -337,6 +337,7 @@ const talkUI = {
 };
 
 export function showResult(r) {
+  $("btn-retry").hidden = false;
   convo = null;
   setSpeaking(false);
   faceCam.stop();

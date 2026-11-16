@@ -35,6 +35,7 @@ export async function requestReport(r, game = null) {
         game,
       },
     });
+    pastTurns = null;
     renderReport(rep);
   } catch (e) {
     showError($("report-error"), `리포트를 만들지 못했습니다: ${e.message}`);
@@ -47,6 +48,15 @@ export async function requestReport(r, game = null) {
 function scoreTile(label, v, sub, main = false) {
   return `<div class="score ${main ? "main" : ""}"><div class="s-label">${label}</div>
     <div class="s-val">${v == null ? "-" : v}<small>${v == null ? "" : "점"}</small></div><div class="s-sub">${sub}</div></div>`;
+}
+
+// 📈 내 기록에서 지난 리포트를 다시 볼 때 (다시 말해보기는 그때의 대화 기준)
+let pastTurns = null;
+export function renderPastReport(rep, turns) {
+  pastTurns = turns || [];
+  $("report-loading").hidden = true;
+  showError($("report-error"), "");
+  renderReport(rep);
 }
 
 function renderReport(rep) {
@@ -142,7 +152,7 @@ async function retryFix(f, el, btn) {
         headers: { "X-OpenAI-Key": keyStore.get(), "X-Session-Id": ctx.session() ? ctx.session().id : "" } });
       if (res.ok) said = (await res.json()).text || "";
     } catch { /* 글자 확인 없이 톤만 비교 */ }
-    const meTurns = ctx.lastHistory().filter((h) => h.speaker === "me");
+    const meTurns = (pastTurns || ctx.lastHistory()).filter((h) => h.speaker === "me");
     const t1 = f.turn && meTurns[f.turn - 1] ? meTurns[f.turn - 1].tone : null;
     box.innerHTML = compareHtml(t1, t2, said, f.better);
   } catch (e) {
