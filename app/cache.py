@@ -32,6 +32,15 @@ def fixed_url(key: str) -> str:
     return f"/assets/audio/{key}.mp3"
 
 
+# 직접 넣은 음성 (예: ElevenLabs로 만든 대사). 있으면 생성 음성보다 우선하고, 지시문이 바뀌어도 그대로 쓴다.
+def custom_path(scenario_id: str, line: str) -> Path:
+    return AUDIO_DIR / "custom" / scenario_id / f"{line}.mp3"
+
+
+def custom_url(scenario_id: str, line: str) -> str:
+    return f"/assets/audio/custom/{scenario_id}/{line}.mp3"
+
+
 def runtime_path(key: str) -> Path:
     return RUNTIME_DIR / f"{key}.mp3"
 

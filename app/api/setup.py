@@ -17,6 +17,8 @@ router = APIRouter(prefix="/api/setup")
 def _audio_jobs():
     for s in scenarios.all_scenarios():
         for line, text in scenarios.fixed_lines(s).items():
+            if cache.custom_path(s["id"], line).exists():
+                continue  # 직접 넣은 음성이 있으면 만들지 않음
             voice, instr = scenarios.voice_for(s, scenarios.line_mood(s, line))
             key = cache.audio_key(text, voice, instr)
             if not cache.fixed_path(key).exists():

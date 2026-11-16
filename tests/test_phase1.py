@@ -177,3 +177,14 @@ def test_voice_playback_mood(client, fake_openai):
     assert client.get("/api/tts/line/kim/nag2", headers=H).json()["mood"] == "angry"
     r = client.post("/api/tts/say", json={"scenario_id": "kim", "text": "됐어.", "mood": "softened"}, headers=H).json()
     assert r["mood"] == "softened"
+
+
+def test_custom_line_audio(client, fake_openai, tmp_path):
+    """custom/<인물>/<대사>.mp3 가 있으면 생성 없이 그 파일을 쓴다."""
+    from app import cache
+    p = cache.custom_path("kim", "opening")
+    p.parent.mkdir(parents=True, exist_ok=True)
+    p.write_bytes(b"ID3fake")
+    r = client.get("/api/tts/line/kim/opening", headers=H).json()
+    assert r["url"] == "/assets/audio/custom/kim/opening.mp3" and r["custom"] and r["mood"] == "calm"
+    assert not [k for k, _ in fake_openai if k == "tts"]

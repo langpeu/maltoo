@@ -35,6 +35,8 @@ def tts_line(scenario_id: str, line: str, cached_only: bool = False,
     s = scenarios.get(scenario_id)
     text = scenarios.fixed_line(s, line)
     mood = scenarios.line_mood(s, line)
+    if cache.custom_path(s["id"], line).exists():
+        return {"url": cache.custom_url(s["id"], line), "text": text, "cached": True, "mood": mood, "custom": True}
     voice, instr = scenarios.voice_for(s, mood)
     key = cache.audio_key(text, voice, instr)
     if cache.fixed_path(key).exists():
