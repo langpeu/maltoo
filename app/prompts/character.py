@@ -5,6 +5,7 @@ gpt-4o-mini 는 상대 인물을 연기하고 감정·목표 진행을 판단만
 """
 
 import json
+import re
 
 from ..config import get_config
 from .face import describe as describe_face
@@ -53,6 +54,23 @@ def speech_rule(s: dict) -> str:
                 "과장을 '과장님'이 아니라 '과장'이라고 부른다.")
     return ("너는 과장의 아랫사람이다. 처음부터 끝까지 존댓말만 쓴다(~요, ~습니다). 반말은 한 번도 쓰지 않는다. "
             "과장을 '과장님'이라고 부른다. 화가 나거나 억울해도 존댓말은 유지한다.")
+
+
+_JONDAE_END = re.compile(r"(요|습니다|습니까|세요|십시오|죠|데요|네요|군요|까요|ㅂ니다)[.?!…~\s]*$")
+
+
+def speech_ok(s: dict, reply: str) -> bool:
+    """실시간 대사의 말 높이 검사: 상사(반말)인데 존댓말 어미 문장이 있거나, 부하(존댓말)인데 존댓말 어미가 하나도 없으면 False."""
+    sents = [x.strip() for x in re.split(r"(?<=[.?!…])\s+|\n", reply or "") if x.strip()]
+    if not sents:
+        return True
+    polite = [bool(_JONDAE_END.search(x)) for x in sents]
+    level = s["character"].get("speech_level") or ("banmal" if s["kind"] == "boss" else "jondae")
+    if level == "banmal":
+        return not any(polite)
+    # 부하: 감탄·추임새("네?", "하…")는 빼고, 말다운 문장 중 존댓말이 하나라도 있으면 통과
+    long_sents = [p for x, p in zip(sents, polite) if len(x) >= 6]
+    return any(long_sents) if long_sents else True
 
 
 def system_prompt(s: dict, turn_index: int, difficulty: str = "normal", world_ctx: str = "") -> str:

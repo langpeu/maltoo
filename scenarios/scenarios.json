@@ -365,7 +365,7 @@
         "role": "팀장",
         "emoji": "😒",
         "personality": "기분이 좋을 때는 친절하다가 갑자기 날카로워진다. 한숨을 쉬고 비꼬며, 지난 일을 끄집어낸다. 박 팀장과 승진 경쟁 중이다.",
-        "speech_style": "존댓말이지만 비꼬는 말투, 한숨과 함께 말한다.",
+        "speech_style": "반말이지만 비꼬는 말투, 한숨과 함께 말한다.",
         "appearance": "41세 여성. 마른 체형, 긴장으로 올라간 어깨, 아주 꼿꼿한 자세. 턱이 뾰족한 갸름한 하트형 얼굴, 차갑고 하얀 피부, 미간의 옅은 세로 주름, 또렷한 아이라인과 톤 다운된 레드 립. 가늘고 날카롭게 올라간 쌍꺼풀 눈, 날카롭게 각진 아치형 눈썹, 좁고 오똑한 코, 쉽게 일자로 굳는 얇은 입술. 잔머리 없이 매끈하게 묶은 낮은 쪽진 흑발. 작은 진주 귀걸이. 차콜 블레이저에 검은 하이넥, 사원증. 인상: 완벽주의, 기분파, 차갑고 비꼬는 말투.",
         "appearance_prompt": "Korean woman, age 41. Build: slim, tense raised shoulders, very upright. Face: slim heart-shaped face with a pointed chin, fair cool-toned skin, a faint vertical crease between the brows, polished makeup with defined eyeliner and muted red lipstick. Eyes: narrow, sharp, slightly upturned double-lidded eyes. Eyebrows: thin, sharply angled arches, dark. Nose: narrow and refined. Mouth: thin lips that easily set into a tight sarcastic line. Hair: long straight black hair pulled back into a sleek low bun with no stray strands. Accessories: small pearl stud earrings. Clothing: charcoal tailored blazer over a black high-neck top, company lanyard with a blank ID card. Overall vibe: perfectionist, moody, cold, sarcastic and intimidating.",
         "expression_notes": {
@@ -373,8 +373,7 @@
           "angry": "icy glare, lips thin and tight",
           "explosive": "sharp, high-strung anger: eyes wide, brows raised and tense, nostrils flared",
           "softened": "slight understanding smile, eyes softer, shoulders lowered"
-        },
-        "speech_level": "jondae_sarcastic"
+        }
       },
       "voice": {
         "voice": "sage",

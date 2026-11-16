@@ -260,8 +260,24 @@ def test_speech_level_rule():
     """상사는 반말, 부하는 존댓말을 시스템 프롬프트와 매 턴 안내에 명시 (한 팀장은 비꼬는 존댓말 예외)."""
     from app import scenarios
     from app.prompts import character
-    for sid, word in [("kim", "반말만"), ("choi", "반말만"), ("park", "반말만"), ("lee", "존댓말"), ("jung", "존댓말"), ("yoon", "존댓말"), ("han", "존댓말")]:
+    for sid, word in [("kim", "반말만"), ("choi", "반말만"), ("park", "반말만"), ("han", "반말만"), ("lee", "존댓말"), ("jung", "존댓말"), ("yoon", "존댓말")]:
         s = scenarios.get(sid)
         msgs = character.build_messages(s, [], "네", 1)
         assert "[말 높이 — 반드시 지킨다]" in msgs[0]["content"]
         assert word in msgs[-1]["content"], sid
+
+
+def test_speech_check_and_retry(client, fake_openai):
+    """실시간 대사 말 높이 검사: 상사가 존댓말로 답하면 한 번 다시 받는다."""
+    from conftest import TURN_OVERRIDE
+
+    from app import scenarios
+    from app.prompts import character
+    kim, lee = scenarios.get("kim"), scenarios.get("lee")
+    assert character.speech_ok(kim, "그래서 결론이 뭔데?") and not character.speech_ok(kim, "그래서 결론이 뭔가요?")
+    assert character.speech_ok(lee, "네, 내일까지 드릴게요.") and not character.speech_ok(lee, "그건 내 일이 아니야.")
+    assert character.speech_ok(lee, "하…")  # 짧은 감탄은 통과
+    TURN_OVERRIDE.update({"reply": "그래서 결론이 뭔가요?"})
+    client.post("/api/turn", json={"scenario_id": "kim", "history": [], "user_text": "네"}, headers=H)
+    chats = [kw for k, kw in fake_openai if k == "chat"]
+    assert len(chats) == 2 and "[말 높이 오류]" in chats[-1]["messages"][-1]["content"]

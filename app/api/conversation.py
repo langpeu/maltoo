@@ -100,6 +100,16 @@ def turn(body: TurnIn, caller: Caller = Depends(get_caller)):
     msgs = character.build_messages(s, [h.model_dump() for h in body.history], user_text, turn_index, body.tone, body.face,
                                      body.difficulty, ctx)
     raw = caller.chat(msgs, max_tokens=700, feature="chat", response_format={"type": "json_object"})
+    # 실시간 대사 말 높이 검사: 상사는 반말, 부하는 존댓말. 어긋나면 한 번만 다시 받는다.
+    first = character.parse(raw, s, turn_index, body.user_text.strip(), set(world.names()))
+    if not character.speech_ok(s, first["reply"]):
+        rule = "반말만" if s["kind"] == "boss" else "존댓말(~요/~습니다)만"
+        fix = msgs + [{"role": "assistant", "content": raw},
+                      {"role": "user", "content": f"[말 높이 오류] reply 의 말 높이가 틀렸다. 내용은 그대로 두고 reply 를 {rule} 쓰도록 고쳐서, 같은 JSON 형식 전체로 다시 답한다."}]
+        retry = caller.chat(fix, max_tokens=700, feature="chat", response_format={"type": "json_object"})
+        print(f"[말 높이] {s['id']} {turn_index}턴: 고쳐 받음", flush=True)
+        if character.speech_ok(s, character.parse(retry, s, turn_index)["reply"]):
+            raw = retry
     parsed = character.parse(raw, s, turn_index, body.user_text.strip(), set(world.names()), body.goal_done,
                              body.goal_progress)
     print(f"[목표] {s['id']} {turn_index}턴: gpt={parsed['goal_debug']} → {parsed['goal_progress']}% {parsed['checklist_done']}",
