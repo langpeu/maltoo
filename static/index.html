@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>말투 · 랑프두잇 갈등 대응 트레이닝</title>
+  <link rel="icon" href="/assets/brand/logo.jpg">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+  <link rel="stylesheet" href="/static/css/app.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <img src="/assets/brand/logo.jpg" alt="랑프두잇" class="brand-logo">
+      <div>
+        <div class="brand-title">말투</div>
+        <div class="brand-sub">랑프두잇 갈등 대응 트레이닝</div>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <span class="tag">나 · 과장</span>
+      <button class="btn btn-ghost" id="btn-settings" type="button">⚙ 설정</button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <main class="stage">
+      <section class="card welcome">
+        <span class="badge">로봇 제조사 · 랑프두잇</span>
+        <h1>오늘도 출근하셨군요, 과장님.</h1>
+        <p class="lead">
+          상사와 부하 직원이 기다리고 있습니다. 상대가 말을 걸면 <b>3초 안에</b> 대답해야 합니다.
+          말투, 목소리 톤, 표정까지 모두 분석됩니다.
+        </p>
+        <ol class="steps">
+          <li><b>시나리오 선택</b> 상사 4명, 부하 직원 3명 중 상대를 고릅니다.</li>
+          <li><b>3초 안에 대답</b> 머뭇거리면 상대가 재촉합니다.</li>
+          <li><b>실시간 결과</b> 상사에게 잘못 보이면 연봉이 깎이고, 부하 직원은 사직서를 냅니다.</li>
+          <li><b>교정</b> 어떤 표현과 톤이 문제였는지, 어떻게 말하면 좋은지 알려줍니다.</li>
+        </ol>
+        <div class="welcome-actions">
+          <button class="btn btn-primary" type="button" disabled title="다음 단계(Phase 1)에서 열립니다">시나리오 고르기 (준비 중)</button>
+          <button class="btn" id="btn-test-chat" type="button">비용 표시 테스트 (1원 미만)</button>
+        </div>
+        <p class="test-reply" id="test-reply" hidden></p>
+      </section>
+    </main>
+
+    <aside class="panel">
+      <section class="card panel-block" id="cost-panel">
+        <div class="panel-head">
+          <h2>API 비용</h2>
+          <span class="key-hint" id="key-hint">키 없음</span>
+        </div>
+
+        <div class="cost-grid">
+          <div class="cost-cell">
+            <div class="cost-label">이번 연습</div>
+            <div class="cost-krw" id="cost-session">₩0</div>
+            <div class="cost-usd" id="cost-session-usd">$0.0000</div>
+          </div>
+          <div class="cost-cell">
+            <div class="cost-label">오늘</div>
+            <div class="cost-krw" id="cost-today">₩0</div>
+            <div class="cost-usd" id="cost-today-usd">$0.0000</div>
+          </div>
+          <div class="cost-cell">
+            <div class="cost-label">이번 달</div>
+            <div class="cost-krw" id="cost-month">₩0</div>
+            <div class="cost-usd" id="cost-month-usd">$0.0000</div>
+          </div>
+        </div>
+
+        <div class="limit">
+          <div class="limit-row"><span>일일 한도</span><span id="limit-daily-text">$0 / $0.50</span></div>
+          <div class="bar"><div class="bar-fill" id="limit-daily-bar"></div></div>
+          <div class="limit-row"><span>월 한도</span><span id="limit-monthly-text">$0 / $5.00</span></div>
+          <div class="bar"><div class="bar-fill" id="limit-monthly-bar"></div></div>
+        </div>
+
+        <ul class="by-feature" id="by-feature">
+          <li><span>분석·대화</span><span data-f="chat">$0</span></li>
+          <li><span>음성 인식</span><span data-f="transcribe">$0</span></li>
+          <li><span>음성 합성</span><span data-f="tts">$0</span></li>
+          <li><span>이미지</span><span data-f="image">$0</span></li>
+          <li class="saved"><span>재사용으로 아낌</span><span id="cost-saved">$0</span></li>
+        </ul>
+        <p class="note" id="cost-note">추정치입니다. 정확한 청구액은 OpenAI 대시보드에서 확인하세요.</p>
+      </section>
+    </aside>
+  </div>
+
+  <footer class="analysis-band">
+    <div class="band-label">실시간 분석</div>
+    <div class="band-body">답변을 시작하면 파형과 감정 체크포인트가 여기에 표시됩니다.</div>
+    <div class="band-notice">상대 인물의 음성과 이미지는 AI로 생성되었습니다 · 연봉·채용 비용은 가상 수치입니다</div>
+  </footer>
+
+  <!-- API 키 입력 -->
+  <dialog class="modal" id="key-modal">
+    <form method="dialog" class="modal-body" id="key-form">
+      <img src="/assets/brand/logo.jpg" alt="" class="modal-logo">
+      <h2>OpenAI API 키를 입력하세요</h2>
+      <p>
+        키는 <b>이 브라우저에만</b> 저장됩니다. 서버나 파일에는 남지 않고, 요청할 때만 내 PC의 로컬 서버로 전달됩니다.
+      </p>
+      <label class="field">
+        <span>API 키</span>
+        <div class="field-row">
+          <input type="password" id="key-input" placeholder="sk-..." autocomplete="off" spellcheck="false" required>
+          <button type="button" class="btn btn-ghost" id="key-toggle">보기</button>
+        </div>
+      </label>
+      <p class="error" id="key-error" hidden></p>
+      <div class="modal-actions">
+        <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener">키 발급받기 ↗</a>
+        <button type="submit" class="btn btn-primary" id="key-submit">확인하고 시작</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- 설정 -->
+  <dialog class="modal" id="settings-modal">
+    <form method="dialog" class="modal-body" id="settings-form">
+      <h2>설정</h2>
+      <section class="settings-section">
+        <h3>API 키</h3>
+        <div class="field-row">
+          <span class="key-hint" id="settings-key-hint">키 없음</span>
+          <button type="button" class="btn" id="btn-key-change">변경</button>
+          <button type="button" class="btn btn-danger" id="btn-key-delete">삭제</button>
+        </div>
+      </section>
+      <section class="settings-section">
+        <h3>비용 한도 (USD)</h3>
+        <div class="field-row">
+          <label class="field"><span>하루</span><input type="number" id="limit-daily" min="0.01" step="0.01"></label>
+          <label class="field"><span>한 달</span><input type="number" id="limit-monthly" min="0.01" step="0.01"></label>
+        </div>
+        <p class="note">한도에 닿으면 서버가 OpenAI 호출을 하지 않습니다. OpenAI 대시보드의 프로젝트 예산도 함께 걸어두세요.</p>
+      </section>
+      <p class="error" id="settings-error" hidden></p>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" id="btn-settings-close">닫기</button>
+        <button type="button" class="btn btn-primary" id="btn-limits-save">저장</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" hidden></div>
+
+  <script type="module" src="/static/js/main.js"></script>
+</body>
+</html>

@@ -76,10 +76,10 @@ maltoo/
 ## 로드맵
 
 ### Phase 0 — 기반
-- [ ] FastAPI 골격, `config.json`, SQLite 스키마
-- [ ] API 키 입력 모달 + 유효성 검사(무료 엔드포인트), localStorage 저장
-- [ ] OpenAI 호출 래퍼 + 사용량/비용 계산 + 한도 차단
-- [ ] 오른쪽 비용 패널
+- [x] FastAPI 골격, `config.json`, SQLite 스키마
+- [x] API 키 입력 모달 + 유효성 검사(무료 엔드포인트), localStorage 저장
+- [x] OpenAI 호출 래퍼 + 사용량/비용 계산 + 한도 차단
+- [x] 오른쪽 비용 패널
 
 ### Phase 1 — 대화 루프
 - [ ] 시나리오 7종 JSON, 시나리오 선택 화면, 상황·목표 카드
