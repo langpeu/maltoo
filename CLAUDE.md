@@ -21,8 +21,10 @@ maltoo/
 │  ├─ usage.py          # 사용량 → 비용 계산, 한도 검사(서버측 차단)
 │  ├─ cache.py          # 음성/이미지 캐시 키 계산, manifest 관리
 │  ├─ prompts/          # 인물 연기, 턴 분석, 최종 리포트 프롬프트
-│  └─ db.py             # SQLite (sessions, turns, usage, baseline)
-├─ scenarios/           # 시나리오 정의 JSON (인물, 상황, 목표, 첫마디, 재촉 대사)
+│  ├─ world.py          # 인물 관계, 소문 전파, 누적 기억(호감·신뢰·연봉) 갱신
+│  └─ db.py             # SQLite (sessions, turns, usage, baseline, world_state, rumors)
+├─ scenarios/           # 시나리오 정의 JSON (인물, 상황, 목표, 첫마디, 재촉 대사, 소문 버전 첫마디)
+│  └─ world.json        # 조직도, 인물 간 관계
 ├─ static/
 │  ├─ index.html
 │  ├─ js/
@@ -33,7 +35,8 @@ maltoo/
 │  └─ css/
 ├─ assets/              # ★ 커밋 대상 캐시
 │  ├─ audio/            # 고정 대사 mp3 + manifest.json
-│  └─ characters/       # <인물id>/<표정>.png + manifest.json
+│  ├─ characters/       # <인물id>/<표정>.png + manifest.json
+│  └─ endings/          # 사직서·인사고과 통보 장면
 └─ tests/
 ```
 
@@ -42,12 +45,16 @@ maltoo/
 2. 재생 종료 → 마이크 ON, 3초 타이머. 무응답이면 재촉 대사(캐시) 재생, 최대 2회
 3. 발화 중: 브라우저가 톤·표정 지표를 실시간 계산해 하단 띠와 톤 미터에 표시, 즉시 체크포인트 생성
 4. 1.5초 무음 → 녹음 종료 → `/api/transcribe`
-5. `/api/turn`: 문장 + 톤 지표 + 표정 지표 + 이전 대화 + 인물 상태 → gpt-4o-mini가 **JSON 한 번**으로 반환
+5. `/api/turn`: 문장 + 톤 지표 + 표정 지표 + 이전 대화 + 인물 상태 + **세계 상태(관계·소문·누적 호감)** → gpt-4o-mini가 **JSON 한 번**으로 반환
    - `emotion` {anger, trust, defensiveness, delta, reason}
    - `goal` {progress, checklist[]}
    - `checkpoints[]` {type, text_span, note}
-   - `reply` (상대의 다음 대사) / `ending` (null | success | partial | fail)
-6. 비용 기록 → 오른쪽 패널 갱신
+   - `mentions[]` {character, sentiment}: 다른 인물 언급·험담 감지
+   - `reply` (상대의 다음 대사) / `ending` (null | success | partial | fail | resigned)
+6. 서버가 결과로 게임 수치 계산 (gpt가 아니라 `world.py`/`config.json` 규칙으로 결정적 계산)
+   - 상사 시나리오: 연봉 변동 / 부하 시나리오: 퇴사 위험도, (7번) 팀 불만
+   - 험담 → 소문 확률 판정 → `rumors` 저장, 대상 인물 호감·신뢰 갱신
+7. 비용 기록 → 오른쪽 패널 갱신
 
 ### 핵심 규칙
 - **API 키**: 브라우저 localStorage에만 저장. 요청 헤더(`X-OpenAI-Key`)로 받아 해당 요청에만 사용. 로그·DB·파일에 절대 남기지 않는다. 비용 집계는 키 끝 4자리로만 구분.
@@ -57,6 +64,12 @@ maltoo/
 - **캐시 키에 모델 이름 미포함**: 오디오 = hash(대사 + voice + instructions), 이미지 = hash(인물 + 표정 + 프롬프트). 모델·생성일은 manifest에 기록.
 - **기준선 보정**: 톤·표정 지표는 사용자 baseline 대비 비율로 계산·전달.
 - **에코 방지**: TTS 재생 중에는 VAD·톤 분석을 멈추고 `echoCancellation`을 켠다.
+- **나는 항상 과장**: 모든 시나리오에서 사용자 직급은 과장. 대사의 호칭도 이에 맞춘다.
+- **게임 수치는 결정적 규칙으로**: 연봉 감액·퇴사 위험도·소문 확률은 `config.json`의 `game` 설정으로 계산한다. gpt-4o-mini는 감정·언급 판단만 하고 금액을 정하지 않는다.
+  - 기본 연봉 4,700만 원(대한민국 과장 평균 가정), 분노+10 −30만 / 신뢰−10 −20만 / 공격 표현 −40만 / 응답 회피 −50만 / 잘한 대응 +20만(누적 감액의 50%까지만 회복)
+  - 고과: A +3% / C 동결 / D −5% / 최악 인사팀 면담
+- **누적 기억**: `world_state`(인물별 호감·신뢰, 현재 연봉)와 `rumors`는 세션을 넘어 유지. "새 회사 입사"로만 초기화.
+- **험담 피드백**: 험담 전략은 리포트에서 칭찬하지 않고 위험을 함께 짚는다.
 
 ## 로드맵
 
@@ -87,7 +100,14 @@ maltoo/
 - [ ] 인물 이미지 생성 파이프라인(기본 초상 → 표정 편집) + `assets/characters` 캐시
 - [ ] 감정 수치에 따른 표정 5단계 전환
 
-### Phase 5 — 교정 · 기록
+### Phase 5 — 게임 장치 · 세계관
+- [ ] `world.json` 조직도·관계, `world_state`/`rumors` 스키마
+- [ ] 연봉 패널 + 실시간 감액 애니메이션, 인사고과 결말
+- [ ] 퇴사 위험도 게이지 + 단계 메시지 + 퇴사 엔딩, 7번 팀 불만 게이지
+- [ ] 인물 언급 감지 → 관계 반응, 소문 전파 → 첫마디 변형·시작 연봉 감액
+- [ ] 엔딩 장면 이미지(`assets/endings`), "새 회사 입사" 초기화
+
+### Phase 6 — 교정 · 기록
 - [ ] 최종 리포트: 문제 표현 하이라이트, 대안 문장, 억양 팁(수치)
 - [ ] 모범 답변 TTS, 다시 말해보기 + 비교
 - [ ] 회차별 기록, 개선 추이 그래프
@@ -101,6 +121,7 @@ maltoo/
 - [ ] 목소리 분석 깊이: A 수치만 / B 최종 리포트에서 음성 입력 모델 추가 (A)
 - [ ] 보완점(baseline, 이어폰 안내, 난이도, 모범 답변, 첫 화면 안내) 포함 여부 (전부 포함)
 - [ ] 상대 성별 선택 기능 (없음, 기본 혼합 구성)
+- [x] 사용자 직급 과장으로 통일, 누적 기억 포함, 소문 시스템 포함, 기본 연봉 4,700만 원 (확정)
 - [ ] 코드 전 화면 시안 확인 여부
 
 ## 실행 · 테스트
