@@ -84,7 +84,7 @@ maltoo/
 - **세계관 엔진**: `app/world.py` — `/api/world/start`(소문 대기 시 첫마디 `rumor_<n>` + 시작 페널티), `/api/turn` 응답의 `game`(연봉 변동·이유, 퇴사 위험·단계, 팀 불만, 언급 효과, 소문 발생, `ending_override`=resign|team_quit), `/api/world/finish`(인사고과 A/C/D·면담). 클라이언트가 `prev_emotion`·`game_session{cut,recovered}`를 턴마다 보낸다. 소문 판정은 `random.Random(session_id:turn:target)`으로 재현 가능. 인물 관계는 `scenarios/world.json`, 수치는 `config.json` `game`.
 - **엔딩 장면**: `assets/endings/review.webp`(인사고과), `resign_<부하 id>.webp`(사직서, 인물 calm 사진 기준 edit) — 초기 세팅에서 생성, 커밋해서 재사용.
 - **교정 리포트**: `/api/report` — 톤·표정 점수는 `app/report.py`의 결정적 공식(같은 입력→같은 점수, JS `toneScore`와 동일 공식 유지), 말 점수·총평·교정 카드(original/problem/better/tone_tip/face_tip)·습관·다음 과제는 gpt-4o-mini. 종합 = 말 0.4·톤 0.35·표정 0.25 가중 평균(없는 항목 제외)×0.85 + 목표 달성도×0.15. 결과는 `sessions.summary`/`turns`에 저장, `/api/history`로 추이. 모범 답변은 `/api/tts/coach`(config `coach` 목소리). 다시 말해보기는 브라우저에서 톤을 재측정해 처음 턴과 비교.
-- **난이도**: config `difficulty` (mild 5초·너그러움 / normal 3초 / spicy 3초·엄격), `/api/turn`의 `difficulty`로 프롬프트에 반영.
+- **난이도**: config `difficulty` (mild 5초·힌트 1번 / normal 3초·최소 1번 반박·초반 success 금지 / spicy 3초·2번 이상 반박), `/api/turn`의 `difficulty`로 프롬프트에 반영.
 - **험담 피드백**: 험담 전략은 리포트에서 칭찬하지 않고 위험을 함께 짚는다.
 
 ## 로드맵
