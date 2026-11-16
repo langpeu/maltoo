@@ -11,6 +11,8 @@ def test_scenarios_list(client):
     assert len(r) == 7
     kinds = [s["kind"] for s in r]
     assert kinds.count("boss") == 4 and kinds.count("sub") == 3
+    kim = next(s for s in r if s["id"] == "kim")
+    assert set(kim["lines"]) == {"opening", "nag1", "nag2"} and kim["lines"]["nag1"] == "왜 말이 없어? 뭐 불만 있어?"
     genders = [s["character"]["gender"] for s in r]
     assert genders.count("여") == 3 and genders.count("남") == 4
 

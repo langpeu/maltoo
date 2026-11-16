@@ -17,10 +17,12 @@ MAX_AUDIO_BYTES = 10 * 1024 * 1024
 
 @router.get("/scenarios")
 def list_scenarios():
-    return [
-        {k: s[k] for k in ("id", "kind", "title", "character", "situation", "goal", "checklist", "fail_conditions")}
-        for s in scenarios.all_scenarios()
-    ]
+    out = []
+    for s in scenarios.all_scenarios():
+        d = {k: s[k] for k in ("id", "kind", "title", "character", "situation", "goal", "checklist", "fail_conditions")}
+        d["lines"] = {line: scenarios.fixed_line(s, line) for line in scenarios.FIXED_LINES}  # 음성 실패 시 글자로
+        out.append(d)
+    return out
 
 
 # ---------- 음성 합성 ----------

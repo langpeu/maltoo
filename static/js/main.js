@@ -130,6 +130,7 @@ function startTalk() {
   $("band-empty").hidden = true;
   go("talk");
 
+  talkUI._ttsWarned = false;
   convo = new Conversation(s, { mic, ui: talkUI });
   convo.run();
 }
@@ -169,10 +170,17 @@ const talkUI = {
     if (kind === "npc") setStatus("npc", `🔊 ${name}이(가) 말하는 중`);
     if (kind === "listen") setStatus("listen", "🎙 지금 대답하세요!");
     if (kind === "analyze") setStatus("analyze", "⏳ 듣고 판단하는 중…");
+    if (kind === "npc-text") setStatus("npc", `💬 ${name}의 말을 읽어보세요`);
+    if (kind === "npc-wait") setStatus("analyze", `💬 ${name}이(가) 대답하려는 중…`);
   },
-  npcSays(text) {
-    $("npc-bubble").textContent = text;
-    addLog("npc", `<small>${esc(current.character.name)}</small>${esc(text)}`);
+  npcSays(text, { muted = false } = {}) {
+    $("npc-bubble").innerHTML = esc(text) + (muted ? ' <span class="muted-badge">🔇 음성 없이 글자로</span>' : "");
+    addLog("npc", `<small>${esc(current.character.name)}${muted ? " · 🔇" : ""}</small>${esc(text)}`);
+  },
+  ttsFailed(e) {
+    if (!this._ttsWarned) toast(`음성을 만들지 못해 글자로 보여줍니다. (${e.message})`, 4500);
+    this._ttsWarned = true;
+    refreshUsage();
   },
   npcTick({ level, ended }) {
     if (ended) return setSpeaking(false);
@@ -352,8 +360,9 @@ async function checkSetup({ force = false } = {}) {
   $("setup-cost").textContent = `${fmtUsd(st.estimate_usd)} (${fmtKrw(st.estimate_usd, krwRate)})`;
   $("setup-progress").hidden = true;
   showError($("setup-error"), "");
-  $("btn-setup-run").disabled = !st.missing;
-  $("btn-setup-run").textContent = st.missing ? "지금 만들기" : "모두 준비됨";
+  $("btn-setup-run").disabled = false;
+  $("btn-setup-run").textContent = st.missing ? "지금 만들기" : "모두 준비됨 · 닫기";
+  $("btn-setup-run").dataset.mode = st.missing ? "run" : "close";
   $("setup-modal").showModal();
 }
 
@@ -411,13 +420,17 @@ async function runSetup() {
   $("btn-setup-later").textContent = "닫기";
   tick(failed.length ? `완료 (실패 ${failed.length}건 — 다시 누르면 빠진 것만 이어서 만듭니다)` : "완료!");
   $("btn-setup-run").disabled = false;
-  $("btn-setup-run").textContent = failed.length ? "빠진 것 다시 만들기" : "모두 준비됨";
+  $("btn-setup-run").textContent = failed.length ? "빠진 것 다시 만들기" : "모두 준비됨 · 닫기";
+  $("btn-setup-run").dataset.mode = failed.length ? "run" : "close";
   await loadScenarios();
   refreshUsage();
   if (!failed.length) toast("준비 완료! assets/ 폴더를 GitHub에 커밋하면 다음부터는 재사용합니다.", 7000);
 }
 
-$("btn-setup-run").addEventListener("click", runSetup);
+$("btn-setup-run").addEventListener("click", () => {
+  if ($("btn-setup-run").dataset.mode === "close") $("setup-modal").close();
+  else runSetup();
+});
 $("btn-setup-later").addEventListener("click", () => $("setup-modal").close());
 $("btn-setup-open").addEventListener("click", () => { $("settings-modal").close(); checkSetup({ force: true }); });
 

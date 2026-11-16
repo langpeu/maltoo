@@ -330,3 +330,6 @@ body {
 .setup-log li { padding: 2px 0; }
 .setup-log li.fail { color: var(--danger); font-weight: 700; }
 code { background: var(--yellow-soft); border: 1px solid var(--ink); border-radius: 4px; padding: 0 4px; }
+
+.muted-badge { display: inline-block; font-size: 12px; font-weight: 800; vertical-align: middle;
+  border: 2px solid var(--ink); border-radius: 6px; padding: 1px 6px; background: #f3f3f3; margin-left: 6px; }

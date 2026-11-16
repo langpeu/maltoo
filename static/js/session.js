@@ -20,24 +20,54 @@ export class Conversation {
 
   guard() { if (this.stopped) throw new Stopped(); }
 
+  // 고정 대사(첫마디·재촉): 저장된 음성 재생, 실패하면 글자로
   async speakFixed(line) {
-    const r = await api(`/api/tts/line/${this.s.id}/${line}`);
+    const text = this.s.lines[line];
+    let r = null;
+    try {
+      r = await api(`/api/tts/line/${this.s.id}/${line}`);
+    } catch (e) {
+      if (e.status === 401) throw e;
+      this.ui.ttsFailed(e);
+    }
     this.guard();
-    this.ui.status("npc");
-    this.ui.npcSays(r.text, { cached: r.cached });
-    this.history.push({ speaker: "npc", text: r.text });
-    await playUrl(r.url, { onTick: (t) => this.ui.npcTick(t) });
-    this.ui.refreshUsage();
-    this.guard();
+    this.history.push({ speaker: "npc", text });
+    await this.deliver(text, r && r.url);
   }
 
+  // 실시간 대사: 음성 생성, 실패하면 글자로
   async speakSay(text) {
-    this.ui.npcSays(text);
-    const r = await api("/api/tts/say", { method: "POST", body: { scenario_id: this.s.id, text } });
+    this.ui.status("npc-wait");
+    let r = null;
+    try {
+      r = await api("/api/tts/say", { method: "POST", body: { scenario_id: this.s.id, text } });
+    } catch (e) {
+      if (e.status === 401) throw e;
+      this.ui.ttsFailed(e);
+    }
     this.guard();
+    await this.deliver(text, r && r.url);
+  }
+
+  async deliver(text, url) {
     this.ui.status("npc");
-    await playUrl(r.url, { onTick: (t) => this.ui.npcTick(t) });
-    this.ui.refreshUsage();
+    if (url) {
+      this.ui.npcSays(text);
+      try {
+        await playUrl(url, { onTick: (t) => this.ui.npcTick(t) });
+        this.ui.refreshUsage();
+        this.guard();
+        return;
+      } catch (e) {
+        this.ui.ttsFailed(e);
+      }
+    }
+    // 음성 없이: 글자를 읽을 시간만큼 기다린 뒤 진행 (한국어 약 초당 9자)
+    this.ui.status("npc-text");
+    this.ui.npcSays(text, { muted: true });
+    const ms = Math.min(7000, Math.max(1500, 400 + text.length * 110));
+    await new Promise((res) => setTimeout(res, ms));
+    this.ui.npcTick({ level: 0, ended: true });
     this.guard();
   }
 
