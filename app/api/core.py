@@ -16,7 +16,7 @@ def public_config():
     return {
         "company": cfg.get("company", {}),
         "models": cfg["models"],
-        "krw_per_usd": cfg.get("krw_per_usd", 1400),
+        "krw_per_usd": cfg["krw_per_usd"],
         "limits": usage.limits(),
     }
 

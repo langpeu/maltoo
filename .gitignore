@@ -3,6 +3,7 @@ data.db
 *.db-journal
 captures/
 recordings/
+.runtime/
 
 # 비밀 정보
 .env

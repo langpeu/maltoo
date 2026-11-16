@@ -25,28 +25,108 @@
 
   <div class="layout">
     <main class="stage">
-      <section class="card welcome">
-        <span class="badge">로봇 제조사 · 랑프두잇</span>
-        <h1>오늘도 출근하셨군요, 과장님.</h1>
-        <p class="lead">
-          상사와 부하 직원이 기다리고 있습니다. 상대가 말을 걸면 <b>3초 안에</b> 대답해야 합니다.
-          말투, 목소리 톤, 표정까지 모두 분석됩니다.
-        </p>
-        <ol class="steps">
-          <li><b>시나리오 선택</b> 상사 4명, 부하 직원 3명 중 상대를 고릅니다.</li>
-          <li><b>3초 안에 대답</b> 머뭇거리면 상대가 재촉합니다.</li>
-          <li><b>실시간 결과</b> 상사에게 잘못 보이면 연봉이 깎이고, 부하 직원은 사직서를 냅니다.</li>
-          <li><b>교정</b> 어떤 표현과 톤이 문제였는지, 어떻게 말하면 좋은지 알려줍니다.</li>
-        </ol>
-        <div class="welcome-actions">
-          <button class="btn btn-primary" type="button" disabled title="다음 단계(Phase 1)에서 열립니다">시나리오 고르기 (준비 중)</button>
-          <button class="btn" id="btn-test-chat" type="button">비용 표시 테스트 (1원 미만)</button>
+      <!-- 1. 시나리오 선택 -->
+      <section class="view" id="view-select">
+        <div class="card welcome">
+          <span class="badge">로봇 제조사 · 랑프두잇</span>
+          <h1>오늘도 출근하셨군요, 과장님.</h1>
+          <p class="lead">
+            상대가 말을 걸면 <b>3초 안에</b> 대답해야 합니다. 머뭇거리면 재촉이 들어옵니다.
+            상대를 골라 대화를 시작하세요. <b>이어폰</b>을 쓰면 더 정확합니다.
+          </p>
         </div>
-        <p class="test-reply" id="test-reply" hidden></p>
+        <h2 class="section-title">상사</h2>
+        <div class="scenario-grid" id="grid-boss"></div>
+        <h2 class="section-title">부하 직원</h2>
+        <div class="scenario-grid" id="grid-sub"></div>
+      </section>
+
+      <!-- 2. 브리핑 -->
+      <section class="view card briefing" id="view-brief" hidden>
+        <button class="btn btn-ghost back" type="button" data-go="select">← 목록</button>
+        <div class="brief-head">
+          <div class="avatar" id="brief-avatar">🙂</div>
+          <div>
+            <span class="badge" id="brief-kind">상사</span>
+            <h1 id="brief-name">이름</h1>
+            <p class="muted" id="brief-meta"></p>
+          </div>
+        </div>
+        <p class="brief-personality" id="brief-personality"></p>
+        <div class="brief-box">
+          <h3>나의 상황 <small>(나 · 과장)</small></h3>
+          <p id="brief-situation"></p>
+        </div>
+        <div class="brief-box goal">
+          <h3>🎯 목표</h3>
+          <p id="brief-goal"></p>
+          <ul class="checklist" id="brief-checklist"></ul>
+          <p class="muted small" id="brief-fail"></p>
+        </div>
+        <ul class="rules">
+          <li>상대가 말을 마치면 바로 <b>3초 카운트</b>가 시작됩니다. 생각할 시간은 없습니다.</li>
+          <li>말을 멈추고 <b>1.5초</b>가 지나면 대답이 끝난 것으로 봅니다.</li>
+          <li>대답은 최대 <b>5번</b>입니다. 그 안에 목표를 이루세요.</li>
+        </ul>
+        <div class="brief-actions">
+          <button class="btn btn-primary btn-big" id="btn-start" type="button">🎙 마이크 켜고 시작</button>
+          <span class="muted small" id="brief-hint"></span>
+        </div>
+      </section>
+
+      <!-- 3. 대화 -->
+      <section class="view card talk" id="view-talk" hidden>
+        <div class="talk-head">
+          <div class="avatar big" id="talk-avatar">🙂</div>
+          <div class="talk-who">
+            <div class="talk-name" id="talk-name">이름</div>
+            <div class="muted" id="talk-goal"></div>
+          </div>
+          <div class="turn-count" id="turn-count">답변 0 / 5</div>
+        </div>
+        <div class="bubble" id="npc-bubble">…</div>
+        <div class="status" id="talk-status">
+          <span class="status-text" id="status-text">준비 중</span>
+          <span class="countdown" id="countdown" hidden>3</span>
+        </div>
+        <ol class="log" id="talk-log"></ol>
+        <div class="talk-actions">
+          <button class="btn btn-ghost" id="btn-stop" type="button">그만하기</button>
+        </div>
+      </section>
+
+      <!-- 4. 결과 -->
+      <section class="view card result" id="view-result" hidden>
+        <div class="result-badge" id="result-badge">결과</div>
+        <h1 id="result-title"></h1>
+        <p class="lead" id="result-reason"></p>
+        <div class="progress-row">
+          <span>목표 달성도</span>
+          <div class="bar"><div class="bar-fill" id="result-progress"></div></div>
+          <b id="result-progress-text">0%</b>
+        </div>
+        <ul class="checklist" id="result-checklist"></ul>
+        <h3>대화 기록</h3>
+        <ol class="log" id="result-log"></ol>
+        <p class="muted small">말투·톤·표정 상세 분석과 교정 안내는 다음 단계에서 추가됩니다.</p>
+        <div class="talk-actions">
+          <button class="btn btn-primary" id="btn-retry" type="button">다시 하기</button>
+          <button class="btn" type="button" data-go="select">다른 상대 고르기</button>
+        </div>
       </section>
     </main>
 
     <aside class="panel">
+      <section class="card panel-block" id="state-panel" hidden>
+        <div class="panel-head"><h2 id="state-title">상대 감정</h2></div>
+        <div class="gauge"><span>분노</span><div class="bar"><div class="bar-fill danger" id="g-anger"></div></div><b id="g-anger-v">-</b></div>
+        <div class="gauge"><span>신뢰</span><div class="bar"><div class="bar-fill" id="g-trust"></div></div><b id="g-trust-v">-</b></div>
+        <div class="gauge"><span>방어심</span><div class="bar"><div class="bar-fill warn" id="g-def"></div></div><b id="g-def-v">-</b></div>
+        <p class="reason" id="g-reason">첫 대답을 기다리는 중</p>
+        <div class="panel-head"><h2>🎯 목표 달성도</h2><b id="g-goal-v">0%</b></div>
+        <div class="bar"><div class="bar-fill yellow" id="g-goal"></div></div>
+        <ul class="checklist small" id="g-checklist"></ul>
+      </section>
       <section class="card panel-block" id="cost-panel">
         <div class="panel-head">
           <h2>API 비용</h2>
@@ -92,7 +172,7 @@
 
   <footer class="analysis-band">
     <div class="band-label">실시간 분석</div>
-    <div class="band-body">답변을 시작하면 파형과 감정 체크포인트가 여기에 표시됩니다.</div>
+    <div class="band-body"><canvas id="band-canvas"></canvas><span class="band-empty" id="band-empty">대화를 시작하면 음성 파형이 여기에 표시됩니다. (회색: 상대 · 검정: 나)</span></div>
     <div class="band-notice">상대 인물의 음성과 이미지는 AI로 생성되었습니다 · 연봉·채용 비용은 가상 수치입니다</div>
   </footer>
 
@@ -138,6 +218,15 @@
           <label class="field"><span>한 달</span><input type="number" id="limit-monthly" min="0.01" step="0.01"></label>
         </div>
         <p class="note">한도에 닿으면 서버가 OpenAI 호출을 하지 않습니다. OpenAI 대시보드의 프로젝트 예산도 함께 걸어두세요.</p>
+      </section>
+      <section class="settings-section">
+        <h3>상대 고정 음성 미리 만들기</h3>
+        <p class="note" id="pregen-info">확인 중…</p>
+        <div class="field-row">
+          <button type="button" class="btn" id="btn-pregen">미리 만들기</button>
+          <button type="button" class="btn btn-ghost" id="btn-test-chat">비용 표시 테스트</button>
+        </div>
+        <p class="note" id="test-reply" hidden></p>
       </section>
       <p class="error" id="settings-error" hidden></p>
       <div class="modal-actions">

@@ -1,0 +1,120 @@
+// 마이크: 녹음 + 말소리 감지(VAD)
+// - listen(): 3초 안에 말을 시작하지 않으면 {spoke:false}
+// - 말을 시작하면 1.5초 무음이 이어질 때 녹음 종료 → {spoke:true, blob, seconds}
+// - 상대 음성이 재생되는 동안에는 listen 을 호출하지 않는다 (에코 방지)
+
+export class Mic {
+  constructor() {
+    this.stream = null;
+    this.ctx = null;
+    this.analyser = null;
+    this.buf = null;
+    this.threshold = 0.02;
+  }
+
+  async open() {
+    if (this.stream) return;
+    this.stream = await navigator.mediaDevices.getUserMedia({
+      audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true },
+    });
+    this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const src = this.ctx.createMediaStreamSource(this.stream);
+    this.analyser = this.ctx.createAnalyser();
+    this.analyser.fftSize = 2048;
+    src.connect(this.analyser);
+    this.buf = new Float32Array(this.analyser.fftSize);
+  }
+
+  level() {
+    this.analyser.getFloatTimeDomainData(this.buf);
+    let sum = 0;
+    for (let i = 0; i < this.buf.length; i++) sum += this.buf[i] * this.buf[i];
+    return Math.sqrt(sum / this.buf.length);
+  }
+
+  // 주변 소음 측정 → 말소리 기준값 설정
+  async calibrate(ms = 900) {
+    if (this.ctx.state === "suspended") await this.ctx.resume();
+    const samples = [];
+    const end = performance.now() + ms;
+    while (performance.now() < end) {
+      samples.push(this.level());
+      await sleep(30);
+    }
+    samples.sort((a, b) => a - b);
+    const noise = samples[Math.floor(samples.length * 0.8)] || 0.005;
+    this.threshold = Math.min(0.08, Math.max(0.015, noise * 3.5));
+    return { noise, threshold: this.threshold };
+  }
+
+  listen({ startTimeoutMs = 3000, endSilenceMs = 1500, maxMs = 30000, onTick } = {}) {
+    return new Promise((resolve) => {
+      const mime = MediaRecorder.isTypeSupported("audio/webm;codecs=opus") ? "audio/webm;codecs=opus" : "";
+      const rec = new MediaRecorder(this.stream, mime ? { mimeType: mime } : undefined);
+      const chunks = [];
+      rec.ondataavailable = (e) => e.data.size && chunks.push(e.data);
+
+      const t0 = performance.now();
+      let voicedMs = 0;
+      let spoke = false;
+      let lastVoice = 0;
+      let done = false;
+
+      const finish = (result) => {
+        if (done) return;
+        done = true;
+        clearInterval(timer);
+        rec.onstop = () => {
+          if (!result.spoke) return resolve(result);
+          const blob = new Blob(chunks, { type: rec.mimeType || "audio/webm" });
+          resolve({ ...result, blob });
+        };
+        rec.stop();
+      };
+
+      const step = 30;
+      const timer = setInterval(() => {
+        const now = performance.now();
+        const elapsed = now - t0;
+        const lv = this.level();
+        const loud = lv > this.threshold;
+
+        if (loud) {
+          voicedMs += step;
+          lastVoice = now;
+          if (!spoke && voicedMs >= 120) spoke = true;
+        } else if (!spoke) {
+          voicedMs = Math.max(0, voicedMs - step);
+        }
+
+        const remain = spoke ? null : Math.max(0, startTimeoutMs - elapsed);
+        onTick && onTick({ level: lv, threshold: this.threshold, spoke, remain, elapsed });
+
+        if (!spoke && elapsed >= startTimeoutMs) return finish({ spoke: false });
+        if (spoke && now - lastVoice >= endSilenceMs) return finish({ spoke: true, seconds: elapsed / 1000 });
+        if (elapsed >= maxMs) return finish({ spoke, seconds: elapsed / 1000 });
+      }, step);
+
+      rec.start(250);
+    });
+  }
+
+  close() {
+    this.stream && this.stream.getTracks().forEach((t) => t.stop());
+    this.ctx && this.ctx.close();
+    this.stream = this.ctx = this.analyser = null;
+  }
+}
+
+export function playUrl(url, { onTick } = {}) {
+  return new Promise((resolve, reject) => {
+    const a = new Audio(url);
+    let timer;
+    if (onTick) timer = setInterval(() => onTick({ playing: !a.paused }), 60);
+    a.onended = () => { clearInterval(timer); resolve(); };
+    a.onerror = () => { clearInterval(timer); reject(new Error("음성을 재생하지 못했습니다.")); };
+    a.play().catch((e) => { clearInterval(timer); reject(e); });
+  });
+}
+
+export const sleep = (ms) => new Promise((r) => setTimeout(r, ms));

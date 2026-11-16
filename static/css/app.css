@@ -182,3 +182,99 @@ body {
   padding: 12px 18px; border-radius: 10px; box-shadow: 4px 4px 0 var(--yellow);
   z-index: 50; max-width: 90vw;
 }
+
+/* ========== Phase 1: 시나리오 · 대화 ========== */
+.muted { color: var(--muted); }
+.small { font-size: 13px; }
+.view[hidden] { display: none !important; }
+.section-title { font-size: 18px; font-weight: 900; margin: 24px 0 10px; }
+.welcome { margin-bottom: 4px; }
+
+.scenario-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+.scenario {
+  text-align: left; font: inherit; color: var(--ink); cursor: pointer;
+  background: var(--paper); border: var(--line); border-radius: var(--radius);
+  box-shadow: var(--shadow); padding: 16px; display: grid; gap: 6px;
+  transition: transform .08s, box-shadow .08s, background .08s;
+}
+.scenario:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--ink); background: var(--yellow-soft); }
+.scenario .sc-top { display: flex; align-items: center; gap: 10px; }
+.scenario .sc-emoji { font-size: 30px; width: 48px; height: 48px; display: grid; place-items: center;
+  background: var(--yellow); border: 2px solid var(--ink); border-radius: 50%; }
+.scenario .sc-name { font-weight: 900; font-size: 18px; }
+.scenario .sc-role { font-size: 12px; color: var(--muted); }
+.scenario .sc-title { font-weight: 800; }
+.scenario .sc-goal { font-size: 13px; line-height: 1.5; color: #333; }
+.cache-dot { font-size: 11px; font-weight: 700; color: var(--ok); }
+
+.briefing, .talk, .result { padding: 28px; }
+.back { margin-bottom: 12px; }
+.brief-head, .talk-head { display: flex; gap: 16px; align-items: center; }
+.brief-head h1 { margin: 6px 0 2px; font-size: 28px; font-weight: 900; }
+.avatar { width: 84px; height: 84px; flex-shrink: 0; font-size: 44px; display: grid; place-items: center;
+  background: var(--yellow); border: var(--line); border-radius: 50%; }
+.avatar.big { width: 96px; height: 96px; font-size: 52px; }
+.avatar.speaking { animation: pulse .7s infinite alternate; }
+@keyframes pulse { to { transform: scale(1.06); box-shadow: 0 0 0 6px var(--yellow-soft); } }
+.brief-personality { line-height: 1.6; margin: 16px 0; }
+.brief-box { border: 2px solid var(--ink); border-radius: 10px; padding: 12px 16px; margin-bottom: 12px; }
+.brief-box h3 { margin: 0 0 6px; font-size: 15px; }
+.brief-box p { margin: 0; line-height: 1.6; }
+.brief-box.goal { background: var(--yellow-soft); }
+.checklist { list-style: none; padding: 0; margin: 8px 0 0; display: grid; gap: 4px; }
+.checklist li::before { content: "☐ "; }
+.checklist li.done::before { content: "☑ "; }
+.checklist li.done { font-weight: 800; }
+.rules { line-height: 1.7; padding-left: 20px; }
+.brief-actions { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 8px; }
+.btn-big { font-size: 18px; padding: 14px 22px; }
+
+.talk-who { flex: 1; }
+.talk-name { font-size: 22px; font-weight: 900; }
+.turn-count { font-weight: 900; border: 2px solid var(--ink); border-radius: 999px; padding: 4px 12px; }
+.bubble {
+  position: relative; margin: 18px 0 12px; padding: 18px 20px; font-size: 20px; font-weight: 700; line-height: 1.55;
+  border: var(--line); border-radius: 16px; background: var(--paper); box-shadow: var(--shadow); min-height: 70px;
+}
+.bubble::before {
+  content: ""; position: absolute; top: -14px; left: 40px; border: 12px solid transparent;
+  border-bottom-color: var(--ink); border-top: 0;
+}
+.status { display: flex; align-items: center; justify-content: center; gap: 14px; min-height: 76px;
+  border: 2px dashed var(--ink); border-radius: 12px; margin-bottom: 12px; font-weight: 800; font-size: 18px; }
+.status.listen { background: var(--yellow-soft); border-style: solid; }
+.status.urgent { background: #ffe3e3; }
+.countdown { font-size: 44px; font-weight: 900; width: 64px; height: 64px; display: grid; place-items: center;
+  border: var(--line); border-radius: 50%; background: var(--yellow); }
+.status.urgent .countdown { background: var(--danger); color: #fff; }
+.log { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; max-height: 280px; overflow: auto; }
+.log li { padding: 8px 12px; border-radius: 10px; border: 2px solid var(--ink); line-height: 1.5; max-width: 85%; }
+.log li.npc { background: #f3f3f3; }
+.log li.me { background: var(--yellow-soft); margin-left: auto; }
+.log li.nag { border-color: var(--danger); background: #fff0f0; }
+.log li small { display: block; color: var(--muted); font-size: 12px; font-weight: 600; }
+.talk-actions { display: flex; gap: 10px; margin-top: 14px; }
+
+.result h1 { font-size: 28px; font-weight: 900; margin: 12px 0 6px; }
+.result-badge { display: inline-block; font-weight: 900; font-size: 15px; border: var(--line); border-radius: 999px; padding: 6px 14px; }
+.result-badge.success { background: #d3f9d8; }
+.result-badge.partial { background: var(--yellow); }
+.result-badge.fail { background: #ffc9c9; }
+.progress-row { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center; margin: 12px 0; font-weight: 700; }
+.progress-row .bar { margin: 0; }
+
+/* 오른쪽: 상대 감정 */
+.gauge { display: grid; grid-template-columns: 52px 1fr 32px; gap: 8px; align-items: center; font-size: 13px; font-weight: 700; }
+.gauge .bar { margin: 0; }
+.gauge b { text-align: right; }
+.bar-fill.danger { background: var(--danger); }
+.bar-fill.yellow { background: var(--yellow); }
+.reason { font-size: 13px; line-height: 1.5; background: var(--yellow-soft); border-radius: 8px; padding: 8px 10px; margin: 10px 0 14px; }
+#state-panel .panel-head { margin-bottom: 6px; }
+#state-panel .panel-head h2 { font-size: 16px; }
+
+/* 하단 파형 */
+.band-body { position: relative; display: block; height: 72px; min-height: 0; overflow: hidden; }
+.band-body canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.band-empty { position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none; }
+.band-empty[hidden] { display: none; }

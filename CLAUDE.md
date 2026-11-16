@@ -25,6 +25,7 @@ maltoo/
 │  └─ db.py             # SQLite (sessions, turns, usage, baseline, world_state, rumors)
 ├─ scenarios/           # 시나리오 정의 JSON (인물, 상황, 목표, 첫마디, 재촉 대사, 소문 버전 첫마디)
 │  └─ world.json        # 조직도, 인물 간 관계
+├─ .runtime/           # 실시간 대사 음성 (커밋 안 함)
 ├─ static/
 │  ├─ index.html
 │  ├─ js/
@@ -82,10 +83,10 @@ maltoo/
 - [x] 오른쪽 비용 패널
 
 ### Phase 1 — 대화 루프
-- [ ] 시나리오 7종 JSON, 시나리오 선택 화면, 상황·목표 카드
-- [ ] TTS 재생 + 오디오 캐시(`assets/audio`) + 미리 생성 버튼
-- [ ] 녹음, VAD(3초 재촉 / 1.5초 종료), 재촉 2회 로직
-- [ ] 음성 인식 → 인물 연기 응답 (최대 5턴), 결말 판정
+- [x] 시나리오 7종 JSON, 시나리오 선택 화면, 상황·목표 카드
+- [x] TTS 재생 + 오디오 캐시(`assets/audio`) + 미리 생성 버튼
+- [x] 녹음, VAD(3초 재촉 / 1.5초 종료), 재촉 2회 로직
+- [x] 음성 인식 → 인물 연기 응답 (최대 5턴), 결말 판정
 
 ### Phase 2 — 톤 분석
 - [ ] baseline 측정(30초) 화면

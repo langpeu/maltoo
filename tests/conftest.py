@@ -50,17 +50,67 @@ class FakeOpenAI:
 
         class _Completions:
             def create(self_inner, **kw):
+                outer.calls.append(("chat", kw))
+                if kw.get("response_format"):
+                    import json
+
+                    class R(FakeResp):
+                        class _C:
+                            class message:
+                                content = json.dumps({
+                                    "reply": "그래서 결론이 뭔데?",
+                                    "emotion": {"anger": 70, "trust": 30, "defensiveness": 55},
+                                    "reason": "변명처럼 들려서 분노가 올랐다",
+                                    "goal_progress": 20,
+                                    "checklist_done": ["사실을 차분히 전달하기", "없는 항목"],
+                                    "ending": None,
+                                }, ensure_ascii=False)
+                        choices = [_C()]
+                    return R()
                 return FakeResp()
 
         class _Chat:
             completions = _Completions()
 
+        class _Bin:
+            def read(self_inner):
+                return b"ID3fake-mp3"
+
+        class _Speech:
+            def create(self_inner, **kw):
+                outer.calls.append(("tts", kw))
+                return _Bin()
+
+        class _Tr:
+            text = "상무님, 2주 전에 위험 보고를 드렸습니다."
+            usage = None
+
+        class _Transcriptions:
+            def create(self_inner, **kw):
+                outer.calls.append(("stt", kw))
+                return _Tr()
+
+        class _Audio:
+            speech = _Speech()
+            transcriptions = _Transcriptions()
+
+        self.calls = FAKE_CALLS
         self.models = _Models()
         self.chat = _Chat()
+        self.audio = _Audio()
+
+
+FAKE_CALLS: list = []
 
 
 @pytest.fixture()
-def fake_openai(monkeypatch):
-    from app import openai_client
+def fake_openai(monkeypatch, tmp_path):
+    from app import cache, openai_client
 
+    FAKE_CALLS.clear()
     monkeypatch.setattr(openai_client, "make_client", lambda key: FakeOpenAI(key))
+    # 테스트가 실제 assets/audio 를 건드리지 않도록 캐시 경로를 임시 폴더로
+    monkeypatch.setattr(cache, "AUDIO_DIR", tmp_path / "audio")
+    monkeypatch.setattr(cache, "MANIFEST", tmp_path / "audio" / "manifest.json")
+    monkeypatch.setattr(cache, "RUNTIME_DIR", tmp_path / "runtime")
+    return FAKE_CALLS

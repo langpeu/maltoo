@@ -53,6 +53,34 @@ class Caller:
                      meta={"prompt_tokens": u.prompt_tokens, "completion_tokens": u.completion_tokens})
         return resp.choices[0].message.content or ""
 
+    # ---- 유료: 음성 합성 ----
+    def tts(self, text: str, voice: str, instructions: str) -> bytes:
+        m = model("tts")
+        cost = usage.cost_tts(m, text)
+        self._check(cost)
+        with translate_errors():
+            resp = self.client.audio.speech.create(
+                model=m, voice=voice, input=text, instructions=instructions, response_format="mp3")
+        data = resp.read() if hasattr(resp, "read") else resp.content
+        usage.record(self.key_id, "tts", m, cost, self.session_id, meta={"chars": len(text)})
+        return data
+
+    # ---- 유료: 음성 인식 ----
+    def transcribe(self, audio: bytes, filename: str, seconds: float) -> str:
+        m = model("transcribe")
+        self._check(usage.cost_transcribe(m, seconds=max(seconds, 1.0)))
+        with translate_errors():
+            resp = self.client.audio.transcriptions.create(
+                model=m, file=(filename, audio), language="ko")
+        text = resp if isinstance(resp, str) else getattr(resp, "text", "")
+        u = getattr(resp, "usage", None)
+        in_tok = getattr(u, "input_tokens", 0) or 0
+        out_tok = getattr(u, "output_tokens", 0) or 0
+        cost = usage.cost_transcribe(m, seconds=seconds, input_tokens=in_tok, output_tokens=out_tok)
+        usage.record(self.key_id, "transcribe", m, cost, self.session_id,
+                     meta={"seconds": round(seconds, 1), "input_tokens": in_tok, "output_tokens": out_tok})
+        return (text or "").strip()
+
     def _check(self, estimate: float) -> None:
         try:
             usage.check_limit(self.key_id, estimate)
@@ -64,6 +92,12 @@ class Caller:
 def make_client(api_key: str) -> OpenAI:
     """테스트에서 교체(monkeypatch)할 수 있도록 분리."""
     return OpenAI(api_key=api_key, timeout=30, max_retries=1)
+
+
+def get_optional_caller(request: Request) -> Caller | None:
+    """캐시 재생처럼 키가 없어도 되는 요청용."""
+    key = (request.headers.get(KEY_HEADER) or "").strip()
+    return Caller(key, request.headers.get(SESSION_HEADER)) if key else None
 
 
 def get_caller(request: Request) -> Caller:

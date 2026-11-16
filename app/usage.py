@@ -148,7 +148,7 @@ def summary(key_id: str, session_id: str | None = None) -> dict:
             (key_id, month)).fetchone()["c"])
 
     lim = limits()
-    krw = float(get_config().get("krw_per_usd", 1400))
+    krw = float(get_config()["krw_per_usd"])
 
     def status(spent, limit):
         r = spent / limit if limit else 0
