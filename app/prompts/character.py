@@ -42,6 +42,19 @@ def difficulty_line(difficulty: str) -> str:
     return (d.get(difficulty) or d.get("normal") or {}).get("prompt", "")
 
 
+def speech_rule(s: dict) -> str:
+    """상사는 과장에게 반말, 부하는 존댓말. 인물별 예외는 scenarios.json 의 speech_level 로."""
+    level = s["character"].get("speech_level") or ("banmal" if s["kind"] == "boss" else "jondae")
+    if level == "banmal":
+        return ("너는 과장의 윗사람이다. 처음부터 끝까지 반말만 쓴다(~해, ~야, ~지?, ~하라고). "
+                "'~요', '~습니다' 같은 존댓말 어미는 한 번도 쓰지 않는다. 과장을 '과장', '김 과장', '자네' 등으로 부른다.")
+    if level == "jondae_sarcastic":
+        return ("너는 과장의 윗사람이지만 비꼬는 존댓말(~요)을 쓰는 사람이다. 처음부터 끝까지 '~요'체를 유지하고 반말로 바꾸지 않는다. "
+                "과장을 '과장님'이 아니라 '과장'이라고 부른다.")
+    return ("너는 과장의 아랫사람이다. 처음부터 끝까지 존댓말만 쓴다(~요, ~습니다). 반말은 한 번도 쓰지 않는다. "
+            "과장을 '과장님'이라고 부른다. 화가 나거나 억울해도 존댓말은 유지한다.")
+
+
 def system_prompt(s: dict, turn_index: int, difficulty: str = "normal", world_ctx: str = "") -> str:
     company = get_config()["company"]
     c = s["character"]
@@ -50,7 +63,8 @@ def system_prompt(s: dict, turn_index: int, difficulty: str = "normal", world_ct
     return f"""너는 롤플레이 연습 앱의 상대 역할이다. 사용자가 직장 갈등 대화를 연습한다.
 
 [회사] {company['name']} — {company['description']}. 협동로봇, 감속기, 로봇 부품을 만든다.
-[사용자] 이 회사의 과장. 너에게 사용자는 {'부하 직원' if s['kind'] == 'boss' else '상사'}다. 호칭은 상황에 맞게 '과장', '과장님', '자네' 등을 쓴다.
+[사용자] 이 회사의 과장. 너에게 사용자는 {'부하 직원' if s['kind'] == 'boss' else '상사'}다.
+[말 높이 — 반드시 지킨다] {speech_rule(s)}
 [너의 역할] {c['name']} ({c['age']}세, {c['gender']}, {c['role']}) — 사용자의 {relation}
 - 성격: {c['personality']}
 - 말투: {c['speech_style']}
@@ -98,6 +112,7 @@ def build_messages(s: dict, history: list[dict], user_text: str, turn_index: int
         content += "\n\n[목소리 톤 측정]\n" + describe_tone(tone)
     if face:
         content += "\n\n[표정 측정 — 상대(너)가 보고 있는 과장의 얼굴]\n" + describe_face(face)
+    content += "\n\n[말 높이] " + ("반말만" if (s["character"].get("speech_level") or ("banmal" if s["kind"] == "boss" else "jondae")) == "banmal" else "존댓말(~요)만") + " 쓴다. 이전 대사와 같은 말 높이를 유지한다."
     content += ("\n\n[출력 형식] 위 과장의 말에 대해, 시스템에 적힌 JSON 형식 전체로만 답한다. "
                 "reply 하나만 쓰지 말고 emotion, reason, goal_progress(지금까지 기준), checklist_done(번호), "
                 "checkpoints, tone_feedback, mentions, team_issue_addressed, ending 을 모두 채운다.")

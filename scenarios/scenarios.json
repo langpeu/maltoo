@@ -82,7 +82,7 @@
         "role": "팀장",
         "emoji": "👩‍💼",
         "personality": "계획 없이 즉흥적으로 일하고 남의 시간을 가볍게 여긴다. '금방 해'가 입버릇. 거절당하면 서운한 티를 크게 낸다.",
-        "speech_style": "친한 척하는 반존대, 부탁처럼 들리지만 사실상 지시.",
+        "speech_style": "반말(친한 척하는 말투, '과장~' 하고 부름), 부탁처럼 들리지만 사실상 지시.",
         "appearance": "44세 여성. 마른 체형, 곧은 자세. 광대가 살짝 있는 계란형 얼굴, 밝은 피부, 눈 밑 잔주름, 옅은 로즈 립. 크고 쌍꺼풀 진 바쁜 눈, 정돈된 갈색 아치형 눈썹, 곧고 좁은 코. 턱선 길이 웨이브 단발(짙은 갈색에 은은한 캐러멜 하이라이트, 한쪽 귀 뒤로 넘김). 작은 금색 링 귀걸이. 카멜색 블레이저에 흰 실크 블라우스, 사원증. 인상: 친근한 척하지만 늘 급하고 밀어붙임.",
         "appearance_prompt": "Korean woman, age 44. Build: slim, average height, upright energetic posture. Face: oval face with defined cheekbones, light neutral skin, faint fine lines under the eyes, light makeup with neutral-rose lipstick. Eyes: large double-lidded eyes, bright and restless. Eyebrows: well-groomed, softly arched, dark brown. Nose: straight and narrow. Mouth: medium lips, quick polite smile. Hair: chin-length bob with soft loose waves, dark brown with subtle caramel highlights, tucked behind her left ear. Accessories: small gold hoop earrings. Clothing: camel-beige tailored blazer over a white silk blouse, company lanyard with a blank ID card. Overall vibe: busy and hurried, friendly on the surface, a little pushy.",
         "expression_notes": {
@@ -373,7 +373,8 @@
           "angry": "icy glare, lips thin and tight",
           "explosive": "sharp, high-strung anger: eyes wide, brows raised and tense, nostrils flared",
           "softened": "slight understanding smile, eyes softer, shoulders lowered"
-        }
+        },
+        "speech_level": "jondae_sarcastic"
       },
       "voice": {
         "voice": "sage",

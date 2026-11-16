@@ -254,3 +254,14 @@ def test_checklist_other_shapes():
     assert character.match_checklist([True, False, True], cl) == [cl[0], cl[2]]
     assert character.match_checklist([{"item": cl[1], "done": True}, {"index": 3, "done": False}], cl) == [cl[1]]
     assert character.match_checklist(["1) 내 기여를 구체적으로 밝히기"], cl) == [cl[0]]
+
+
+def test_speech_level_rule():
+    """상사는 반말, 부하는 존댓말을 시스템 프롬프트와 매 턴 안내에 명시 (한 팀장은 비꼬는 존댓말 예외)."""
+    from app import scenarios
+    from app.prompts import character
+    for sid, word in [("kim", "반말만"), ("choi", "반말만"), ("park", "반말만"), ("lee", "존댓말"), ("jung", "존댓말"), ("yoon", "존댓말"), ("han", "존댓말")]:
+        s = scenarios.get(sid)
+        msgs = character.build_messages(s, [], "네", 1)
+        assert "[말 높이 — 반드시 지킨다]" in msgs[0]["content"]
+        assert word in msgs[-1]["content"], sid
