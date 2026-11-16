@@ -207,5 +207,16 @@
       "normal": 1,
       "strong": 1.5
     }
+  },
+  "elevenlabs": {
+    "_comment": "고정 대사만 ElevenLabs로 미리 만들어 assets/audio/custom 에 저장 (실시간 대사는 OpenAI). 키는 브라우저에만 저장, X-ElevenLabs-Key 헤더로 전달",
+    "api_base": "https://api.elevenlabs.io",
+    "model_id": "eleven_v4",
+    "output_format": "mp3_44100_128",
+    "language_code": "ko",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    }
   }
 }

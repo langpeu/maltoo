@@ -27,8 +27,8 @@ export class ApiError extends Error {
   }
 }
 
-export async function api(path, { method = "GET", body, key } = {}) {
-  const headers = { "X-Session-Id": sessionId };
+export async function api(path, { method = "GET", body, key, headers: extra } = {}) {
+  const headers = { "X-Session-Id": sessionId, ...(extra || {}) };
   const k = key ?? keyStore.get();
   if (k) headers["X-OpenAI-Key"] = k;
   if (body !== undefined) headers["Content-Type"] = "application/json";

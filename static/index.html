@@ -346,6 +346,26 @@
   </dialog>
 
   <!-- 설정 -->
+  <dialog class="modal modal-wide" id="eleven-modal">
+    <div class="modal-body">
+      <h2>🎙 ElevenLabs 고정 대사 만들기</h2>
+      <p class="note">만든 음성은 <code>assets/audio/custom/</code>에 저장되어 OpenAI 음성 대신 재생됩니다. GitHub에 커밋하면 다른 사람도 그대로 씁니다.
+        크레딧은 보내는 글자 수(오디오 태그 포함)만큼 듭니다. 실시간 대사는 OpenAI 그대로입니다.</p>
+      <div class="field-row">
+        <label class="field" style="flex:1"><span>ElevenLabs API 키 (이 브라우저에만 저장)</span>
+          <input type="password" id="eleven-key" autocomplete="off" placeholder="sk_..."></label>
+        <button type="button" class="btn" id="btn-eleven-voices">목소리 불러오기</button>
+      </div>
+      <p class="note" id="eleven-summary">확인 중…</p>
+      <div id="eleven-list"></div>
+      <p class="error" id="eleven-error" hidden></p>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" id="btn-eleven-stop" hidden>멈추기</button>
+        <button type="button" class="btn btn-primary" id="btn-eleven-close">닫기</button>
+      </div>
+    </div>
+  </dialog>
+
   <dialog class="modal" id="settings-modal">
     <form method="dialog" class="modal-body" id="settings-form">
       <h2>설정</h2>
@@ -374,6 +394,11 @@
           <button type="button" data-fx="strong">강하게</button>
         </div>
         <p class="note">화가 날수록 상대 목소리를 더 크고 빠르게, 누그러지면 작고 느리게 재생합니다. 스피커를 쓰면 이어폰을 권장합니다.</p>
+      </section>
+      <section class="settings-section">
+        <h3>🎙 ElevenLabs 고정 대사</h3>
+        <p class="note">첫마디·재촉·추임새·결말 음성을 ElevenLabs로 만들어 넣습니다. 실시간 대사는 계속 OpenAI입니다.</p>
+        <button type="button" class="btn" id="btn-eleven-open">열기</button>
       </section>
       <section class="settings-section">
         <h3>평소 목소리</h3>

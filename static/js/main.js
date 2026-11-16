@@ -7,6 +7,7 @@ import { drawLandmarks, FaceCam } from "./face/camera.js";
 import { computeFaceBaseline, CP, FaceTracker, PHASE_LABEL } from "./face/metrics.js";
 import { renderCost, resetCost } from "./ui/cost-panel.js";
 import { setVoiceFxConfig, setVoiceFxStrength, voiceFxStrength } from "./audio/voicefx.js";
+import { initEleven } from "./ui/eleven.js";
 import {
   exprFromEmotion, framesOf, hasPhoto, setBreathing, setExpression, setMouth, setPortraitFrames, setSpeaking, showCharacter,
 } from "./ui/portrait.js";
@@ -1253,6 +1254,7 @@ document.querySelectorAll("#voicefx-pick button").forEach((b) => b.addEventListe
   renderVoiceFx();
 }));
 renderVoiceFx();
+initEleven();
 function startApp() {
   if (!keyStore.get()) openKeyModal();
   else { refreshUsage(); checkSetup().catch(() => {}); }

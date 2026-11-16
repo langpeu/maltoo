@@ -1,0 +1,62 @@
+{
+  "_comment": "ElevenLabs 고정 대사 대본. lines 에 있으면 그 대본(오디오 태그 포함)을 그대로 읽고, 없으면 [mood_tags[감정]] + 원래 대사로 만든다(평온은 태그 없음). 말투는 목소리 자체가 담당하고, 태그는 크레딧을 아끼려고 감정만 짧게. base_tag 를 쓰려면 use_base_tag=true. 화면 글자는 scenarios.json 의 원래 대사.",
+  "mood_tags": {
+    "calm": "",
+    "annoyed": "irritated",
+    "angry": "angry",
+    "explosive": "shouting, furious",
+    "softened": "softer, relaxed",
+    "resigned": "quiet, giving up",
+    "hurt": "hurt, sulking"
+  },
+  "characters": {
+    "kim": {
+      "base_tag": "sleazy, raspy, smug drawl",
+      "lines": {
+        "opening": "[smug, raspy, lazy drawl] 아~ 그 보고서 말이야. 방향은 내가 다~ 잡아준 거니까… 임원 보고는 내가 할게. [wheezy sleazy chuckle] 흐흐, [sneering] 자네는 자료만 깔끔~하게 넘겨.",
+        "nag1": "[snorts, irritated and impatient] 흥, 왜 말이 없어? 뭐… 불만 있어?",
+        "nag2": "[cold quiet menace, very slow, raspy breath] 하아… 자네, 요즘… 태도가 좀 그렇다?",
+        "react_angry_0": "[offended, suddenly louder] 뭐? 지금… 나한테 하는 소리야?",
+        "react_angry_1": "[disbelieving scoff] 허… [long annoyed exhale] 참.",
+        "react_angry_2": "[warning, fake smile, slow] 자네… 말이 좀 세다?",
+        "react_neutral_0": "[bored, unimpressed hum] 음…",
+        "react_neutral_1": "[lazy, dismissive] 그래서?",
+        "react_neutral_2": "[skeptical, drawling] 흠~ 계속해 봐.",
+        "react_soft_0": "[placating, amused] 그래, 그래~",
+        "react_soft_1": "[grudging, reluctant] 음… 일리는 있네.",
+        "react_soft_2": "[greasy chuckle, loosened up] 허허, 알았어 알았어.",
+        "end_success": "[grudgingly persuaded, smug] 흐흐… 좋아. 이번 보고는 자네랑 같이 들어가지. 준비 잘~ 해 와.",
+        "end_partial": "[evasive, waving it off] 일단… 알았으니까, 다음에 다시 얘기하자고.",
+        "end_fail": "[fed up, loud and harsh] 됐어! 자네는 자료나 넘겨. [cold] 이만… 나가봐.",
+        "end_noresp": "[mocking scoff] 허, 말이 없는 걸 보니… 내 말대로 하겠다는 거지? [nasty chuckle] 흐흐, 나가봐.",
+        "rumor_0": "[sarcastic, fake friendly, icy] 자네~ 요즘 내 얘기를 하고 다닌다며? [cold] …다 들었어.",
+        "rumor_1": "[sneering, slow and probing] 어디서 들었는데 말이야… 내가 공을 가로챈다고 했다며? 응?"
+      }
+    },
+    "park": {
+      "base_tag": "hurried, overly familiar, talking fast",
+      "lines": {}
+    },
+    "choi": {
+      "base_tag": "gruff, barking executive, impatient",
+      "lines": {}
+    },
+    "lee": {
+      "base_tag": "defensive, sulky, whiny",
+      "lines": {}
+    },
+    "jung": {
+      "base_tag": "cold, flat, cynical",
+      "lines": {}
+    },
+    "han": {
+      "base_tag": "moody, sarcastic, sharp",
+      "lines": {}
+    },
+    "yoon": {
+      "base_tag": "exhausted, hoarse, voice shaking",
+      "lines": {}
+    }
+  },
+  "use_base_tag": false
+}
