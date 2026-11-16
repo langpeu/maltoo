@@ -100,6 +100,10 @@ def build_messages(s: dict, history: list[dict], user_text: str, turn_index: int
 
 
 def _clamp(v, lo=0, hi=100, default=50):
+    if isinstance(v, str):  # "40%", "약 40" 같은 답도 숫자로
+        import re
+        m = re.search(r"-?\d+(?:\.\d+)?", v)
+        v = m.group(0) if m else None
     try:
         return max(lo, min(hi, int(round(float(v)))))
     except (TypeError, ValueError):
@@ -148,7 +152,7 @@ def goal_state(s: dict, gpt_progress: int, done: list[str], prev_done: list[str]
 
 
 def parse(raw: str, s: dict, turn_index: int, user_text: str = "", valid_ids: set | None = None,
-          prev_done: list[str] | None = None) -> dict:
+          prev_done: list[str] | None = None, prev_progress: int = 0) -> dict:
     try:
         data = json.loads(raw)
     except json.JSONDecodeError:
@@ -163,8 +167,13 @@ def parse(raw: str, s: dict, turn_index: int, user_text: str = "", valid_ids: se
         ending = None
     if ending is None and turn_index >= MAX_TURNS:
         ending = "partial"
-    done = match_checklist(data.get("checklist_done"), s["checklist"])
-    progress, done = goal_state(s, _clamp(data.get("goal_progress"), default=0), done, prev_done, ending)
+    # 다른 모양으로 답해도 받아준다: {"goal": {"progress", "checklist"}}
+    goal = data.get("goal") if isinstance(data.get("goal"), dict) else {}
+    raw_p = data.get("goal_progress", goal.get("progress"))
+    raw_c = data.get("checklist_done", goal.get("checklist") or goal.get("checklist_done"))
+    done = match_checklist(raw_c if isinstance(raw_c, list) else [raw_c] if raw_c else [], s["checklist"])
+    progress, done = goal_state(s, max(_clamp(raw_p, default=0), _clamp(prev_progress, default=0)),
+                                done, prev_done, ending)
     cps = []
     for c in (data.get("checkpoints") or [])[:3]:
         if not isinstance(c, dict) or c.get("type") not in CP_TYPES:
@@ -182,6 +191,7 @@ def parse(raw: str, s: dict, turn_index: int, user_text: str = "", valid_ids: se
         },
         "reason": (data.get("reason") or "").strip(),
         "goal_progress": progress,
+        "goal_debug": {"raw_progress": raw_p, "raw_checklist": raw_c},
         "checklist_done": done,
         "checkpoints": cps,
         "mentions": _mentions(data.get("mentions"), valid_ids or set(), s["id"]),

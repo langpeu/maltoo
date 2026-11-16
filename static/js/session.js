@@ -199,12 +199,14 @@ export class Conversation {
           body: { scenario_id: this.s.id, history: prior, user_text: myText, nag_count: nag, tone, face,
                   difficulty: this.difficulty, session_id: this.sessionId,
                   goal_done: (this.lastResult && this.lastResult.checklist_done) || [],
+                  goal_progress: (this.lastResult && this.lastResult.goal_progress) || 0,
                   prev_emotion: this.prevEmotion, game_session: this.gameSession },
         });
         this.guard();
         await reacting;
         this.guard();
         this.lastResult = r;
+        console.info("[목표]", r.goal_progress, r.checklist_done, r.goal_debug);
         meEntry.checkpoints = r.checkpoints || [];
         this.prevEmotion = { anger: r.emotion.anger, trust: r.emotion.trust };
         this.lastEmotion = r.emotion;

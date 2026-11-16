@@ -211,3 +211,17 @@ def test_goal_checklist_matching_and_carry(client, fake_openai):
     assert d["checklist_done"] == [cl[0], cl[1]] and d["goal_progress"] >= 66
     sys_prompt = [kw for k, kw in fake_openai if k == "chat"][-1]["messages"][0]["content"]
     assert "1) 내 기여를 구체적으로 밝히기" in sys_prompt and "[이미 달성한 체크리스트]" in sys_prompt
+
+
+def test_goal_progress_robust():
+    """'40%' 같은 문자열, goal 객체 모양, 직전 달성도 유지."""
+    from app.prompts import character
+    from app import scenarios
+    import json
+    s = scenarios.get("kim")
+    r = character.parse(json.dumps({"reply": "음", "goal_progress": "40%"}), s, 1)
+    assert r["goal_progress"] == 40
+    r = character.parse(json.dumps({"reply": "음", "goal": {"progress": 30, "checklist": [1]}}), s, 1)
+    assert r["checklist_done"] == [s["checklist"][0]] and r["goal_progress"] >= 33
+    r = character.parse(json.dumps({"reply": "음", "goal_progress": 10}), s, 2, prev_progress=50)
+    assert r["goal_progress"] == 50

@@ -107,6 +107,7 @@ class TurnIn(BaseModel):
     prev_emotion: dict | None = None   # 직전 턴 상대 감정 (게임 수치 계산용)
     game_session: dict | None = None   # 이번 판 누적 감액 {cut, recovered}
     goal_done: list[str] = []          # 지금까지 달성한 체크리스트 항목 (유지용)
+    goal_progress: int = 0             # 직전 턴 목표 달성도 (떨어지지 않게)
 
 
 @router.post("/turn")
@@ -125,7 +126,10 @@ def turn(body: TurnIn, caller: Caller = Depends(get_caller)):
     msgs = character.build_messages(s, [h.model_dump() for h in body.history], user_text, turn_index, body.tone, body.face,
                                      body.difficulty, ctx)
     raw = caller.chat(msgs, max_tokens=700, feature="chat", response_format={"type": "json_object"})
-    parsed = character.parse(raw, s, turn_index, body.user_text.strip(), set(world.names()), body.goal_done)
+    parsed = character.parse(raw, s, turn_index, body.user_text.strip(), set(world.names()), body.goal_done,
+                             body.goal_progress)
+    print(f"[목표] {s['id']} {turn_index}턴: gpt={parsed['goal_debug']} → {parsed['goal_progress']}% {parsed['checklist_done']}",
+          flush=True)
     game = world.apply_turn(s, parsed, body.prev_emotion, body.tone, body.nag_count, body.game_session,
                             seed=f"{body.session_id}:{turn_index}")
     if game.get("ending_override"):
