@@ -1,0 +1,1163 @@
+{
+  "023a2b7e11e8dcf6575f": {
+    "scenario": "choi",
+    "line": "end_success",
+    "text": "…알았어. 보고했던 건 내가 놓쳤군. 대책 정리해서 오후에 다시 보자.",
+    "voice": "ash",
+    "instructions": "50대 중반 한국 남성 임원. 화가 나서 언성을 높이고 빠르게 몰아붙인다. 짧고 거칠게 끊어 말한다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:41:27"
+  },
+  "04b83d5abd918a39879f": {
+    "scenario": "park",
+    "line": "rumor_1",
+    "text": "어디서 들었는데, 내가 일정 무리하게 잡는다고 했다며?",
+    "voice": "coral",
+    "instructions": "40대 중반 한국 여성 팀장. 바쁘고 급한 말투로 빠르게 말한다. 친한 척하지만 은근히 밀어붙인다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T13:50:32"
+  },
+  "08aebe18d63843e98164": {
+    "scenario": "yoon",
+    "line": "nag2",
+    "text": "역시 제가 그냥 그만두는 게 낫겠죠.",
+    "voice": "verse",
+    "instructions": "30대 중반 한국 남성 대리. 지치고 피곤한 목소리. 감정이 북받쳐 떨리고 방어적이다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:18:49"
+  },
+  "0ad2b26e281bccc8c3f2": {
+    "scenario": "kim",
+    "line": "end_fail",
+    "text": "됐어. 자네는 자료나 넘겨. 이만 나가봐.",
+    "voice": "onyx",
+    "instructions": "50대 초반 한국 남성 부장. 느긋하고 능글맞은 톤이지만 은근히 압박하는 말투. 말끝을 낮게 끈다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:40:49"
+  },
+  "0cfba810e5f7b039db25": {
+    "scenario": "lee",
+    "line": "react_soft_0",
+    "text": "아… 네.",
+    "voice": "nova",
+    "instructions": "20대 후반 한국 여성 사원. 억울하고 방어적인 톤. 말끝을 흐리고 살짝 투덜거린다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:41:51"
+  },
+  "0d1de8b38ce675ad8c47": {
+    "scenario": "park",
+    "line": "react_soft_1",
+    "text": "응, 그럴 수 있지.",
+    "voice": "coral",
+    "instructions": "40대 중반 한국 여성 팀장. 바쁘고 급한 말투로 빠르게 말한다. 친한 척하지만 은근히 밀어붙인다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:41:01"
+  },
+  "0d67db5d7433c2d9eeae": {
+    "scenario": "yoon",
+    "line": "end_resign",
+    "text": "죄송합니다. 그냥 그만두는 게 모두를 위한 것 같아요.",
+    "voice": "verse",
+    "instructions": "30대 중반 한국 남성 대리. 지치고 피곤한 목소리. 감정이 북받쳐 떨리고 방어적이다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:43:00"
+  },
+  "0e01f59b8b3d63e07e07": {
+    "scenario": "jung",
+    "line": "end_fail",
+    "text": "그럼 다른 분께 맡기시죠. 저는 못 합니다.",
+    "voice": "echo",
+    "instructions": "30대 초반 한국 남성 주임. 차갑고 냉소적인 톤. 감정 없이 또박또박 따지듯 말한다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:42:17"
+  },
+  "109d5b237dd139e1c3ad": {
+    "scenario": "kim",
+    "line": "end_success",
+    "text": "좋아. 이번 보고는 자네랑 같이 들어가지. 준비 잘해 와.",
+    "voice": "onyx",
+    "instructions": "50대 초반 한국 남성 부장. 느긋하고 능글맞은 톤이지만 은근히 압박하는 말투. 말끝을 낮게 끈다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:40:45"
+  },
+  "121149627fed394cf2fd": {
+    "scenario": "jung",
+    "line": "end_partial",
+    "text": "일단 검토는 해 보겠습니다.",
+    "voice": "echo",
+    "instructions": "30대 초반 한국 남성 주임. 차갑고 냉소적인 톤. 감정 없이 또박또박 따지듯 말한다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:42:15"
+  },
+  "156c0d8b2be94e8a93a0": {
+    "scenario": "choi",
+    "line": "end_noresp",
+    "text": "대답도 못 하면서 무슨 과장이야. 나가!",
+    "voice": "ash",
+    "instructions": "50대 중반 한국 남성 임원. 화가 나서 언성을 높이고 빠르게 몰아붙인다. 짧고 거칠게 끊어 말한다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:41:34"
+  },
+  "19f47e5ff3b7570f0891": {
+    "scenario": "yoon",
+    "line": "react_angry_0",
+    "text": "…제가 놀았다는 거예요?",
+    "voice": "verse",
+    "instructions": "30대 중반 한국 남성 대리. 지치고 피곤한 목소리. 감정이 북받쳐 떨리고 방어적이다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:42:41"
+  },
+  "1d3747db9cf26ab71f4a": {
+    "scenario": "kim",
+    "line": "nag1",
+    "text": "왜 말이 없어? 뭐 불만 있어?",
+    "voice": "onyx",
+    "instructions": "50대 초반 한국 남성 부장. 느긋하고 능글맞은 톤이지만 은근히 압박하는 말투. 말끝을 낮게 끈다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:18:13"
+  },
+  "1e0b141c6475742a7451": {
+    "scenario": "yoon",
+    "line": "react_neutral_0",
+    "text": "…네.",
+    "voice": "verse",
+    "instructions": "30대 중반 한국 남성 대리. 지치고 피곤한 목소리. 감정이 북받쳐 떨리고 방어적이다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:42:45"
+  },
+  "1e6a9d6b449ffd862d42": {
+    "scenario": "lee",
+    "line": "opening",
+    "text": "아, 그거요… 다른 팀에서 자료를 늦게 줘서요. 근데 솔직히 그 일정은 처음부터 좀 무리였어요.",
+    "voice": "nova",
+    "instructions": "20대 후반 한국 여성 사원. 억울하고 방어적인 톤. 말끝을 흐리고 살짝 투덜거린다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:18:28"
+  },
+  "1f6350a8d4a26584ee96": {
+    "scenario": "choi",
+    "line": "react_neutral_1",
+    "text": "요점만 말해.",
+    "voice": "ash",
+    "instructions": "50대 중반 한국 남성 임원. 화가 나서 언성을 높이고 빠르게 몰아붙인다. 짧고 거칠게 끊어 말한다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:41:18"
+  },
+  "1f99c674a67a8d4d7afb": {
+    "scenario": "choi",
+    "line": "react_angry_2",
+    "text": "변명은 됐고!",
+    "voice": "ash",
+    "instructions": "50대 중반 한국 남성 임원. 화가 나서 언성을 높이고 빠르게 몰아붙인다. 짧고 거칠게 끊어 말한다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:41:14"
+  },
+  "20bb7b3bb59e2f34f347": {
+    "scenario": "han",
+    "line": "react_neutral_1",
+    "text": "네, 계속하세요.",
+    "voice": "sage",
+    "instructions": "40대 초반 한국 여성 팀장. 짜증 섞인 한숨과 비꼬는 톤. 말이 날카롭고 차갑다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:42:29"
+  },
+  "225cbfc5cebcae4dcec1": {
+    "scenario": "kim",
+    "line": "opening",
+    "text": "아, 그 보고서 말이야. 방향은 내가 다 잡아준 거니까 임원 보고는 내가 할게. 자네는 자료만 깔끔하게 넘겨.",
+    "voice": "onyx",
+    "instructions": "50대 초반 한국 남성 부장. 느긋하고 능글맞은 톤이지만 은근히 압박하는 말투. 말끝을 낮게 끈다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:18:11"
+  },
+  "250da2d41659376a49a7": {
+    "scenario": "jung",
+    "line": "react_neutral_0",
+    "text": "그래서요?",
+    "voice": "echo",
+    "instructions": "30대 초반 한국 남성 주임. 차갑고 냉소적인 톤. 감정 없이 또박또박 따지듯 말한다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:42:05"
+  },
+  "28c269b308c928914b73": {
+    "scenario": "lee",
+    "line": "rumor_1",
+    "text": "저에 대해 안 좋게 말씀하셨다는 얘기 들었어요.",
+    "voice": "nova",
+    "instructions": "20대 후반 한국 여성 사원. 억울하고 방어적인 톤. 말끝을 흐리고 살짝 투덜거린다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T13:50:39"
+  },
+  "2f3a361c7e862b92a73d": {
+    "scenario": "kim",
+    "line": "react_neutral_1",
+    "text": "그래서?",
+    "voice": "onyx",
+    "instructions": "50대 초반 한국 남성 부장. 느긋하고 능글맞은 톤이지만 은근히 압박하는 말투. 말끝을 낮게 끈다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:40:37"
+  },
+  "2fa042e8a2ed1e26f5b6": {
+    "scenario": "han",
+    "line": "opening",
+    "text": "또요? 지난주에도 조퇴했잖아요. 다른 사람들은 사정이 없어서 남아 있는 줄 알아요?",
+    "voice": "sage",
+    "instructions": "40대 초반 한국 여성 팀장. 짜증 섞인 한숨과 비꼬는 톤. 말이 날카롭고 차갑다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:18:39"
+  },
+  "3062f7e078125dfc6aa3": {
+    "scenario": "han",
+    "line": "react_soft_2",
+    "text": "알겠어요.",
+    "voice": "sage",
+    "instructions": "40대 초반 한국 여성 팀장. 짜증 섞인 한숨과 비꼬는 톤. 말이 날카롭고 차갑다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:42:33"
+  },
+  "311d31899f169a6e2b2c": {
+    "scenario": "kim",
+    "line": "react_soft_0",
+    "text": "그래, 그래.",
+    "voice": "onyx",
+    "instructions": "50대 초반 한국 남성 부장. 느긋하고 능글맞은 톤이지만 은근히 압박하는 말투. 말끝을 낮게 끈다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:40:40"
+  },
+  "33df2cc8322a659ee266": {
+    "scenario": "kim",
+    "line": "end_noresp",
+    "text": "말이 없는 걸 보니 내 말대로 하겠다는 거지? 나가봐.",
+    "voice": "onyx",
+    "instructions": "50대 초반 한국 남성 부장. 느긋하고 능글맞은 톤이지만 은근히 압박하는 말투. 말끝을 낮게 끈다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:40:50"
+  },
+  "3442dc197eadb7c7571b": {
+    "scenario": "han",
+    "line": "rumor_1",
+    "text": "하… 제 험담 하고 다니신다는 얘기 들었어요.",
+    "voice": "sage",
+    "instructions": "40대 초반 한국 여성 팀장. 짜증 섞인 한숨과 비꼬는 톤. 말이 날카롭고 차갑다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T13:50:46"
+  },
+  "3509a4352b037ce7f6b0": {
+    "scenario": "park",
+    "line": "end_noresp",
+    "text": "대답 없으면 하는 걸로 알게. 부탁해.",
+    "voice": "coral",
+    "instructions": "40대 중반 한국 여성 팀장. 바쁘고 급한 말투로 빠르게 말한다. 친한 척하지만 은근히 밀어붙인다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:41:10"
+  },
+  "3593659cd64e8ebaca10": {
+    "scenario": "lee",
+    "line": "end_success",
+    "text": "…알겠습니다. 내일 오후 3시까지 꼭 드릴게요. 앞으로는 중간에 미리 말씀드릴게요.",
+    "voice": "nova",
+    "instructions": "20대 후반 한국 여성 사원. 억울하고 방어적인 톤. 말끝을 흐리고 살짝 투덜거린다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:41:55"
+  },
+  "37f213d64289db25cb80": {
+    "scenario": "jung",
+    "line": "react_neutral_1",
+    "text": "네, 들어보죠.",
+    "voice": "echo",
+    "instructions": "30대 초반 한국 남성 주임. 차갑고 냉소적인 톤. 감정 없이 또박또박 따지듯 말한다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:42:06"
+  },
+  "3937417b0d478db6b745": {
+    "scenario": "jung",
+    "line": "opening",
+    "text": "그건 제 업무 범위가 아닌 것 같은데요. 그리고 그 방식은 비효율적이라, 하게 되더라도 제 방식대로 할게요.",
+    "voice": "echo",
+    "instructions": "30대 초반 한국 남성 주임. 차갑고 냉소적인 톤. 감정 없이 또박또박 따지듯 말한다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:18:33"
+  },
+  "3d0c339df1f01355a71b": {
+    "scenario": "choi",
+    "line": "opening",
+    "text": "이게 지금 말이 돼? 일정이 이렇게 밀릴 때까지 대체 뭐 하고 있었어?",
+    "voice": "ash",
+    "instructions": "50대 중반 한국 남성 임원. 화가 나서 언성을 높이고 빠르게 몰아붙인다. 짧고 거칠게 끊어 말한다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:18:22"
+  },
+  "3dabb1c914bf0573245d": {
+    "scenario": "yoon",
+    "line": "react_angry_1",
+    "text": "저도 힘들다고요.",
+    "voice": "verse",
+    "instructions": "30대 중반 한국 남성 대리. 지치고 피곤한 목소리. 감정이 북받쳐 떨리고 방어적이다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:42:43"
+  },
+  "3f9d58e76d187af38344": {
+    "scenario": "jung",
+    "line": "nag1",
+    "text": "답이 없으신 거 보니 제 말이 맞는 거죠?",
+    "voice": "echo",
+    "instructions": "30대 초반 한국 남성 주임. 차갑고 냉소적인 톤. 감정 없이 또박또박 따지듯 말한다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:18:35"
+  },
+  "40796bc2b17c08425d7e": {
+    "scenario": "jung",
+    "line": "nag2",
+    "text": "그럼 이 건은 없던 걸로 하겠습니다.",
+    "voice": "echo",
+    "instructions": "30대 초반 한국 남성 주임. 차갑고 냉소적인 톤. 감정 없이 또박또박 따지듯 말한다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:18:37"
+  },
+  "470762e1adbc00f82fa1": {
+    "scenario": "jung",
+    "line": "react_angry_1",
+    "text": "하, 네.",
+    "voice": "echo",
+    "instructions": "30대 초반 한국 남성 주임. 차갑고 냉소적인 톤. 감정 없이 또박또박 따지듯 말한다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:42:03"
+  },
+  "47ae286c7696139b5389": {
+    "scenario": "jung",
+    "line": "rumor_0",
+    "text": "제 얘기를 위에 하셨다고 들었습니다. 그런 식이면 저도 생각이 있습니다.",
+    "voice": "echo",
+    "instructions": "30대 초반 한국 남성 주임. 차갑고 냉소적인 톤. 감정 없이 또박또박 따지듯 말한다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T13:50:41"
+  },
+  "47d076a1221e81c1f42e": {
+    "scenario": "yoon",
+    "line": "react_soft_1",
+    "text": "네… 그렇게 말씀해 주시니.",
+    "voice": "verse",
+    "instructions": "30대 중반 한국 남성 대리. 지치고 피곤한 목소리. 감정이 북받쳐 떨리고 방어적이다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:42:50"
+  },
+  "49cbf857c358e7a5ce0b": {
+    "scenario": "park",
+    "line": "end_fail",
+    "text": "됐어, 내가 하지 뭐. 다들 바쁘다고 하니까.",
+    "voice": "coral",
+    "instructions": "40대 중반 한국 여성 팀장. 바쁘고 급한 말투로 빠르게 말한다. 친한 척하지만 은근히 밀어붙인다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:41:08"
+  },
+  "4a1a78e6c5e84f944684": {
+    "scenario": "kim",
+    "line": "react_angry_0",
+    "text": "뭐? 지금 나한테 하는 소리야?",
+    "voice": "onyx",
+    "instructions": "50대 초반 한국 남성 부장. 느긋하고 능글맞은 톤이지만 은근히 압박하는 말투. 말끝을 낮게 끈다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:40:30"
+  },
+  "4f3d08892e9c1d9b3b32": {
+    "scenario": "park",
+    "line": "react_angry_1",
+    "text": "하, 진짜…",
+    "voice": "coral",
+    "instructions": "40대 중반 한국 여성 팀장. 바쁘고 급한 말투로 빠르게 말한다. 친한 척하지만 은근히 밀어붙인다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:40:53"
+  },
+  "556dd7accc7a4f645025": {
+    "scenario": "park",
+    "line": "react_soft_0",
+    "text": "아, 그렇구나.",
+    "voice": "coral",
+    "instructions": "40대 중반 한국 여성 팀장. 바쁘고 급한 말투로 빠르게 말한다. 친한 척하지만 은근히 밀어붙인다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:41:00"
+  },
+  "5694cadafa9a227b50d7": {
+    "scenario": "jung",
+    "line": "rumor_1",
+    "text": "저 없는 자리에서 제 평가를 하셨다던데요.",
+    "voice": "echo",
+    "instructions": "30대 초반 한국 남성 주임. 차갑고 냉소적인 톤. 감정 없이 또박또박 따지듯 말한다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T13:50:43"
+  },
+  "58c9b8d666e8ca7ab416": {
+    "scenario": "choi",
+    "line": "react_angry_0",
+    "text": "뭐?!",
+    "voice": "ash",
+    "instructions": "50대 중반 한국 남성 임원. 화가 나서 언성을 높이고 빠르게 몰아붙인다. 짧고 거칠게 끊어 말한다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:41:10"
+  },
+  "5f897760e3621a47696e": {
+    "scenario": "lee",
+    "line": "react_neutral_1",
+    "text": "그래서요?",
+    "voice": "nova",
+    "instructions": "20대 후반 한국 여성 사원. 억울하고 방어적인 톤. 말끝을 흐리고 살짝 투덜거린다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:41:48"
+  },
+  "5fb70516bebde91a26f6": {
+    "scenario": "kim",
+    "line": "rumor_1",
+    "text": "어디서 들었는데 말이야, 내가 공을 가로챈다고 했다며?",
+    "voice": "onyx",
+    "instructions": "50대 초반 한국 남성 부장. 느긋하고 능글맞은 톤이지만 은근히 압박하는 말투. 말끝을 낮게 끈다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T13:50:29"
+  },
+  "6106c23cbe8517f0dd76": {
+    "scenario": "lee",
+    "line": "react_soft_2",
+    "text": "네, 알겠어요.",
+    "voice": "nova",
+    "instructions": "20대 후반 한국 여성 사원. 억울하고 방어적인 톤. 말끝을 흐리고 살짝 투덜거린다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:41:53"
+  },
+  "63d46b3de5abce47ee76": {
+    "scenario": "kim",
+    "line": "react_soft_1",
+    "text": "음, 일리는 있네.",
+    "voice": "onyx",
+    "instructions": "50대 초반 한국 남성 부장. 느긋하고 능글맞은 톤이지만 은근히 압박하는 말투. 말끝을 낮게 끈다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:40:42"
+  },
+  "6738d0af1ba7cb16b910": {
+    "scenario": "choi",
+    "line": "react_neutral_2",
+    "text": "음.",
+    "voice": "ash",
+    "instructions": "50대 중반 한국 남성 임원. 화가 나서 언성을 높이고 빠르게 몰아붙인다. 짧고 거칠게 끊어 말한다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:41:21"
+  },
+  "697872a6ca9a1158434d": {
+    "scenario": "yoon",
+    "line": "opening",
+    "text": "…죄송합니다. 근데 과장님, 요즘 애가 밤마다 아파서 거의 못 자요. 저 정말 최선 다하고 있는 거예요.",
+    "voice": "verse",
+    "instructions": "30대 중반 한국 남성 대리. 지치고 피곤한 목소리. 감정이 북받쳐 떨리고 방어적이다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:18:46"
+  },
+  "6ad03691336d317b55f7": {
+    "scenario": "han",
+    "line": "end_fail",
+    "text": "됐어요. 다들 사정 있는데 혼자만 특별한가 봐요.",
+    "voice": "sage",
+    "instructions": "40대 초반 한국 여성 팀장. 짜증 섞인 한숨과 비꼬는 톤. 말이 날카롭고 차갑다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:42:39"
+  },
+  "6e4799b427f6d77041ff": {
+    "scenario": "yoon",
+    "line": "end_success",
+    "text": "말씀 감사합니다, 과장님. 유연근무 신청하고, 자료는 이번 주 안에 다시 검토해서 드릴게요.",
+    "voice": "verse",
+    "instructions": "30대 중반 한국 남성 대리. 지치고 피곤한 목소리. 감정이 북받쳐 떨리고 방어적이다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:42:53"
+  },
+  "6ed09bc9fe7db4c21159": {
+    "scenario": "kim",
+    "line": "react_soft_2",
+    "text": "허허, 알았어.",
+    "voice": "onyx",
+    "instructions": "50대 초반 한국 남성 부장. 느긋하고 능글맞은 톤이지만 은근히 압박하는 말투. 말끝을 낮게 끈다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:40:43"
+  },
+  "6f765a3070ad84979873": {
+    "scenario": "han",
+    "line": "nag1",
+    "text": "왜 대답이 없어요? 할 말 없죠?",
+    "voice": "sage",
+    "instructions": "40대 초반 한국 여성 팀장. 짜증 섞인 한숨과 비꼬는 톤. 말이 날카롭고 차갑다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:18:42"
+  },
+  "6fdbed30a299e7893051": {
+    "scenario": "lee",
+    "line": "react_angry_2",
+    "text": "왜 저한테만 그러세요?",
+    "voice": "nova",
+    "instructions": "20대 후반 한국 여성 사원. 억울하고 방어적인 톤. 말끝을 흐리고 살짝 투덜거린다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:41:44"
+  },
+  "729ce0d0af026cd0b87f": {
+    "scenario": "park",
+    "line": "rumor_0",
+    "text": "과장, 나 없는 데서 내 얘기 했다며? 서운하네.",
+    "voice": "coral",
+    "instructions": "40대 중반 한국 여성 팀장. 바쁘고 급한 말투로 빠르게 말한다. 친한 척하지만 은근히 밀어붙인다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T13:50:30"
+  },
+  "72d0adb9661f9668fe4f": {
+    "scenario": "lee",
+    "line": "end_resign",
+    "text": "저… 이번 달까지만 다닐게요. 더는 못 하겠어요.",
+    "voice": "nova",
+    "instructions": "20대 후반 한국 여성 사원. 억울하고 방어적인 톤. 말끝을 흐리고 살짝 투덜거린다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:42:00"
+  },
+  "7312dab3fabd3fd8ff51": {
+    "scenario": "jung",
+    "line": "react_neutral_2",
+    "text": "흠.",
+    "voice": "echo",
+    "instructions": "30대 초반 한국 남성 주임. 차갑고 냉소적인 톤. 감정 없이 또박또박 따지듯 말한다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:42:07"
+  },
+  "750d88f9da45a4411794": {
+    "scenario": "yoon",
+    "line": "nag1",
+    "text": "…과장님?",
+    "voice": "verse",
+    "instructions": "30대 중반 한국 남성 대리. 지치고 피곤한 목소리. 감정이 북받쳐 떨리고 방어적이다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:18:47"
+  },
+  "76ab528e8fb0f55d74ce": {
+    "scenario": "park",
+    "line": "react_soft_2",
+    "text": "알았어, 알았어.",
+    "voice": "coral",
+    "instructions": "40대 중반 한국 여성 팀장. 바쁘고 급한 말투로 빠르게 말한다. 친한 척하지만 은근히 밀어붙인다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:41:03"
+  },
+  "798a94e2fb6932bc77cd": {
+    "scenario": "choi",
+    "line": "rumor_0",
+    "text": "자네가 나 없는 데서 무슨 말 했는지 다 들었어. 각오하고 들어와.",
+    "voice": "ash",
+    "instructions": "50대 중반 한국 남성 임원. 화가 나서 언성을 높이고 빠르게 몰아붙인다. 짧고 거칠게 끊어 말한다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T13:50:34"
+  },
+  "7bb646f5ace36a2eba2f": {
+    "scenario": "yoon",
+    "line": "react_neutral_2",
+    "text": "음…",
+    "voice": "verse",
+    "instructions": "30대 중반 한국 남성 대리. 지치고 피곤한 목소리. 감정이 북받쳐 떨리고 방어적이다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:42:47"
+  },
+  "7bc1af399db04a0c5825": {
+    "scenario": "jung",
+    "line": "end_noresp",
+    "text": "답이 없으시니 이 건은 없던 걸로 하겠습니다.",
+    "voice": "echo",
+    "instructions": "30대 초반 한국 남성 주임. 차갑고 냉소적인 톤. 감정 없이 또박또박 따지듯 말한다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:42:19"
+  },
+  "83071182f7972563c052": {
+    "scenario": "lee",
+    "line": "rumor_0",
+    "text": "…과장님이 저 일 못한다고 하셨다면서요?",
+    "voice": "nova",
+    "instructions": "20대 후반 한국 여성 사원. 억울하고 방어적인 톤. 말끝을 흐리고 살짝 투덜거린다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T13:50:37"
+  },
+  "8340cf74aa8cf217a78e": {
+    "scenario": "park",
+    "line": "react_neutral_0",
+    "text": "응, 그래서?",
+    "voice": "coral",
+    "instructions": "40대 중반 한국 여성 팀장. 바쁘고 급한 말투로 빠르게 말한다. 친한 척하지만 은근히 밀어붙인다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:40:56"
+  },
+  "836a377634a734759fbb": {
+    "scenario": "lee",
+    "line": "react_neutral_2",
+    "text": "음…",
+    "voice": "nova",
+    "instructions": "20대 후반 한국 여성 사원. 억울하고 방어적인 톤. 말끝을 흐리고 살짝 투덜거린다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:41:50"
+  },
+  "87844087dd81110e3016": {
+    "scenario": "yoon",
+    "line": "rumor_1",
+    "text": "제 얘기 하셨다는 거 들었어요. 저 정말 열심히 하고 있는데…",
+    "voice": "verse",
+    "instructions": "30대 중반 한국 남성 대리. 지치고 피곤한 목소리. 감정이 북받쳐 떨리고 방어적이다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T13:50:50"
+  },
+  "87d2d2331ff3d1e2394f": {
+    "scenario": "lee",
+    "line": "nag2",
+    "text": "말씀 없으신 거 보니 저만 잘못한 건 아니네요.",
+    "voice": "nova",
+    "instructions": "20대 후반 한국 여성 사원. 억울하고 방어적인 톤. 말끝을 흐리고 살짝 투덜거린다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:18:31"
+  },
+  "9058ab01660b73637bf8": {
+    "scenario": "yoon",
+    "line": "end_noresp",
+    "text": "…아무 말씀 없으시네요. 자리로 가 볼게요.",
+    "voice": "verse",
+    "instructions": "30대 중반 한국 남성 대리. 지치고 피곤한 목소리. 감정이 북받쳐 떨리고 방어적이다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:42:58"
+  },
+  "9365bf6ac166a368b1a0": {
+    "scenario": "kim",
+    "line": "react_angry_2",
+    "text": "자네 말이 좀 세다?",
+    "voice": "onyx",
+    "instructions": "50대 초반 한국 남성 부장. 느긋하고 능글맞은 톤이지만 은근히 압박하는 말투. 말끝을 낮게 끈다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:40:33"
+  },
+  "98130e509e4c3129d3f0": {
+    "scenario": "lee",
+    "line": "react_angry_1",
+    "text": "…네, 그러시겠죠.",
+    "voice": "nova",
+    "instructions": "20대 후반 한국 여성 사원. 억울하고 방어적인 톤. 말끝을 흐리고 살짝 투덜거린다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:41:42"
+  },
+  "9af5e0311d32aa8661b7": {
+    "scenario": "choi",
+    "line": "end_partial",
+    "text": "일단 대책부터 가져와. 얘기는 그다음이야.",
+    "voice": "ash",
+    "instructions": "50대 중반 한국 남성 임원. 화가 나서 언성을 높이고 빠르게 몰아붙인다. 짧고 거칠게 끊어 말한다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:41:29"
+  },
+  "a0334729050440ec5911": {
+    "scenario": "yoon",
+    "line": "react_angry_2",
+    "text": "하…",
+    "voice": "verse",
+    "instructions": "30대 중반 한국 남성 대리. 지치고 피곤한 목소리. 감정이 북받쳐 떨리고 방어적이다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:42:44"
+  },
+  "a07aae0e7b63ec059f5e": {
+    "scenario": "han",
+    "line": "react_angry_1",
+    "text": "지금 저한테 짜증 내는 거예요?",
+    "voice": "sage",
+    "instructions": "40대 초반 한국 여성 팀장. 짜증 섞인 한숨과 비꼬는 톤. 말이 날카롭고 차갑다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:42:23"
+  },
+  "a1e72455da0f4e31d1ae": {
+    "scenario": "kim",
+    "line": "react_neutral_0",
+    "text": "음…",
+    "voice": "onyx",
+    "instructions": "50대 초반 한국 남성 부장. 느긋하고 능글맞은 톤이지만 은근히 압박하는 말투. 말끝을 낮게 끈다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:40:34"
+  },
+  "a223aed706a34547a383": {
+    "scenario": "park",
+    "line": "end_success",
+    "text": "알았어, 그럼 월요일 아침 9시까지 부탁해. 오늘은 들어가 봐.",
+    "voice": "coral",
+    "instructions": "40대 중반 한국 여성 팀장. 바쁘고 급한 말투로 빠르게 말한다. 친한 척하지만 은근히 밀어붙인다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:41:05"
+  },
+  "a89e29db7eecd0eb25ca": {
+    "scenario": "jung",
+    "line": "react_soft_1",
+    "text": "알겠습니다.",
+    "voice": "echo",
+    "instructions": "30대 초반 한국 남성 주임. 차갑고 냉소적인 톤. 감정 없이 또박또박 따지듯 말한다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:42:10"
+  },
+  "acc180e69257f2ea4eaa": {
+    "scenario": "yoon",
+    "line": "end_fail",
+    "text": "…네. 제가 다 잘못했죠.",
+    "voice": "verse",
+    "instructions": "30대 중반 한국 남성 대리. 지치고 피곤한 목소리. 감정이 북받쳐 떨리고 방어적이다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:42:57"
+  },
+  "acfdaa7cc8cf88cdba18": {
+    "scenario": "yoon",
+    "line": "react_soft_0",
+    "text": "…감사합니다.",
+    "voice": "verse",
+    "instructions": "30대 중반 한국 남성 대리. 지치고 피곤한 목소리. 감정이 북받쳐 떨리고 방어적이다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:42:48"
+  },
+  "ae99e4bb3934039c8a53": {
+    "scenario": "lee",
+    "line": "react_neutral_0",
+    "text": "…네.",
+    "voice": "nova",
+    "instructions": "20대 후반 한국 여성 사원. 억울하고 방어적인 톤. 말끝을 흐리고 살짝 투덜거린다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:41:46"
+  },
+  "b1e82ddbdddf04402f68": {
+    "scenario": "kim",
+    "line": "end_partial",
+    "text": "일단 알았으니까, 다음에 다시 얘기하자고.",
+    "voice": "onyx",
+    "instructions": "50대 초반 한국 남성 부장. 느긋하고 능글맞은 톤이지만 은근히 압박하는 말투. 말끝을 낮게 끈다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:40:47"
+  },
+  "b78e625228f46d3c6108": {
+    "scenario": "park",
+    "line": "nag1",
+    "text": "왜 대답을 안 해? 바빠?",
+    "voice": "coral",
+    "instructions": "40대 중반 한국 여성 팀장. 바쁘고 급한 말투로 빠르게 말한다. 친한 척하지만 은근히 밀어붙인다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:18:18"
+  },
+  "b856eb67802e01c6fabe": {
+    "scenario": "choi",
+    "line": "react_soft_2",
+    "text": "흠, 그건 몰랐네.",
+    "voice": "ash",
+    "instructions": "50대 중반 한국 남성 임원. 화가 나서 언성을 높이고 빠르게 몰아붙인다. 짧고 거칠게 끊어 말한다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:41:26"
+  },
+  "bbc6dc242c15410cbd53": {
+    "scenario": "choi",
+    "line": "react_soft_0",
+    "text": "…그래.",
+    "voice": "ash",
+    "instructions": "50대 중반 한국 남성 임원. 화가 나서 언성을 높이고 빠르게 몰아붙인다. 짧고 거칠게 끊어 말한다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:41:23"
+  },
+  "bea528df79be2c726d4e": {
+    "scenario": "choi",
+    "line": "end_fail",
+    "text": "됐어! 이번 일은 자네 책임으로 정리해. 다들 나가!",
+    "voice": "ash",
+    "instructions": "50대 중반 한국 남성 임원. 화가 나서 언성을 높이고 빠르게 몰아붙인다. 짧고 거칠게 끊어 말한다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:41:31"
+  },
+  "bfef6598c164789ef96f": {
+    "scenario": "jung",
+    "line": "end_success",
+    "text": "알겠습니다. 2주만입니다. 방식은 말씀드린 대로 조정해서 하겠습니다.",
+    "voice": "echo",
+    "instructions": "30대 초반 한국 남성 주임. 차갑고 냉소적인 톤. 감정 없이 또박또박 따지듯 말한다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:42:14"
+  },
+  "c014d685129a541ab923": {
+    "scenario": "jung",
+    "line": "react_angry_2",
+    "text": "논리적으로 말씀해 주시죠.",
+    "voice": "echo",
+    "instructions": "30대 초반 한국 남성 주임. 차갑고 냉소적인 톤. 감정 없이 또박또박 따지듯 말한다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:42:03"
+  },
+  "c4cc32ad0d85413a23b1": {
+    "scenario": "han",
+    "line": "rumor_0",
+    "text": "저 없는 데서 제 얘기 하셨다면서요? 참 실망이네요.",
+    "voice": "sage",
+    "instructions": "40대 초반 한국 여성 팀장. 짜증 섞인 한숨과 비꼬는 톤. 말이 날카롭고 차갑다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T13:50:45"
+  },
+  "c68429e4d16b271ecc63": {
+    "scenario": "lee",
+    "line": "end_partial",
+    "text": "네, 일단 해 볼게요…",
+    "voice": "nova",
+    "instructions": "20대 후반 한국 여성 사원. 억울하고 방어적인 톤. 말끝을 흐리고 살짝 투덜거린다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:41:56"
+  },
+  "cee9275fad2243e1f928": {
+    "scenario": "han",
+    "line": "end_partial",
+    "text": "일단 가세요. 근데 보고 자료는 오늘 밤까지 메일로 주세요.",
+    "voice": "sage",
+    "instructions": "40대 초반 한국 여성 팀장. 짜증 섞인 한숨과 비꼬는 톤. 말이 날카롭고 차갑다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:42:37"
+  },
+  "cf09f42c6d8b156c2b71": {
+    "scenario": "park",
+    "line": "end_partial",
+    "text": "일단 오늘은 가. 근데 다음엔 미리 말해 줘.",
+    "voice": "coral",
+    "instructions": "40대 중반 한국 여성 팀장. 바쁘고 급한 말투로 빠르게 말한다. 친한 척하지만 은근히 밀어붙인다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:41:07"
+  },
+  "cf5b39b0049e04bb369f": {
+    "scenario": "jung",
+    "line": "react_angry_0",
+    "text": "지금 명령하시는 겁니까?",
+    "voice": "echo",
+    "instructions": "30대 초반 한국 남성 주임. 차갑고 냉소적인 톤. 감정 없이 또박또박 따지듯 말한다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:42:02"
+  },
+  "d17a44fd4dae017937ec": {
+    "scenario": "park",
+    "line": "react_angry_2",
+    "text": "나 지금 바쁜 거 안 보여?",
+    "voice": "coral",
+    "instructions": "40대 중반 한국 여성 팀장. 바쁘고 급한 말투로 빠르게 말한다. 친한 척하지만 은근히 밀어붙인다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:40:55"
+  },
+  "d26a0bce379a4ca6289b": {
+    "scenario": "park",
+    "line": "nag2",
+    "text": "그냥 한다는 걸로 알게.",
+    "voice": "coral",
+    "instructions": "40대 중반 한국 여성 팀장. 바쁘고 급한 말투로 빠르게 말한다. 친한 척하지만 은근히 밀어붙인다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:18:19"
+  },
+  "d30ee3c8fb1695b0124a": {
+    "scenario": "yoon",
+    "line": "react_soft_2",
+    "text": "네, 알겠어요.",
+    "voice": "verse",
+    "instructions": "30대 중반 한국 남성 대리. 지치고 피곤한 목소리. 감정이 북받쳐 떨리고 방어적이다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:42:51"
+  },
+  "d373a69e777aeeebec85": {
+    "scenario": "lee",
+    "line": "nag1",
+    "text": "…과장님? 왜 아무 말씀 안 하세요?",
+    "voice": "nova",
+    "instructions": "20대 후반 한국 여성 사원. 억울하고 방어적인 톤. 말끝을 흐리고 살짝 투덜거린다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:18:29"
+  },
+  "d49f713c4623fa1150bb": {
+    "scenario": "park",
+    "line": "opening",
+    "text": "이거 월요일 아침 회의 자료인데, 오늘 좀 정리해 줄 수 있지? 오래 안 걸려.",
+    "voice": "coral",
+    "instructions": "40대 중반 한국 여성 팀장. 바쁘고 급한 말투로 빠르게 말한다. 친한 척하지만 은근히 밀어붙인다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:18:16"
+  },
+  "d5779a374f43473a4a74": {
+    "scenario": "jung",
+    "line": "react_soft_0",
+    "text": "…그건 일리가 있네요.",
+    "voice": "echo",
+    "instructions": "30대 초반 한국 남성 주임. 차갑고 냉소적인 톤. 감정 없이 또박또박 따지듯 말한다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:42:08"
+  },
+  "d59b1b9ed7b9e8210862": {
+    "scenario": "han",
+    "line": "end_success",
+    "text": "알겠어요. 보고는 내일 오전에 하고, 오늘은 얼른 가 보세요. 아이 괜찮길 바라요.",
+    "voice": "sage",
+    "instructions": "40대 초반 한국 여성 팀장. 짜증 섞인 한숨과 비꼬는 톤. 말이 날카롭고 차갑다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:42:35"
+  },
+  "d94c93fd172e846138a6": {
+    "scenario": "choi",
+    "line": "rumor_1",
+    "text": "내가 소리만 지른다고? 그 얘기 나한테까지 들어왔어.",
+    "voice": "ash",
+    "instructions": "50대 중반 한국 남성 임원. 화가 나서 언성을 높이고 빠르게 몰아붙인다. 짧고 거칠게 끊어 말한다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T13:50:35"
+  },
+  "d9f7cb993b4d4885e199": {
+    "scenario": "jung",
+    "line": "end_resign",
+    "text": "더 이상 여기서 배울 게 없는 것 같네요. 사직서 내겠습니다.",
+    "voice": "echo",
+    "instructions": "30대 초반 한국 남성 주임. 차갑고 냉소적인 톤. 감정 없이 또박또박 따지듯 말한다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:42:20"
+  },
+  "dd24a0eda4c253314ea7": {
+    "scenario": "choi",
+    "line": "react_angry_1",
+    "text": "그걸 말이라고 해?",
+    "voice": "ash",
+    "instructions": "50대 중반 한국 남성 임원. 화가 나서 언성을 높이고 빠르게 몰아붙인다. 짧고 거칠게 끊어 말한다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:41:12"
+  },
+  "df320743e03dd9296728": {
+    "scenario": "yoon",
+    "line": "end_partial",
+    "text": "네… 일단 노력해 볼게요.",
+    "voice": "verse",
+    "instructions": "30대 중반 한국 남성 대리. 지치고 피곤한 목소리. 감정이 북받쳐 떨리고 방어적이다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:42:54"
+  },
+  "e2262801d4774bbbf379": {
+    "scenario": "choi",
+    "line": "react_neutral_0",
+    "text": "그래서?",
+    "voice": "ash",
+    "instructions": "50대 중반 한국 남성 임원. 화가 나서 언성을 높이고 빠르게 몰아붙인다. 짧고 거칠게 끊어 말한다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:41:16"
+  },
+  "e590b35ac95b6c40879d": {
+    "scenario": "jung",
+    "line": "react_soft_2",
+    "text": "그 정도면 괜찮겠네요.",
+    "voice": "echo",
+    "instructions": "30대 초반 한국 남성 주임. 차갑고 냉소적인 톤. 감정 없이 또박또박 따지듯 말한다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:42:12"
+  },
+  "e6aded6e5c838492a180": {
+    "scenario": "kim",
+    "line": "rumor_0",
+    "text": "자네, 요즘 내 얘기를 하고 다닌다며? 다 들었어.",
+    "voice": "onyx",
+    "instructions": "50대 초반 한국 남성 부장. 느긋하고 능글맞은 톤이지만 은근히 압박하는 말투. 말끝을 낮게 끈다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T13:50:28"
+  },
+  "e9e51c630b73a43ef5a5": {
+    "scenario": "han",
+    "line": "nag2",
+    "text": "하… 됐어요. 알아서 하세요.",
+    "voice": "sage",
+    "instructions": "40대 초반 한국 여성 팀장. 짜증 섞인 한숨과 비꼬는 톤. 말이 날카롭고 차갑다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:18:43"
+  },
+  "ea237e2d573cc22cc458": {
+    "scenario": "lee",
+    "line": "end_fail",
+    "text": "…네. 알겠습니다.",
+    "voice": "nova",
+    "instructions": "20대 후반 한국 여성 사원. 억울하고 방어적인 톤. 말끝을 흐리고 살짝 투덜거린다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:41:57"
+  },
+  "ea65bc57becfe80f20c8": {
+    "scenario": "lee",
+    "line": "end_noresp",
+    "text": "말씀 없으시면 저 그냥 자리로 갈게요.",
+    "voice": "nova",
+    "instructions": "20대 후반 한국 여성 사원. 억울하고 방어적인 톤. 말끝을 흐리고 살짝 투덜거린다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:41:59"
+  },
+  "eac2591f250a031ec159": {
+    "scenario": "lee",
+    "line": "react_soft_1",
+    "text": "그건 그렇네요.",
+    "voice": "nova",
+    "instructions": "20대 후반 한국 여성 사원. 억울하고 방어적인 톤. 말끝을 흐리고 살짝 투덜거린다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:41:52"
+  },
+  "eb1769958c6b0047f616": {
+    "scenario": "lee",
+    "line": "react_angry_0",
+    "text": "아니, 그게 제 잘못이에요?",
+    "voice": "nova",
+    "instructions": "20대 후반 한국 여성 사원. 억울하고 방어적인 톤. 말끝을 흐리고 살짝 투덜거린다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:41:41"
+  },
+  "eba56113e4bddee5143c": {
+    "scenario": "yoon",
+    "line": "react_neutral_1",
+    "text": "네, 듣고 있어요.",
+    "voice": "verse",
+    "instructions": "30대 중반 한국 남성 대리. 지치고 피곤한 목소리. 감정이 북받쳐 떨리고 방어적이다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:42:46"
+  },
+  "ebdd853c481c3952b18c": {
+    "scenario": "kim",
+    "line": "react_angry_1",
+    "text": "허… 참.",
+    "voice": "onyx",
+    "instructions": "50대 초반 한국 남성 부장. 느긋하고 능글맞은 톤이지만 은근히 압박하는 말투. 말끝을 낮게 끈다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:40:31"
+  },
+  "ef7dd6c2fca0ff7301a5": {
+    "scenario": "han",
+    "line": "react_soft_0",
+    "text": "…그래요.",
+    "voice": "sage",
+    "instructions": "40대 초반 한국 여성 팀장. 짜증 섞인 한숨과 비꼬는 톤. 말이 날카롭고 차갑다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:42:31"
+  },
+  "efdb43cba98b901cd444": {
+    "scenario": "park",
+    "line": "react_neutral_2",
+    "text": "어, 듣고 있어.",
+    "voice": "coral",
+    "instructions": "40대 중반 한국 여성 팀장. 바쁘고 급한 말투로 빠르게 말한다. 친한 척하지만 은근히 밀어붙인다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:40:58"
+  },
+  "f0e02187d683f36d4ceb": {
+    "scenario": "han",
+    "line": "react_neutral_2",
+    "text": "흠…",
+    "voice": "sage",
+    "instructions": "40대 초반 한국 여성 팀장. 짜증 섞인 한숨과 비꼬는 톤. 말이 날카롭고 차갑다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:42:30"
+  },
+  "f232de0b4c09ad45d034": {
+    "scenario": "han",
+    "line": "react_neutral_0",
+    "text": "그래서요?",
+    "voice": "sage",
+    "instructions": "40대 초반 한국 여성 팀장. 짜증 섞인 한숨과 비꼬는 톤. 말이 날카롭고 차갑다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:42:25"
+  },
+  "f67f00178b2d0fb00a9b": {
+    "scenario": "choi",
+    "line": "nag1",
+    "text": "대답 안 해? 내 말 안 들려?",
+    "voice": "ash",
+    "instructions": "50대 중반 한국 남성 임원. 화가 나서 언성을 높이고 빠르게 몰아붙인다. 짧고 거칠게 끊어 말한다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:18:24"
+  },
+  "f7e850c80e04c388ee3a": {
+    "scenario": "kim",
+    "line": "react_neutral_2",
+    "text": "흠, 계속해 봐.",
+    "voice": "onyx",
+    "instructions": "50대 초반 한국 남성 부장. 느긋하고 능글맞은 톤이지만 은근히 압박하는 말투. 말끝을 낮게 끈다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:40:38"
+  },
+  "f7ed6429ab4c7e233eee": {
+    "scenario": "kim",
+    "line": "nag2",
+    "text": "자네 요즘 태도가 좀 그렇다?",
+    "voice": "onyx",
+    "instructions": "50대 초반 한국 남성 부장. 느긋하고 능글맞은 톤이지만 은근히 압박하는 말투. 말끝을 낮게 끈다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:18:14"
+  },
+  "f80488fbfffb6dae8a4a": {
+    "scenario": "han",
+    "line": "end_noresp",
+    "text": "말 안 하실 거면 그냥 자리로 가세요.",
+    "voice": "sage",
+    "instructions": "40대 초반 한국 여성 팀장. 짜증 섞인 한숨과 비꼬는 톤. 말이 날카롭고 차갑다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:42:40"
+  },
+  "f86116ea0a9431d9e7d1": {
+    "scenario": "han",
+    "line": "react_soft_1",
+    "text": "아, 그건 몰랐네요.",
+    "voice": "sage",
+    "instructions": "40대 초반 한국 여성 팀장. 짜증 섞인 한숨과 비꼬는 톤. 말이 날카롭고 차갑다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:42:32"
+  },
+  "f8a8e2bc96484eacd268": {
+    "scenario": "choi",
+    "line": "nag2",
+    "text": "꿀 먹은 벙어리야? 대답하라고!",
+    "voice": "ash",
+    "instructions": "50대 중반 한국 남성 임원. 화가 나서 언성을 높이고 빠르게 몰아붙인다. 짧고 거칠게 끊어 말한다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:18:25"
+  },
+  "f99553593651995c6fe3": {
+    "scenario": "han",
+    "line": "react_angry_2",
+    "text": "또 시작이네요.",
+    "voice": "sage",
+    "instructions": "40대 초반 한국 여성 팀장. 짜증 섞인 한숨과 비꼬는 톤. 말이 날카롭고 차갑다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:42:24"
+  },
+  "fc06e5ccea46cb9a3c93": {
+    "scenario": "yoon",
+    "line": "rumor_0",
+    "text": "…과장님도 제가 자꾸 빠진다고 하셨다면서요.",
+    "voice": "verse",
+    "instructions": "30대 중반 한국 남성 대리. 지치고 피곤한 목소리. 감정이 북받쳐 떨리고 방어적이다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T13:50:48"
+  },
+  "fdf6ac4eba2210479b09": {
+    "scenario": "park",
+    "line": "react_angry_0",
+    "text": "아니, 지금 그게 무슨 말이야?",
+    "voice": "coral",
+    "instructions": "40대 중반 한국 여성 팀장. 바쁘고 급한 말투로 빠르게 말한다. 친한 척하지만 은근히 밀어붙인다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:40:52"
+  },
+  "feed20d69c1cf6af5d1d": {
+    "scenario": "park",
+    "line": "react_neutral_1",
+    "text": "음… 빨리 말해 봐.",
+    "voice": "coral",
+    "instructions": "40대 중반 한국 여성 팀장. 바쁘고 급한 말투로 빠르게 말한다. 친한 척하지만 은근히 밀어붙인다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:40:57"
+  },
+  "ff2362d3b8cb132a84f4": {
+    "scenario": "han",
+    "line": "react_angry_0",
+    "text": "하… 진짜.",
+    "voice": "sage",
+    "instructions": "40대 초반 한국 여성 팀장. 짜증 섞인 한숨과 비꼬는 톤. 말이 날카롭고 차갑다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:42:22"
+  },
+  "ff6e4a2aa1f0a78e3c30": {
+    "scenario": "choi",
+    "line": "react_soft_1",
+    "text": "알았어, 계속해.",
+    "voice": "ash",
+    "instructions": "50대 중반 한국 남성 임원. 화가 나서 언성을 높이고 빠르게 몰아붙인다. 짧고 거칠게 끊어 말한다.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T11:41:25"
+  }
+}

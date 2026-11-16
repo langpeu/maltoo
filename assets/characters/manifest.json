@@ -1,0 +1,562 @@
+{
+  "choi/angry.webp": {
+    "character": "choi",
+    "expression": "angry",
+    "talk": false,
+    "prompt_hash": "7e0b2088562e14ca",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:21:58"
+  },
+  "choi/angry_talk.webp": {
+    "character": "choi",
+    "expression": "angry",
+    "talk": true,
+    "prompt_hash": "e3e0fc0b42282e09",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:23:07"
+  },
+  "choi/annoyed.webp": {
+    "character": "choi",
+    "expression": "annoyed",
+    "talk": false,
+    "prompt_hash": "8302ac7af6645d30",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:21:46"
+  },
+  "choi/annoyed_talk.webp": {
+    "character": "choi",
+    "expression": "annoyed",
+    "talk": true,
+    "prompt_hash": "e3e0fc0b42282e09",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:22:54"
+  },
+  "choi/calm.webp": {
+    "character": "choi",
+    "expression": "calm",
+    "talk": false,
+    "prompt_hash": "548972dc2850b5d3",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:21:33"
+  },
+  "choi/calm_talk.webp": {
+    "character": "choi",
+    "expression": "calm",
+    "talk": true,
+    "prompt_hash": "e3e0fc0b42282e09",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:22:40"
+  },
+  "choi/explosive.webp": {
+    "character": "choi",
+    "expression": "explosive",
+    "talk": false,
+    "prompt_hash": "88706923f259e6f9",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:22:13"
+  },
+  "choi/explosive_talk.webp": {
+    "character": "choi",
+    "expression": "explosive",
+    "talk": true,
+    "prompt_hash": "e3e0fc0b42282e09",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:23:20"
+  },
+  "choi/softened.webp": {
+    "character": "choi",
+    "expression": "softened",
+    "talk": false,
+    "prompt_hash": "9261d40a81172f92",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:22:26"
+  },
+  "choi/softened_talk.webp": {
+    "character": "choi",
+    "expression": "softened",
+    "talk": true,
+    "prompt_hash": "e3e0fc0b42282e09",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:23:34"
+  },
+  "han/angry.webp": {
+    "character": "han",
+    "expression": "angry",
+    "talk": false,
+    "prompt_hash": "c879e2baef12dc91",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:24:09"
+  },
+  "han/angry_talk.webp": {
+    "character": "han",
+    "expression": "angry",
+    "talk": true,
+    "prompt_hash": "e3e0fc0b42282e09",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:25:13"
+  },
+  "han/annoyed.webp": {
+    "character": "han",
+    "expression": "annoyed",
+    "talk": false,
+    "prompt_hash": "67713084fc0dfdfd",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:23:56"
+  },
+  "han/annoyed_talk.webp": {
+    "character": "han",
+    "expression": "annoyed",
+    "talk": true,
+    "prompt_hash": "e3e0fc0b42282e09",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:25:01"
+  },
+  "han/calm.webp": {
+    "character": "han",
+    "expression": "calm",
+    "talk": false,
+    "prompt_hash": "52fc0e5f8b6cba9f",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:23:45"
+  },
+  "han/calm_talk.webp": {
+    "character": "han",
+    "expression": "calm",
+    "talk": true,
+    "prompt_hash": "e3e0fc0b42282e09",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:24:47"
+  },
+  "han/explosive.webp": {
+    "character": "han",
+    "expression": "explosive",
+    "talk": false,
+    "prompt_hash": "0d4212ee91c2c4dc",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:24:22"
+  },
+  "han/explosive_talk.webp": {
+    "character": "han",
+    "expression": "explosive",
+    "talk": true,
+    "prompt_hash": "e3e0fc0b42282e09",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:25:24"
+  },
+  "han/softened.webp": {
+    "character": "han",
+    "expression": "softened",
+    "talk": false,
+    "prompt_hash": "b7426ff7d5330381",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:24:32"
+  },
+  "han/softened_talk.webp": {
+    "character": "han",
+    "expression": "softened",
+    "talk": true,
+    "prompt_hash": "e3e0fc0b42282e09",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:25:37"
+  },
+  "jung/angry.webp": {
+    "character": "jung",
+    "expression": "angry",
+    "talk": false,
+    "prompt_hash": "22f7746b48093a60",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:24:06"
+  },
+  "jung/angry_talk.webp": {
+    "character": "jung",
+    "expression": "angry",
+    "talk": true,
+    "prompt_hash": "e3e0fc0b42282e09",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:25:08"
+  },
+  "jung/annoyed.webp": {
+    "character": "jung",
+    "expression": "annoyed",
+    "talk": false,
+    "prompt_hash": "f950308f02f4796f",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:23:53"
+  },
+  "jung/annoyed_talk.webp": {
+    "character": "jung",
+    "expression": "annoyed",
+    "talk": true,
+    "prompt_hash": "e3e0fc0b42282e09",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:24:57"
+  },
+  "jung/calm.webp": {
+    "character": "jung",
+    "expression": "calm",
+    "talk": false,
+    "prompt_hash": "3a14444f576b88eb",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:23:42"
+  },
+  "jung/calm_talk.webp": {
+    "character": "jung",
+    "expression": "calm",
+    "talk": true,
+    "prompt_hash": "e3e0fc0b42282e09",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:24:44"
+  },
+  "jung/explosive.webp": {
+    "character": "jung",
+    "expression": "explosive",
+    "talk": false,
+    "prompt_hash": "2f035d51de508335",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:24:19"
+  },
+  "jung/explosive_talk.webp": {
+    "character": "jung",
+    "expression": "explosive",
+    "talk": true,
+    "prompt_hash": "e3e0fc0b42282e09",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:25:22"
+  },
+  "jung/softened.webp": {
+    "character": "jung",
+    "expression": "softened",
+    "talk": false,
+    "prompt_hash": "e44c7e1615a76929",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:24:32"
+  },
+  "jung/softened_talk.webp": {
+    "character": "jung",
+    "expression": "softened",
+    "talk": true,
+    "prompt_hash": "e3e0fc0b42282e09",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:25:35"
+  },
+  "kim/angry.webp": {
+    "character": "kim",
+    "expression": "angry",
+    "talk": false,
+    "prompt_hash": "f2ed387e75696851",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:21:59"
+  },
+  "kim/angry_talk.webp": {
+    "character": "kim",
+    "expression": "angry",
+    "talk": true,
+    "prompt_hash": "e3e0fc0b42282e09",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:23:03"
+  },
+  "kim/annoyed.webp": {
+    "character": "kim",
+    "expression": "annoyed",
+    "talk": false,
+    "prompt_hash": "6c282fea1b78baa2",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:21:49"
+  },
+  "kim/annoyed_talk.webp": {
+    "character": "kim",
+    "expression": "annoyed",
+    "talk": true,
+    "prompt_hash": "e3e0fc0b42282e09",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:22:50"
+  },
+  "kim/calm.webp": {
+    "character": "kim",
+    "expression": "calm",
+    "talk": false,
+    "prompt_hash": "3d0172a0b110580c",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:21:34"
+  },
+  "kim/calm_talk.webp": {
+    "character": "kim",
+    "expression": "calm",
+    "talk": true,
+    "prompt_hash": "e3e0fc0b42282e09",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:22:37"
+  },
+  "kim/explosive.webp": {
+    "character": "kim",
+    "expression": "explosive",
+    "talk": false,
+    "prompt_hash": "7a25333db3f9345a",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:22:12"
+  },
+  "kim/explosive_talk.webp": {
+    "character": "kim",
+    "expression": "explosive",
+    "talk": true,
+    "prompt_hash": "e3e0fc0b42282e09",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:23:17"
+  },
+  "kim/softened.webp": {
+    "character": "kim",
+    "expression": "softened",
+    "talk": false,
+    "prompt_hash": "355048db11bb3156",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:22:25"
+  },
+  "kim/softened_talk.webp": {
+    "character": "kim",
+    "expression": "softened",
+    "talk": true,
+    "prompt_hash": "e3e0fc0b42282e09",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:23:29"
+  },
+  "lee/angry.webp": {
+    "character": "lee",
+    "expression": "angry",
+    "talk": false,
+    "prompt_hash": "d6112f2106460c54",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:23:53"
+  },
+  "lee/angry_talk.webp": {
+    "character": "lee",
+    "expression": "angry",
+    "talk": true,
+    "prompt_hash": "e3e0fc0b42282e09",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:24:56"
+  },
+  "lee/annoyed.webp": {
+    "character": "lee",
+    "expression": "annoyed",
+    "talk": false,
+    "prompt_hash": "f010b689408ea21e",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:23:41"
+  },
+  "lee/annoyed_talk.webp": {
+    "character": "lee",
+    "expression": "annoyed",
+    "talk": true,
+    "prompt_hash": "e3e0fc0b42282e09",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:24:44"
+  },
+  "lee/calm.webp": {
+    "character": "lee",
+    "expression": "calm",
+    "talk": false,
+    "prompt_hash": "46bcff3dc6a01204",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:23:29"
+  },
+  "lee/calm_talk.webp": {
+    "character": "lee",
+    "expression": "calm",
+    "talk": true,
+    "prompt_hash": "e3e0fc0b42282e09",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:24:31"
+  },
+  "lee/explosive.webp": {
+    "character": "lee",
+    "expression": "explosive",
+    "talk": false,
+    "prompt_hash": "133aea8a79cf4851",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:24:07"
+  },
+  "lee/explosive_talk.webp": {
+    "character": "lee",
+    "expression": "explosive",
+    "talk": true,
+    "prompt_hash": "e3e0fc0b42282e09",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:25:08"
+  },
+  "lee/softened.webp": {
+    "character": "lee",
+    "expression": "softened",
+    "talk": false,
+    "prompt_hash": "9b9d7b6c403e3811",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:24:20"
+  },
+  "lee/softened_talk.webp": {
+    "character": "lee",
+    "expression": "softened",
+    "talk": true,
+    "prompt_hash": "e3e0fc0b42282e09",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:25:20"
+  },
+  "park/angry.webp": {
+    "character": "park",
+    "expression": "angry",
+    "talk": false,
+    "prompt_hash": "e9d89da18e85460b",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:21:57"
+  },
+  "park/angry_talk.webp": {
+    "character": "park",
+    "expression": "angry",
+    "talk": true,
+    "prompt_hash": "e3e0fc0b42282e09",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:22:53"
+  },
+  "park/annoyed.webp": {
+    "character": "park",
+    "expression": "annoyed",
+    "talk": false,
+    "prompt_hash": "d317d9a6281e264a",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:21:44"
+  },
+  "park/annoyed_talk.webp": {
+    "character": "park",
+    "expression": "annoyed",
+    "talk": true,
+    "prompt_hash": "e3e0fc0b42282e09",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:22:42"
+  },
+  "park/calm.webp": {
+    "character": "park",
+    "expression": "calm",
+    "talk": false,
+    "prompt_hash": "0a1839d25d0d2909",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:21:32"
+  },
+  "park/calm_talk.webp": {
+    "character": "park",
+    "expression": "calm",
+    "talk": true,
+    "prompt_hash": "e3e0fc0b42282e09",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:22:30"
+  },
+  "park/explosive.webp": {
+    "character": "park",
+    "expression": "explosive",
+    "talk": false,
+    "prompt_hash": "1a11e85224774cba",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:22:08"
+  },
+  "park/explosive_talk.webp": {
+    "character": "park",
+    "expression": "explosive",
+    "talk": true,
+    "prompt_hash": "e3e0fc0b42282e09",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:23:06"
+  },
+  "park/softened.webp": {
+    "character": "park",
+    "expression": "softened",
+    "talk": false,
+    "prompt_hash": "5e96188ce63067fd",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:22:18"
+  },
+  "park/softened_talk.webp": {
+    "character": "park",
+    "expression": "softened",
+    "talk": true,
+    "prompt_hash": "e3e0fc0b42282e09",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:23:18"
+  },
+  "yoon/angry.webp": {
+    "character": "yoon",
+    "expression": "angry",
+    "talk": false,
+    "prompt_hash": "969d5fb848289322",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:25:58"
+  },
+  "yoon/angry_talk.webp": {
+    "character": "yoon",
+    "expression": "angry",
+    "talk": true,
+    "prompt_hash": "e3e0fc0b42282e09",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:27:00"
+  },
+  "yoon/annoyed.webp": {
+    "character": "yoon",
+    "expression": "annoyed",
+    "talk": false,
+    "prompt_hash": "f1a8a1f6fd26d103",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:25:45"
+  },
+  "yoon/annoyed_talk.webp": {
+    "character": "yoon",
+    "expression": "annoyed",
+    "talk": true,
+    "prompt_hash": "e3e0fc0b42282e09",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:26:47"
+  },
+  "yoon/calm.webp": {
+    "character": "yoon",
+    "expression": "calm",
+    "talk": false,
+    "prompt_hash": "50d6668bffac3ca0",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:25:33"
+  },
+  "yoon/calm_talk.webp": {
+    "character": "yoon",
+    "expression": "calm",
+    "talk": true,
+    "prompt_hash": "e3e0fc0b42282e09",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:26:36"
+  },
+  "yoon/explosive.webp": {
+    "character": "yoon",
+    "expression": "explosive",
+    "talk": false,
+    "prompt_hash": "d877fd1147614b28",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:26:11"
+  },
+  "yoon/explosive_talk.webp": {
+    "character": "yoon",
+    "expression": "explosive",
+    "talk": true,
+    "prompt_hash": "e3e0fc0b42282e09",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:27:12"
+  },
+  "yoon/softened.webp": {
+    "character": "yoon",
+    "expression": "softened",
+    "talk": false,
+    "prompt_hash": "f4c38c78f2b66157",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:26:23"
+  },
+  "yoon/softened_talk.webp": {
+    "character": "yoon",
+    "expression": "softened",
+    "talk": true,
+    "prompt_hash": "e3e0fc0b42282e09",
+    "model": "gpt-image-1-mini",
+    "created_at": "2026-11-16T11:27:27"
+  }
+}
