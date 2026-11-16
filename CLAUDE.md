@@ -63,7 +63,7 @@ maltoo/
 - **비용 한도**: 모든 OpenAI 호출은 `usage.py`의 한도 검사를 거친다. 한도 초과 시 호출하지 않고 HTTP 402/429 + 안내 메시지. 호출 전 예상 비용으로 사전 검사.
   - 예외: 초기 세팅(`/api/setup/job`)은 사용자가 예상 비용을 확인하고 시작하므로 한도 검사를 생략하고 `exempt=1`로 기록한다 (표시는 하되 한도 합계에서 제외, session_id=`setup`).
 - **초기 세팅**: 키 입력 시 `/api/setup/status`로 고정 음성·인물 사진 존재를 확인하고, 없으면 앱에서 생성한다. 생성물(`assets/`)은 사용자가 GitHub에 커밋해서 재사용한다. 앱 실행 중에는 사진을 새로 만들지 않는다.
-- **인물 사진**: 실사. calm 기본 사진 → 표정 4종 edit(input_fidelity=high) → 표정별 입 벌림 edit(입 주변 마스크). 입 움직임은 재생 음량으로 `_talk` 사진 투명도를 조절한다.
+- **인물 사진**: 실사. 외모는 `scenarios.json`의 `appearance_prompt`(영어, 얼굴형·눈·눈썹·코·입·피부·머리·나이 흔적·체격·옷·소품·인상 항목별)와 `expression_notes`(인물별 표정)로 지정, 7명 공통 촬영 조건은 `portraits.PHOTO_SPEC`. 화면용 한국어 요약은 `appearance`. calm 기본 사진 → 표정 4종 edit(input_fidelity=high) → 표정별 입 벌림 edit(입 주변 마스크). 입 움직임은 재생 음량으로 `_talk` 사진 투명도를 조절한다.
 - **영상 비전송**: 카메라 프레임은 서버로 보내지 않는다. 수치 요약만 전송. 캡처 이미지는 로컬 `captures/`에만.
 - **모델/가격 하드코딩 금지**: 모두 `config.json`에서 읽는다.
 - **캐시 키에 모델 이름 미포함**: 오디오 = hash(대사 + voice + instructions), 이미지 = hash(인물 + 표정 + 프롬프트). 모델·생성일은 manifest에 기록.

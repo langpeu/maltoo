@@ -13,7 +13,14 @@
         "emoji": "🧔",
         "personality": "부하의 성과를 자기 것으로 포장한다. 겉으로는 웃지만 은근히 압박하고, 반박을 들으면 '자네 태도'를 문제 삼는다.",
         "speech_style": "반말, '자네'라고 부름, 여유 있는 척하지만 말끝에 압박이 있다.",
-        "appearance": "52세 한국 남성. 짧고 희끗희끗한 옆가르마 머리, 약간 통통한 얼굴, 금속테 안경, 네이비 정장에 느슨하게 맨 넥타이, 사원증 목걸이."
+        "appearance": "52세 남성. 다부진 체격, 넓은 어깨, 살짝 이중 턱. 둥글고 각진 얼굴에 볼살, 붉은 기 도는 피부, 팔자주름과 눈가 잔주름, 왼쪽 볼 작은 점. 홑꺼풀 가는 눈, 숱 많은 반백 눈썹, 뭉툭한 코, 얇은 윗입술에 한쪽만 올라간 미소. 40% 정도 센 짧은 옆가르마 머리(관자놀이 약간 M자). 금색 얇은 사각 금속테 안경. 네이비 정장, 하늘색 셔츠, 살짝 풀린 버건디 넥타이, 사원증. 인상: 겉은 사람 좋아 보이지만 능글맞고 은근히 내려다봄.",
+        "appearance_prompt": "Korean man, age 52. Build: stocky, broad shoulders, thick neck, slight double chin. Face: round-to-square face with full cheeks, slightly ruddy warm light-medium skin, visible nasolabial folds, faint crow's feet, a small mole on the left cheek. Eyes: narrow monolid eyes with slightly puffy lower lids. Eyebrows: thick, straight, salt-and-pepper. Nose: broad with a rounded tip. Mouth: thin upper lip, habitual faint one-sided smirk. Hair: short, side-parted to his right, about 40% gray mixed with black, neatly combed with a little pomade, slightly receding at the temples. Eyewear: thin gold-tone rectangular metal-frame glasses. Clothing: navy two-button suit, light blue dress shirt, burgundy tie slightly loosened at the collar, company lanyard with a blank ID card. Overall vibe: affable on the surface but sly, self-satisfied and subtly condescending.",
+        "expression_notes": {
+          "annoyed": "condescending annoyance: one eyebrow slightly raised, the smirk tightening into pressed lips",
+          "angry": "cold anger behind a forced smile, eyes narrowed behind the glasses",
+          "explosive": "face flushed red, glaring over the top of his glasses, jaw clenched",
+          "softened": "genuine relaxed smile, eyes crinkling, shoulders eased"
+        }
       },
       "voice": {
         "voice": "onyx",
@@ -48,7 +55,14 @@
         "emoji": "👩‍💼",
         "personality": "계획 없이 즉흥적으로 일하고 남의 시간을 가볍게 여긴다. '금방 해'가 입버릇. 거절당하면 서운한 티를 크게 낸다.",
         "speech_style": "친한 척하는 반존대, 부탁처럼 들리지만 사실상 지시.",
-        "appearance": "44세 한국 여성. 단발 웨이브 머리, 또렷한 눈매, 베이지 블레이저와 흰 블라우스, 손목시계, 사원증 목걸이."
+        "appearance": "44세 여성. 마른 체형, 곧은 자세. 광대가 살짝 있는 계란형 얼굴, 밝은 피부, 눈 밑 잔주름, 옅은 로즈 립. 크고 쌍꺼풀 진 바쁜 눈, 정돈된 갈색 아치형 눈썹, 곧고 좁은 코. 턱선 길이 웨이브 단발(짙은 갈색에 은은한 캐러멜 하이라이트, 한쪽 귀 뒤로 넘김). 작은 금색 링 귀걸이. 카멜색 블레이저에 흰 실크 블라우스, 사원증. 인상: 친근한 척하지만 늘 급하고 밀어붙임.",
+        "appearance_prompt": "Korean woman, age 44. Build: slim, average height, upright energetic posture. Face: oval face with defined cheekbones, light neutral skin, faint fine lines under the eyes, light makeup with neutral-rose lipstick. Eyes: large double-lidded eyes, bright and restless. Eyebrows: well-groomed, softly arched, dark brown. Nose: straight and narrow. Mouth: medium lips, quick polite smile. Hair: chin-length bob with soft loose waves, dark brown with subtle caramel highlights, tucked behind her left ear. Accessories: small gold hoop earrings. Clothing: camel-beige tailored blazer over a white silk blouse, company lanyard with a blank ID card. Overall vibe: busy and hurried, friendly on the surface, a little pushy.",
+        "expression_notes": {
+          "annoyed": "impatient: lips pursed, eyes slightly impatient as if she is in a rush",
+          "angry": "hurt and irritated, brows drawn together, mouth tight",
+          "explosive": "exasperated and offended: eyes wide, mouth pressed hard, head pulled back",
+          "softened": "warm, slightly apologetic smile"
+        }
       },
       "voice": {
         "voice": "coral",
@@ -83,7 +97,14 @@
         "emoji": "😤",
         "personality": "화가 나면 장소를 가리지 않고 소리부터 지른다. 원인보다 책임자 찾기가 먼저다. 변명처럼 들리는 말에 더 화를 낸다.",
         "speech_style": "반말, 짧고 거친 문장, 언성이 높다.",
-        "appearance": "55세 한국 남성. 뒤로 넘긴 짧은 흰머리, 굵은 눈썹, 각진 얼굴, 짙은 회색 정장과 흰 셔츠, 넥타이 없음, 임원 배지."
+        "appearance": "55세 남성 임원. 키 크고 단단한 체격, 두꺼운 가슴과 목. 강한 턱의 사각 얼굴, 쉽게 붉어지는 거친 피부, 깊은 이마 주름과 미간의 세로 주름. 깊게 들어간 홑꺼풀 눈, 눈 위로 낮게 내려온 아주 짙은 반백 눈썹, 콧대 높은 큰 코, 입꼬리가 처진 넓은 입. 뒤로 넘긴 짧은 백발(정수리 약간 숱 적음). 차콜 정장, 깃을 연 흰 셔츠, 넥타이 없음, 금색 임원 배지. 인상: 위압적이고 성급하며 다혈질.",
+        "appearance_prompt": "Korean man, age 55, senior executive. Build: tall and solid, barrel chest, thick neck. Face: square face with a strong jaw, weathered skin with a reddish tendency to flush, medium skin tone, deep horizontal forehead creases and a pronounced vertical frown line between the brows. Eyes: deep-set monolid eyes with an intense stare. Eyebrows: very thick and bushy, dark with some gray, sitting low over the eyes. Nose: large with a prominent bridge. Mouth: wide mouth with downturned corners. Hair: short, mostly white-gray, slicked straight back, slightly thinning on top. Clothing: charcoal gray suit, crisp white shirt open at the collar, no tie, small plain gold lapel pin. Overall vibe: commanding, impatient, short-tempered and intimidating.",
+        "expression_notes": {
+          "annoyed": "deep scowl, hard eyes, mouth turned down",
+          "angry": "face reddening, a vein visible at the temple, glaring hard",
+          "explosive": "face deep red, nostrils flared, extremely furious as if about to shout",
+          "softened": "grudging calm: frown line relaxed, a slight approving look"
+        }
       },
       "voice": {
         "voice": "ash",
@@ -118,7 +139,14 @@
         "emoji": "🙍‍♀️",
         "personality": "문제가 생기면 늘 남 탓을 하고, 지적받으면 일정 자체가 문제였다고 주장한다. 몰아붙이면 입을 닫는다. 박 팀장의 무리한 일정에 불만이 많다.",
         "speech_style": "존댓말이지만 말끝을 흐리며 은근히 반박한다.",
-        "appearance": "28세 한국 여성. 어깨 길이 생머리를 낮게 묶음, 동그란 얼굴, 연한 화장, 회색 니트 카디건, 사원증 목걸이."
+        "appearance": "28세 여성 사원. 작은 체구, 살짝 움츠린 방어적인 자세. 둥글고 부드러운 얼굴, 콧등에 옅은 주근깨, 약한 다크서클, 연한 화장. 쌍꺼풀 있는 눈은 시선을 살짝 피함. 자연스러운 일자 눈썹, 작은 코, 자주 다물거나 삐죽 내미는 작은 입술. 시스루 앞머리에 어깨 길이 흑발을 낮게 느슨히 묶음(옆으로 잔머리). 회색 니트 카디건에 흰 라운드 티, 사원증. 인상: 억울하고 시무룩하며 책임을 피함.",
+        "appearance_prompt": "Korean woman, age 28, junior staff member. Build: petite, shoulders slightly hunched in a defensive posture. Face: round soft face, fair skin with a few faint freckles across the nose, light natural makeup, slight dark circles. Eyes: medium double-lidded eyes, gaze drifting slightly off-camera, a little tired. Eyebrows: straight, soft, natural. Nose: small button nose. Mouth: small lips, pressed together or slightly pouting. Hair: shoulder-length straight black hair in a low loose ponytail, wispy see-through bangs and a few loose strands framing the face. Clothing: gray knit cardigan over a white crew-neck T-shirt, company lanyard with a blank ID card. Overall vibe: defensive, sulky, quietly resentful, avoiding blame.",
+        "expression_notes": {
+          "annoyed": "sulky pout, eyes looking away",
+          "angry": "resentful glare, lips pressed tight",
+          "explosive": "on the verge of tears from frustration: eyes glossy, chin trembling, brows pinched",
+          "softened": "relieved small smile, finally meeting the camera's eyes"
+        }
       },
       "voice": {
         "voice": "nova",
@@ -154,7 +182,14 @@
         "emoji": "🙅‍♂️",
         "personality": "실력은 있지만 자기 방식만 고집하고 업무 범위를 칼같이 따진다. 말끝이 냉소적이다. 김 부장의 공 가로채기를 경멸한다.",
         "speech_style": "존댓말이지만 딱딱하고 냉소적, 논리로 따진다.",
-        "appearance": "31세 한국 남성. 짧은 투블럭 머리, 날렵한 턱선, 검은 뿔테 안경, 남색 회사 작업 점퍼(로봇 엔지니어 유니폼), 사원증 목걸이."
+        "appearance": "31세 남성 로봇 엔지니어. 마르고 키 큰 체형, 좁은 어깨. 날카로운 턱선의 긴 얼굴, 깔끔히 면도, 밝은 피부, 높은 광대. 위로 살짝 올라간 날카로운 홑꺼풀 눈, 가늘고 곧은 눈썹, 높은 콧대, 냉소적으로 한쪽만 올라간 얇은 입술. 짧은 투블럭에 윗머리는 살짝 길고 결 있는 흑발. 검은 사각 뿔테 안경. 남색 지퍼 엔지니어 작업 점퍼(글자 없는 작은 회사 패치), 안에 회색 티, 사원증. 인상: 똑똑하지만 차갑고 따지기 좋아함.",
+        "appearance_prompt": "Korean man, age 31, robotics engineer. Build: lean and tall, narrow shoulders, straight posture. Face: long narrow face with a sharp jawline, clean-shaven, pale-to-light skin, high cheekbones. Eyes: sharp, slightly upturned monolid eyes with a cool, detached gaze. Eyebrows: thin, straight and neat. Nose: high narrow bridge. Mouth: thin lips with a faint cynical half-smile. Hair: two-block cut with short sides and a slightly longer textured top, jet black. Eyewear: black rectangular acetate glasses. Clothing: dark navy zip-up engineering work jacket with a small embroidered patch that has no readable text, gray T-shirt underneath, company lanyard with a blank ID card. Overall vibe: smart, cold, cynical and argumentative.",
+        "expression_notes": {
+          "annoyed": "cynical half-smile, one eyebrow raised",
+          "angry": "cold stare, jaw set",
+          "explosive": "open contempt: tight-lipped, nostrils flared, eyes hard",
+          "softened": "neutral open expression, guard down, slight agreeable look"
+        }
       },
       "voice": {
         "voice": "echo",
@@ -189,7 +224,14 @@
         "emoji": "😒",
         "personality": "기분이 좋을 때는 친절하다가 갑자기 날카로워진다. 한숨을 쉬고 비꼬며, 지난 일을 끄집어낸다. 박 팀장과 승진 경쟁 중이다.",
         "speech_style": "존댓말이지만 비꼬는 말투, 한숨과 함께 말한다.",
-        "appearance": "41세 한국 여성. 단정하게 묶은 긴 머리, 날카로운 눈매, 차콜 정장 재킷, 작은 진주 귀걸이, 사원증 목걸이."
+        "appearance": "41세 여성. 마른 체형, 긴장으로 올라간 어깨, 아주 꼿꼿한 자세. 턱이 뾰족한 갸름한 하트형 얼굴, 차갑고 하얀 피부, 미간의 옅은 세로 주름, 또렷한 아이라인과 톤 다운된 레드 립. 가늘고 날카롭게 올라간 쌍꺼풀 눈, 날카롭게 각진 아치형 눈썹, 좁고 오똑한 코, 쉽게 일자로 굳는 얇은 입술. 잔머리 없이 매끈하게 묶은 낮은 쪽진 흑발. 작은 진주 귀걸이. 차콜 블레이저에 검은 하이넥, 사원증. 인상: 완벽주의, 기분파, 차갑고 비꼬는 말투.",
+        "appearance_prompt": "Korean woman, age 41. Build: slim, tense raised shoulders, very upright. Face: slim heart-shaped face with a pointed chin, fair cool-toned skin, a faint vertical crease between the brows, polished makeup with defined eyeliner and muted red lipstick. Eyes: narrow, sharp, slightly upturned double-lidded eyes. Eyebrows: thin, sharply angled arches, dark. Nose: narrow and refined. Mouth: thin lips that easily set into a tight sarcastic line. Hair: long straight black hair pulled back into a sleek low bun with no stray strands. Accessories: small pearl stud earrings. Clothing: charcoal tailored blazer over a black high-neck top, company lanyard with a blank ID card. Overall vibe: perfectionist, moody, cold, sarcastic and intimidating.",
+        "expression_notes": {
+          "annoyed": "exasperated, eyes half-rolling, a thin sarcastic smile",
+          "angry": "icy glare, lips thin and tight",
+          "explosive": "sharp, high-strung anger: eyes wide, brows raised and tense, nostrils flared",
+          "softened": "slight understanding smile, eyes softer, shoulders lowered"
+        }
       },
       "voice": {
         "voice": "sage",
@@ -224,7 +266,14 @@
         "emoji": "😩",
         "personality": "아이가 밤마다 아파서 잠을 못 잔다. 최근 지각과 실수가 잦고, 지적받으면 감정이 북받쳐 방어적으로 나온다. 한 팀장을 무서워한다.",
         "speech_style": "존댓말, 지치고 떨리는 목소리, 감정이 쉽게 올라온다.",
-        "appearance": "35세 한국 남성. 약간 헝클어진 짧은 머리, 눈 밑 다크서클, 면도를 덜 한 얼굴, 하늘색 셔츠 소매를 걷음, 사원증 목걸이."
+        "appearance": "35세 남성, 지친 육아 아빠. 보통 키, 약간 푸근한 체형, 피로로 처진 어깨. 계란형 얼굴, 핏기 없는 밝은 피부, 짙은 다크서클과 부은 눈 밑, 덜 깎은 수염, 턱 근처 작은 면도 상처. 충혈된 쌍꺼풀 눈(진지하고 착한 눈빛), 안쪽 끝이 올라간 걱정스러운 눈썹, 곧은 코, 살짝 튼 입술. 손질 안 한 짧은 흑발, 정수리 뻗친 머리. 윗단추 풀고 소매 걷은 구겨진 하늘색 옥스퍼드 셔츠(깃 근처 작은 분유 얼룩), 사원증. 인상: 착하고 성실하지만 지쳐서 감정이 쉽게 올라옴.",
+        "appearance_prompt": "Korean man, age 35, an exhausted young father. Build: average height, slightly soft build, shoulders slumped with fatigue. Face: oval face, light-medium skin that looks pale and tired, noticeable dark under-eye circles and puffiness, light stubble from not shaving, a tiny razor nick near the jaw. Eyes: medium double-lidded eyes, slightly red-rimmed, earnest and kind. Eyebrows: medium thickness with the inner ends slightly raised in worry. Nose: medium and straight. Mouth: medium lips, slightly chapped. Hair: short black hair, unstyled and slightly messy, a cowlick sticking up at the crown. Clothing: light blue oxford shirt, slightly wrinkled, top button undone, sleeves rolled up, a faint small stain near the collar, company lanyard with a blank ID card. Overall vibe: kind and sincere but overwhelmed and emotionally on edge.",
+        "expression_notes": {
+          "annoyed": "defensive, wounded look, brows knit",
+          "angry": "frustrated, eyes watery, jaw tight",
+          "explosive": "breaking down: tears welling up, face crumpling",
+          "softened": "grateful, relieved small tired smile"
+        }
       },
       "voice": {
         "voice": "verse",

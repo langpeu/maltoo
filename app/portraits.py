@@ -42,28 +42,50 @@ def ext() -> str:
     return _fmt()["format"]
 
 
+# 7명 공통 촬영 조건: 같은 회사의 같은 프로필 촬영 세트에서 찍은 것처럼 통일
+PHOTO_SPEC = (
+    "Shot as an in-house employee profile photo in the same studio corner of the company headquarters, "
+    "identical setup for every employee: background is a softly blurred bright open-plan robotics office "
+    "with a white collaborative robot arm on a workbench and a warm muted-yellow accent wall, "
+    "soft key light from camera-left at 45 degrees, gentle fill light, subtle rim light on the hair, "
+    "neutral natural color grade. 85mm lens at f/2.8, camera at eye level. "
+    "Framing: square image, head-and-shoulders crop from mid-chest up, head about 45% of the frame height, "
+    "face centered horizontally, eyes at about 40% from the top, mouth at about 60% from the top, "
+    "looking straight into the camera, shoulders square to the camera. "
+    "Photorealistic, natural skin texture with visible pores, no retouching, no beauty filter, no makeup unless described. "
+    "No text, no readable letters, no logos, no watermark."
+)
+
+
 def base_prompt(s: dict) -> str:
     c = s["character"]
     company = get_config()["company"]["name"]
     return (
-        "Photorealistic head-and-shoulders portrait photograph of a fictional Korean office worker. "
-        f"Appearance: {c['appearance']} "
-        f"Works at '{company}', a robot manufacturing company; softly blurred modern office with robot arms in the background. "
-        "Subject faces the camera directly, face centered horizontally, eyes at about 40% from the top of the frame, "
-        "mouth at about 60% from the top, shoulders visible. Natural soft office lighting, 85mm lens, realistic skin texture. "
-        "This is an invented person who must not resemble any real or famous individual. No text, no logos, no watermark."
+        "Photorealistic portrait photograph of a fictional Korean office worker at "
+        f"'{company}', a robot manufacturing company.\n"
+        f"PERSON: {c['appearance_prompt']}\n"
+        "Expression for this photo: neutral and composed, mouth closed, matching the overall vibe described above.\n"
+        f"PHOTO: {PHOTO_SPEC}\n"
+        "This is an invented person and must not resemble any real or famous individual."
     )
 
 
-def expression_prompt(expr: str) -> str:
+def expression_prompt(expr: str, s: dict | None = None) -> str:
+    note = ""
+    if s:
+        note = s["character"].get("expression_notes", {}).get(expr, "")
     return (
-        "Keep exactly the same person, face shape, hairstyle, clothing, background, framing and lighting. "
-        f"Change only the facial expression to: {EXPRESSIONS[expr][1]}. Photorealistic."
+        "Keep exactly the same person: identical face shape, eyes, nose, skin, moles, hairstyle, glasses, clothing, "
+        "background, framing, camera angle and lighting. Do not change identity or age. "
+        f"Change only the facial expression to: {EXPRESSIONS[expr][1]}"
+        + (f"; specifically for this person: {note}" if note else "")
+        + ". Keep the mouth closed. Photorealistic."
     )
 
 
 TALK_PROMPT = (
-    "Keep everything identical. Only change the mouth so the person is mid-speech, "
+    "Keep everything identical: same person, same expression, same eyes and brows, same lighting. "
+    "Only change the mouth so the person is mid-speech, "
     "lips naturally parted with the mouth half open as if saying 'ah', teeth slightly visible. "
     "Keep the same facial expression and emotion. Photorealistic."
 )
@@ -137,7 +159,7 @@ def generate_one(caller, s: dict, expr: str, talk: bool) -> None:
         prompt = base_prompt(s)
         data = caller.image_generate(prompt, cost)
     elif not talk:
-        prompt = expression_prompt(expr)
+        prompt = expression_prompt(expr, s)
         data = caller.image_edit(path(cid, "calm").read_bytes(), prompt, cost)
     else:
         prompt = TALK_PROMPT

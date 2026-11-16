@@ -28,7 +28,11 @@ def test_portrait_chain_and_reuse(client, fake_openai):
     gens = [c for c in fake_openai if c[0] == "img_gen"]
     edits = [c for c in fake_openai if c[0] == "img_edit"]
     assert len(gens) == 1 and len(edits) == 9
-    assert "랑프두잇" in gens[0][1]["prompt"] and "fictional" in gens[0][1]["prompt"]
+    gp = gens[0][1]["prompt"]
+    assert "랑프두잇" in gp and "fictional" in gp
+    assert "gold-tone rectangular metal-frame glasses" in gp and "mole on the left cheek" in gp  # 상세 외모
+    assert "eyes at about 40% from the top" in gp  # 공통 촬영 조건
+    assert any("glaring over the top of his glasses" in e[1]["prompt"] for e in edits)  # 인물별 표정 지시
     assert sum(1 for e in edits if "mask" in e[1]) == 5  # 입 벌림만 마스크
     assert all(e[1]["input_fidelity"] == "high" for e in edits)
 
@@ -79,3 +83,15 @@ def test_setup_cost_not_counted_in_limit(client, fake_openai):
     assert u["session_usd"] == 0  # 연습 비용에 섞이지 않음
     r = client.post("/api/tts/say", json={"scenario_id": "kim", "text": "그래서?"}, headers=H)
     assert r.status_code == 200  # 세팅 후에도 연습 가능
+
+
+def test_all_characters_have_detailed_appearance():
+    from app import portraits, scenarios
+
+    for s in scenarios.all_scenarios():
+        c = s["character"]
+        assert len(c["appearance_prompt"]) > 500
+        for key in ("Build:", "Face:", "Eyes:", "Eyebrows:", "Nose:", "Mouth:", "Hair:", "Clothing:", "vibe"):
+            assert key in c["appearance_prompt"], (s["id"], key)
+        assert set(c["expression_notes"]) == {"annoyed", "angry", "explosive", "softened"}
+        assert c["appearance_prompt"] in portraits.base_prompt(s)
