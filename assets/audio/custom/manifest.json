@@ -1,0 +1,1514 @@
+{
+  "choi/end_fail": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "UhYcffp2PUeHcegtSWto",
+    "voice_name": "최상무",
+    "script": "[shouting, furious] 됐어! 이번 일은 자네 책임으로 정리해. 다들 나가!",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:12:50+00:00"
+  },
+  "choi/end_noresp": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "UhYcffp2PUeHcegtSWto",
+    "voice_name": "최상무",
+    "script": "[contemptuous, loud] 대답도 못 하면서 무슨 과장이야. 나가!",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:12:52+00:00"
+  },
+  "choi/end_partial": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "UhYcffp2PUeHcegtSWto",
+    "voice_name": "최상무",
+    "script": "[gruff, curt] 일단 대책부터 가져와. 얘기는 그다음이야.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:12:49+00:00"
+  },
+  "choi/end_success": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "UhYcffp2PUeHcegtSWto",
+    "voice_name": "최상무",
+    "script": "[calming down, gruff exhale] 하… 알았어. 보고했던 건 내가 놓쳤군. [curt] 대책 정리해서 오후에 다시 보자.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:12:47+00:00"
+  },
+  "choi/nag1": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "UhYcffp2PUeHcegtSWto",
+    "voice_name": "최상무",
+    "script": "[impatient, loud] 대답 안 해? 내 말 안 들려?",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:12:36+00:00"
+  },
+  "choi/nag2": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "UhYcffp2PUeHcegtSWto",
+    "voice_name": "최상무",
+    "script": "[explosive, shouting] 꿀 먹은 벙어리야? 대답하라고!",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:12:37+00:00"
+  },
+  "choi/opening": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "UhYcffp2PUeHcegtSWto",
+    "voice_name": "최상무",
+    "script": "[furious, shouting, barking] 이게 지금 말이 돼? [slams words] 일정이 이렇게 밀릴 때까지 대체 뭐 하고 있었어!",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:12:34+00:00"
+  },
+  "choi/react_angry_0": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "UhYcffp2PUeHcegtSWto",
+    "voice_name": "최상무",
+    "script": "[angry] 뭐?!",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:12:38+00:00"
+  },
+  "choi/react_angry_1": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "UhYcffp2PUeHcegtSWto",
+    "voice_name": "최상무",
+    "script": "[angry] 그걸 말이라고 해?",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:12:39+00:00"
+  },
+  "choi/react_angry_2": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "UhYcffp2PUeHcegtSWto",
+    "voice_name": "최상무",
+    "script": "[angry] 변명은 됐고!",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:12:40+00:00"
+  },
+  "choi/react_neutral_0": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "UhYcffp2PUeHcegtSWto",
+    "voice_name": "최상무",
+    "script": "그래서?",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:12:40+00:00"
+  },
+  "choi/react_neutral_1": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "UhYcffp2PUeHcegtSWto",
+    "voice_name": "최상무",
+    "script": "요점만 말해.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:12:41+00:00"
+  },
+  "choi/react_neutral_2": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "UhYcffp2PUeHcegtSWto",
+    "voice_name": "최상무",
+    "script": "음.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:12:42+00:00"
+  },
+  "choi/react_soft_0": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "UhYcffp2PUeHcegtSWto",
+    "voice_name": "최상무",
+    "script": "[softer, relaxed] …그래.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:12:43+00:00"
+  },
+  "choi/react_soft_1": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "UhYcffp2PUeHcegtSWto",
+    "voice_name": "최상무",
+    "script": "[softer, relaxed] 알았어, 계속해.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:12:44+00:00"
+  },
+  "choi/react_soft_2": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "UhYcffp2PUeHcegtSWto",
+    "voice_name": "최상무",
+    "script": "[softer, relaxed] 흠, 그건 몰랐네.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:12:45+00:00"
+  },
+  "choi/rumor_0": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "UhYcffp2PUeHcegtSWto",
+    "voice_name": "최상무",
+    "script": "[low, menacing growl] 자네가 나 없는 데서 무슨 말 했는지… 다 들었어. 각오하고 들어와.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:12:53+00:00"
+  },
+  "choi/rumor_1": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "UhYcffp2PUeHcegtSWto",
+    "voice_name": "최상무",
+    "script": "[sarcastic, rising anger] 내가 소리만 지른다고? 그 얘기 나한테까지 들어왔어!",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:12:55+00:00"
+  },
+  "han/end_fail": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "xWx59g11jh9cF4SvsFUC",
+    "voice_name": "한팀장",
+    "script": "[icy sarcasm] 됐어요. 다들 사정 있는데… 혼자만 특별한가 봐요.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:19:15+00:00"
+  },
+  "han/end_noresp": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "xWx59g11jh9cF4SvsFUC",
+    "voice_name": "한팀장",
+    "script": "[cold, dismissive] 말 안 하실 거면… 그냥 자리로 가세요.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:19:17+00:00"
+  },
+  "han/end_partial": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "xWx59g11jh9cF4SvsFUC",
+    "voice_name": "한팀장",
+    "script": "[reluctant, clipped] 일단 가세요. 근데 보고 자료는 오늘 밤까지 메일로 주세요.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:19:14+00:00"
+  },
+  "han/end_success": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "xWx59g11jh9cF4SvsFUC",
+    "voice_name": "한팀장",
+    "script": "[softening, unexpectedly warm] 알겠어요. 보고는 내일 오전에 하고, 오늘은 얼른 가 보세요. [gentle] 아이 괜찮길 바라요.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:19:12+00:00"
+  },
+  "han/nag1": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "xWx59g11jh9cF4SvsFUC",
+    "voice_name": "한팀장",
+    "script": "[cutting, condescending] 왜 대답이 없어요? 할 말 없죠?",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:18:59+00:00"
+  },
+  "han/nag2": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "xWx59g11jh9cF4SvsFUC",
+    "voice_name": "한팀장",
+    "script": "[heavy exasperated sigh] 하… [cold, dismissive] 됐어요. 알아서 하세요.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:19:01+00:00"
+  },
+  "han/opening": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "xWx59g11jh9cF4SvsFUC",
+    "voice_name": "한팀장",
+    "script": "[heavy exasperated sigh] 하아… [sarcastic, sharp] 또요? 지난주에도 조퇴했잖아요. 다른 사람들은 사정이 없어서 남아 있는 줄 알아요?",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:18:58+00:00"
+  },
+  "han/react_angry_0": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "xWx59g11jh9cF4SvsFUC",
+    "voice_name": "한팀장",
+    "script": "[angry] 하… 진짜.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:19:02+00:00"
+  },
+  "han/react_angry_1": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "xWx59g11jh9cF4SvsFUC",
+    "voice_name": "한팀장",
+    "script": "[angry] 지금 저한테 짜증 내는 거예요?",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:19:03+00:00"
+  },
+  "han/react_angry_2": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "xWx59g11jh9cF4SvsFUC",
+    "voice_name": "한팀장",
+    "script": "[angry] 또 시작이네요.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:19:04+00:00"
+  },
+  "han/react_neutral_0": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "xWx59g11jh9cF4SvsFUC",
+    "voice_name": "한팀장",
+    "script": "그래서요?",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:19:05+00:00"
+  },
+  "han/react_neutral_1": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "xWx59g11jh9cF4SvsFUC",
+    "voice_name": "한팀장",
+    "script": "네, 계속하세요.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:19:06+00:00"
+  },
+  "han/react_neutral_2": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "xWx59g11jh9cF4SvsFUC",
+    "voice_name": "한팀장",
+    "script": "흠…",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:19:07+00:00"
+  },
+  "han/react_soft_0": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "xWx59g11jh9cF4SvsFUC",
+    "voice_name": "한팀장",
+    "script": "[softer, relaxed] …그래요.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:19:08+00:00"
+  },
+  "han/react_soft_1": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "xWx59g11jh9cF4SvsFUC",
+    "voice_name": "한팀장",
+    "script": "[softer, relaxed] 아, 그건 몰랐네요.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:19:09+00:00"
+  },
+  "han/react_soft_2": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "xWx59g11jh9cF4SvsFUC",
+    "voice_name": "한팀장",
+    "script": "[softer, relaxed] 알겠어요.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:19:10+00:00"
+  },
+  "han/rumor_0": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "xWx59g11jh9cF4SvsFUC",
+    "voice_name": "한팀장",
+    "script": "[sarcastic, disappointed] 저 없는 데서 제 얘기 하셨다면서요? 참… 실망이네요.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:19:18+00:00"
+  },
+  "han/rumor_1": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "xWx59g11jh9cF4SvsFUC",
+    "voice_name": "한팀장",
+    "script": "[heavy sigh] 하… [icy] 제 험담 하고 다니신다는 얘기 들었어요.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:19:20+00:00"
+  },
+  "jung/end_fail": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "cBu7ikEsSIRX7J6CBySJ",
+    "voice_name": "정주임",
+    "script": "[cold, curt] 그럼 다른 분께 맡기시죠. 저는 못 합니다.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:18:31+00:00"
+  },
+  "jung/end_noresp": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "cBu7ikEsSIRX7J6CBySJ",
+    "voice_name": "정주임",
+    "script": "[dismissive, flat] 답이 없으시니 이 건은 없던 걸로 하겠습니다.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:18:32+00:00"
+  },
+  "jung/end_partial": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "cBu7ikEsSIRX7J6CBySJ",
+    "voice_name": "정주임",
+    "script": "[noncommittal, flat] 일단 검토는 해 보겠습니다.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:18:29+00:00"
+  },
+  "jung/end_resign": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "cBu7ikEsSIRX7J6CBySJ",
+    "voice_name": "정주임",
+    "script": "[calm, cold, decided] 더 이상 여기서 배울 게 없는 것 같네요. 사직서 내겠습니다.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:18:34+00:00"
+  },
+  "jung/end_success": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "cBu7ikEsSIRX7J6CBySJ",
+    "voice_name": "정주임",
+    "script": "[reserved, businesslike] 알겠습니다. 2주만입니다. 방식은 말씀드린 대로 조정해서 하겠습니다.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:18:27+00:00"
+  },
+  "jung/nag1": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "cBu7ikEsSIRX7J6CBySJ",
+    "voice_name": "정주임",
+    "script": "[cynical, smug] 답이 없으신 거 보니… 제 말이 맞는 거죠?",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:18:24+00:00"
+  },
+  "jung/nag2": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "cBu7ikEsSIRX7J6CBySJ",
+    "voice_name": "정주임",
+    "script": "[icy, dismissive] 그럼 이 건은 없던 걸로 하겠습니다.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:18:25+00:00"
+  },
+  "jung/opening": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "cBu7ikEsSIRX7J6CBySJ",
+    "voice_name": "정주임",
+    "script": "[cold, flat, precise] 그건 제 업무 범위가 아닌 것 같은데요. [faint scoff] 그리고 그 방식은 비효율적이라, 하게 되더라도 제 방식대로 할게요.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:18:23+00:00"
+  },
+  "jung/react_angry_0": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "cBu7ikEsSIRX7J6CBySJ",
+    "voice_name": "정주임",
+    "script": "[angry] 지금 명령하시는 겁니까?",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:18:41+00:00"
+  },
+  "jung/react_angry_1": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "cBu7ikEsSIRX7J6CBySJ",
+    "voice_name": "정주임",
+    "script": "[angry] 하, 네.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:18:42+00:00"
+  },
+  "jung/react_angry_2": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "cBu7ikEsSIRX7J6CBySJ",
+    "voice_name": "정주임",
+    "script": "[angry] 논리적으로 말씀해 주시죠.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:18:43+00:00"
+  },
+  "jung/react_neutral_0": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "cBu7ikEsSIRX7J6CBySJ",
+    "voice_name": "정주임",
+    "script": "그래서요?",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:18:44+00:00"
+  },
+  "jung/react_neutral_1": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "cBu7ikEsSIRX7J6CBySJ",
+    "voice_name": "정주임",
+    "script": "네, 들어보죠.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:18:45+00:00"
+  },
+  "jung/react_neutral_2": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "cBu7ikEsSIRX7J6CBySJ",
+    "voice_name": "정주임",
+    "script": "흠.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:18:46+00:00"
+  },
+  "jung/react_soft_0": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "cBu7ikEsSIRX7J6CBySJ",
+    "voice_name": "정주임",
+    "script": "[softer, relaxed] …그건 일리가 있네요.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:18:47+00:00"
+  },
+  "jung/react_soft_1": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "cBu7ikEsSIRX7J6CBySJ",
+    "voice_name": "정주임",
+    "script": "[softer, relaxed] 알겠습니다.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:18:48+00:00"
+  },
+  "jung/react_soft_2": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "cBu7ikEsSIRX7J6CBySJ",
+    "voice_name": "정주임",
+    "script": "[softer, relaxed] 그 정도면 괜찮겠네요.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:18:49+00:00"
+  },
+  "jung/rumor_0": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "cBu7ikEsSIRX7J6CBySJ",
+    "voice_name": "정주임",
+    "script": "[cold, quietly threatening] 제 얘기를 위에 하셨다고 들었습니다. 그런 식이면… 저도 생각이 있습니다.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:18:36+00:00"
+  },
+  "jung/rumor_1": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "cBu7ikEsSIRX7J6CBySJ",
+    "voice_name": "정주임",
+    "script": "[sharp, cynical] 저 없는 자리에서 제 평가를 하셨다던데요.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:18:37+00:00"
+  },
+  "kim/end_fail": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "vEOKSaehLYwtSWPCAtyO",
+    "voice_name": " 진짜김부장",
+    "script": "[fed up, loud and harsh] 됐어! 자네는 자료나 넘겨. [cold] 이만… 나가봐.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T07:55:47+00:00"
+  },
+  "kim/end_noresp": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "vEOKSaehLYwtSWPCAtyO",
+    "voice_name": " 진짜김부장",
+    "script": "[mocking scoff] 허, 말이 없는 걸 보니… 내 말대로 하겠다는 거지? [nasty chuckle] 흐흐, 나가봐.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T07:55:49+00:00"
+  },
+  "kim/end_partial": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "vEOKSaehLYwtSWPCAtyO",
+    "voice_name": " 진짜김부장",
+    "script": "[evasive, waving it off] 일단… 알았으니까, 다음에 다시 얘기하자고.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T07:55:45+00:00"
+  },
+  "kim/end_success": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "vEOKSaehLYwtSWPCAtyO",
+    "voice_name": " 진짜김부장",
+    "script": "[grudgingly persuaded, smug] 흐흐… 좋아. 이번 보고는 자네랑 같이 들어가지. 준비 잘~ 해 와.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T07:55:43+00:00"
+  },
+  "kim/react_angry_0": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "vEOKSaehLYwtSWPCAtyO",
+    "voice_name": " 진짜김부장",
+    "script": "[offended, suddenly louder] 뭐? 지금… 나한테 하는 소리야?",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T07:55:31+00:00"
+  },
+  "kim/react_angry_1": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "vEOKSaehLYwtSWPCAtyO",
+    "voice_name": " 진짜김부장",
+    "script": "[disbelieving scoff] 허… [long annoyed exhale] 참.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T07:55:32+00:00"
+  },
+  "kim/react_angry_2": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "vEOKSaehLYwtSWPCAtyO",
+    "voice_name": " 진짜김부장",
+    "script": "[warning, fake smile, slow] 자네… 말이 좀 세다?",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T07:55:34+00:00"
+  },
+  "kim/react_neutral_0": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "vEOKSaehLYwtSWPCAtyO",
+    "voice_name": " 진짜김부장",
+    "script": "[bored, unimpressed hum] 음…",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T07:55:35+00:00"
+  },
+  "kim/react_neutral_1": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "vEOKSaehLYwtSWPCAtyO",
+    "voice_name": " 진짜김부장",
+    "script": "[lazy, dismissive] 그래서?",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T07:55:36+00:00"
+  },
+  "kim/react_neutral_2": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "vEOKSaehLYwtSWPCAtyO",
+    "voice_name": " 진짜김부장",
+    "script": "[skeptical, drawling] 흠~ 계속해 봐.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T07:55:37+00:00"
+  },
+  "kim/react_soft_0": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "vEOKSaehLYwtSWPCAtyO",
+    "voice_name": " 진짜김부장",
+    "script": "[placating, amused] 그래, 그래~",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T07:55:38+00:00"
+  },
+  "kim/react_soft_1": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "vEOKSaehLYwtSWPCAtyO",
+    "voice_name": " 진짜김부장",
+    "script": "[grudging, reluctant] 음… 일리는 있네.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T07:55:39+00:00"
+  },
+  "kim/react_soft_2": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "vEOKSaehLYwtSWPCAtyO",
+    "voice_name": " 진짜김부장",
+    "script": "[greasy chuckle, loosened up] 허허, 알았어 알았어.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T07:55:41+00:00"
+  },
+  "kim/rumor_0": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "vEOKSaehLYwtSWPCAtyO",
+    "voice_name": " 진짜김부장",
+    "script": "[sarcastic, fake friendly, icy] 자네~ 요즘 내 얘기를 하고 다닌다며? [cold] …다 들었어.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T07:55:51+00:00"
+  },
+  "kim/rumor_1": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "vEOKSaehLYwtSWPCAtyO",
+    "voice_name": " 진짜김부장",
+    "script": "[sneering, slow and probing] 어디서 들었는데 말이야… 내가 공을 가로챈다고 했다며? 응?",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T07:55:53+00:00"
+  },
+  "lee/end_fail": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "PexhzX9gosdV09tQU0WF",
+    "voice_name": "이사원",
+    "script": "[shutting down, flat, barely audible] …네. 알겠습니다.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:13:23+00:00"
+  },
+  "lee/end_noresp": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "PexhzX9gosdV09tQU0WF",
+    "voice_name": "이사원",
+    "script": "[sulky, quiet] 말씀 없으시면… 저 그냥 자리로 갈게요.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:13:25+00:00"
+  },
+  "lee/end_partial": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "PexhzX9gosdV09tQU0WF",
+    "voice_name": "이사원",
+    "script": "[unconvinced, trailing off] 네, 일단 해 볼게요…",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:13:22+00:00"
+  },
+  "lee/end_resign": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "PexhzX9gosdV09tQU0WF",
+    "voice_name": "이사원",
+    "script": "[quiet, shaky, giving up] 저… 이번 달까지만 다닐게요. [voice breaking] 더는 못 하겠어요.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:13:27+00:00"
+  },
+  "lee/end_success": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "PexhzX9gosdV09tQU0WF",
+    "voice_name": "이사원",
+    "script": "[quietly relieved, sincere] …알겠습니다. 내일 오후 3시까지 꼭 드릴게요. 앞으로는 중간에 미리 말씀드릴게요.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:13:21+00:00"
+  },
+  "lee/nag1": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "PexhzX9gosdV09tQU0WF",
+    "voice_name": "이사원",
+    "script": "[uneasy, quiet] …과장님? 왜 아무 말씀 안 하세요?",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:13:07+00:00"
+  },
+  "lee/nag2": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "PexhzX9gosdV09tQU0WF",
+    "voice_name": "이사원",
+    "script": "[passive-aggressive, mumbling] 말씀 없으신 거 보니… 저만 잘못한 건 아니네요.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:13:09+00:00"
+  },
+  "lee/opening": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "PexhzX9gosdV09tQU0WF",
+    "voice_name": "이사원",
+    "script": "[defensive, whiny, trailing off] 아, 그거요… 다른 팀에서 자료를 늦게 줘서요. [small sigh] 근데 솔직히 그 일정은… 처음부터 좀 무리였어요.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:13:06+00:00"
+  },
+  "lee/react_angry_0": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "PexhzX9gosdV09tQU0WF",
+    "voice_name": "이사원",
+    "script": "[angry] 아니, 그게 제 잘못이에요?",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:13:10+00:00"
+  },
+  "lee/react_angry_1": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "PexhzX9gosdV09tQU0WF",
+    "voice_name": "이사원",
+    "script": "[angry] …네, 그러시겠죠.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:13:11+00:00"
+  },
+  "lee/react_angry_2": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "PexhzX9gosdV09tQU0WF",
+    "voice_name": "이사원",
+    "script": "[angry] 왜 저한테만 그러세요?",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:13:12+00:00"
+  },
+  "lee/react_neutral_0": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "PexhzX9gosdV09tQU0WF",
+    "voice_name": "이사원",
+    "script": "…네.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:13:13+00:00"
+  },
+  "lee/react_neutral_1": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "PexhzX9gosdV09tQU0WF",
+    "voice_name": "이사원",
+    "script": "그래서요?",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:13:13+00:00"
+  },
+  "lee/react_neutral_2": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "PexhzX9gosdV09tQU0WF",
+    "voice_name": "이사원",
+    "script": "음…",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:13:14+00:00"
+  },
+  "lee/react_soft_0": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "PexhzX9gosdV09tQU0WF",
+    "voice_name": "이사원",
+    "script": "[softer, relaxed] 아… 네.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:13:16+00:00"
+  },
+  "lee/react_soft_1": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "PexhzX9gosdV09tQU0WF",
+    "voice_name": "이사원",
+    "script": "[softer, relaxed] 그건 그렇네요.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:13:17+00:00"
+  },
+  "lee/react_soft_2": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "PexhzX9gosdV09tQU0WF",
+    "voice_name": "이사원",
+    "script": "[softer, relaxed] 네, 알겠어요.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:13:18+00:00"
+  },
+  "lee/rumor_0": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "PexhzX9gosdV09tQU0WF",
+    "voice_name": "이사원",
+    "script": "[hurt, accusing, quiet] …과장님이 저 일 못한다고 하셨다면서요?",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:13:28+00:00"
+  },
+  "lee/rumor_1": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "PexhzX9gosdV09tQU0WF",
+    "voice_name": "이사원",
+    "script": "[wounded, sulky] 저에 대해 안 좋게 말씀하셨다는 얘기… 들었어요.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:13:30+00:00"
+  },
+  "park/end_fail": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "wQydwqVlhWvgHt2xMtE7",
+    "voice_name": "박팀장",
+    "script": "[hurt, loud sulking sigh] 하… 됐어, 내가 하지 뭐. [passive-aggressive] 다들 바쁘다고 하니까.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:11:20+00:00"
+  },
+  "park/end_noresp": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "wQydwqVlhWvgHt2xMtE7",
+    "voice_name": "박팀장",
+    "script": "[brushing past it, fake cheerful] 대답 없으면 하는 걸로 알게. 부탁해~",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:11:21+00:00"
+  },
+  "park/end_partial": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "wQydwqVlhWvgHt2xMtE7",
+    "voice_name": "박팀장",
+    "script": "[reluctant, a little sulky] 일단 오늘은 가. 근데 다음엔… 미리 말해 줘.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:11:18+00:00"
+  },
+  "park/end_success": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "wQydwqVlhWvgHt2xMtE7",
+    "voice_name": "박팀장",
+    "script": "[relieved, bright again] 알았어, 그럼 월요일 아침 9시까지 부탁해. 오늘은 들어가 봐.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:11:16+00:00"
+  },
+  "park/nag1": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "wQydwqVlhWvgHt2xMtE7",
+    "voice_name": "박팀장",
+    "script": "[impatient, sing-song pressure] 왜 대답을 안 해? 바빠?",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:11:12+00:00"
+  },
+  "park/nag2": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "wQydwqVlhWvgHt2xMtE7",
+    "voice_name": "박팀장",
+    "script": "[sulky, fake-sweet, final] 그냥… 한다는 걸로 알게.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:11:14+00:00"
+  },
+  "park/opening": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "wQydwqVlhWvgHt2xMtE7",
+    "voice_name": "박팀장",
+    "script": "[cheerful, breezy, overly familiar, talking fast] 과장님~ 이거 월요일 아침 회의 자료인데, 오늘 좀 정리해 줄 수 있지? [light dismissive laugh] 오래 안 걸려.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:11:11+00:00"
+  },
+  "park/react_angry_0": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "wQydwqVlhWvgHt2xMtE7",
+    "voice_name": "박팀장",
+    "script": "[angry] 아니, 지금 그게 무슨 말이야?",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:12:17+00:00"
+  },
+  "park/react_angry_1": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "wQydwqVlhWvgHt2xMtE7",
+    "voice_name": "박팀장",
+    "script": "[angry] 하, 진짜…",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:12:18+00:00"
+  },
+  "park/react_angry_2": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "wQydwqVlhWvgHt2xMtE7",
+    "voice_name": "박팀장",
+    "script": "[angry] 나 지금 바쁜 거 안 보여?",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:12:19+00:00"
+  },
+  "park/react_neutral_0": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "wQydwqVlhWvgHt2xMtE7",
+    "voice_name": "박팀장",
+    "script": "응, 그래서?",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:12:20+00:00"
+  },
+  "park/react_neutral_1": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "wQydwqVlhWvgHt2xMtE7",
+    "voice_name": "박팀장",
+    "script": "음… 빨리 말해 봐.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:12:21+00:00"
+  },
+  "park/react_neutral_2": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "wQydwqVlhWvgHt2xMtE7",
+    "voice_name": "박팀장",
+    "script": "어, 듣고 있어.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:12:22+00:00"
+  },
+  "park/react_soft_0": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "wQydwqVlhWvgHt2xMtE7",
+    "voice_name": "박팀장",
+    "script": "[softer, relaxed] 아, 그렇구나.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:12:23+00:00"
+  },
+  "park/react_soft_1": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "wQydwqVlhWvgHt2xMtE7",
+    "voice_name": "박팀장",
+    "script": "[softer, relaxed] 응, 그럴 수 있지.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:12:24+00:00"
+  },
+  "park/react_soft_2": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "wQydwqVlhWvgHt2xMtE7",
+    "voice_name": "박팀장",
+    "script": "[softer, relaxed] 알았어, 알았어.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:12:25+00:00"
+  },
+  "park/rumor_0": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "wQydwqVlhWvgHt2xMtE7",
+    "voice_name": "박팀장",
+    "script": "[wounded, sulking] 과장, 나 없는 데서 내 얘기 했다며? 서운하네…",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:11:23+00:00"
+  },
+  "park/rumor_1": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "wQydwqVlhWvgHt2xMtE7",
+    "voice_name": "박팀장",
+    "script": "[hurt, probing] 어디서 들었는데… 내가 일정 무리하게 잡는다고 했다며?",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:11:25+00:00"
+  },
+  "yoon/end_fail": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "IAOjLWU21i5dMtHyCGkd",
+    "voice_name": "윤대리",
+    "script": "[bitter, broken] …네. 제가 다 잘못했죠.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:19:51+00:00"
+  },
+  "yoon/end_noresp": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "IAOjLWU21i5dMtHyCGkd",
+    "voice_name": "윤대리",
+    "script": "[hurt, quiet] …아무 말씀 없으시네요. 자리로 가 볼게요.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:19:53+00:00"
+  },
+  "yoon/end_partial": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "IAOjLWU21i5dMtHyCGkd",
+    "voice_name": "윤대리",
+    "script": "[tired, uncertain] 네… 일단 노력해 볼게요.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:19:50+00:00"
+  },
+  "yoon/end_resign": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "IAOjLWU21i5dMtHyCGkd",
+    "voice_name": "윤대리",
+    "script": "[quiet, exhausted, voice breaking] 죄송합니다. 그냥… 그만두는 게 모두를 위한 것 같아요.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:19:54+00:00"
+  },
+  "yoon/end_success": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "IAOjLWU21i5dMtHyCGkd",
+    "voice_name": "윤대리",
+    "script": "[relieved, grateful, a little teary] 말씀 감사합니다, 과장님. 유연근무 신청하고, 자료는 이번 주 안에 다시 검토해서 드릴게요.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:19:48+00:00"
+  },
+  "yoon/nag1": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "IAOjLWU21i5dMtHyCGkd",
+    "voice_name": "윤대리",
+    "script": "[anxious, small voice] …과장님?",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:19:35+00:00"
+  },
+  "yoon/nag2": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "IAOjLWU21i5dMtHyCGkd",
+    "voice_name": "윤대리",
+    "script": "[defeated, on the verge of tears] 역시… 제가 그냥 그만두는 게 낫겠죠.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:19:37+00:00"
+  },
+  "yoon/opening": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "IAOjLWU21i5dMtHyCGkd",
+    "voice_name": "윤대리",
+    "script": "[exhausted, shaky voice] …죄송합니다. 근데 과장님, 요즘 애가 밤마다 아파서 거의 못 자요. [voice cracking, emotional] 저 정말 최선 다하고 있는 거예요.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:19:34+00:00"
+  },
+  "yoon/react_angry_0": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "IAOjLWU21i5dMtHyCGkd",
+    "voice_name": "윤대리",
+    "script": "[angry] …제가 놀았다는 거예요?",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:19:38+00:00"
+  },
+  "yoon/react_angry_1": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "IAOjLWU21i5dMtHyCGkd",
+    "voice_name": "윤대리",
+    "script": "[angry] 저도 힘들다고요.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:19:39+00:00"
+  },
+  "yoon/react_angry_2": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "IAOjLWU21i5dMtHyCGkd",
+    "voice_name": "윤대리",
+    "script": "[angry] 하…",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:19:40+00:00"
+  },
+  "yoon/react_neutral_0": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "IAOjLWU21i5dMtHyCGkd",
+    "voice_name": "윤대리",
+    "script": "…네.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:19:41+00:00"
+  },
+  "yoon/react_neutral_1": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "IAOjLWU21i5dMtHyCGkd",
+    "voice_name": "윤대리",
+    "script": "네, 듣고 있어요.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:19:42+00:00"
+  },
+  "yoon/react_neutral_2": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "IAOjLWU21i5dMtHyCGkd",
+    "voice_name": "윤대리",
+    "script": "음…",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:19:43+00:00"
+  },
+  "yoon/react_soft_0": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "IAOjLWU21i5dMtHyCGkd",
+    "voice_name": "윤대리",
+    "script": "[softer, relaxed] …감사합니다.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:19:44+00:00"
+  },
+  "yoon/react_soft_1": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "IAOjLWU21i5dMtHyCGkd",
+    "voice_name": "윤대리",
+    "script": "[softer, relaxed] 네… 그렇게 말씀해 주시니.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:19:45+00:00"
+  },
+  "yoon/react_soft_2": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "IAOjLWU21i5dMtHyCGkd",
+    "voice_name": "윤대리",
+    "script": "[softer, relaxed] 네, 알겠어요.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:19:46+00:00"
+  },
+  "yoon/rumor_0": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "IAOjLWU21i5dMtHyCGkd",
+    "voice_name": "윤대리",
+    "script": "[hurt, shaky] …과장님도 제가 자꾸 빠진다고 하셨다면서요.",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:19:56+00:00"
+  },
+  "yoon/rumor_1": {
+    "source": "elevenlabs",
+    "model": "eleven_v4",
+    "voice_id": "IAOjLWU21i5dMtHyCGkd",
+    "voice_name": "윤대리",
+    "script": "[emotional, voice trembling] 제 얘기 하셨다는 거 들었어요. 저 정말 열심히 하고 있는데…",
+    "voice_settings": {
+      "stability": 0.2,
+      "similarity_boost": 0.3
+    },
+    "created": "2026-11-16T08:19:58+00:00"
+  }
+}
