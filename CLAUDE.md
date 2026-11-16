@@ -33,7 +33,7 @@ maltoo/
 │  │  ├─ audio/         # 녹음, VAD(3초/1.5초), 음높이·음량·속도·끝억양 측정
 │  │  ├─ face/          # MediaPipe Face Landmarker, 표정 지표 집계
 │  │  ├─ ui/            # 오른쪽 패널, 하단 파형/체크포인트 띠, 인물 이미지 전환, ElevenLabs 창
-│  │  ├─ views/         # 화면별 모듈 (history.js 기록, setup.js 초기 세팅) — main.js 에서 하나씩 옮기는 중
+│  │  ├─ views/         # 화면별 모듈: history(기록) · setup(초기 세팅) · report(교정 리포트) · game(연봉·퇴사·인사고과) — 남은 것(측정·대화)은 main.js
 │  │  ├─ util.js        # $, esc, toast, showError
 │  │  └─ session.js     # 턴 상태 머신
 │  └─ css/
