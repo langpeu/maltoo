@@ -225,3 +225,17 @@ def test_goal_progress_robust():
     assert r["checklist_done"] == [s["checklist"][0]] and r["goal_progress"] >= 33
     r = character.parse(json.dumps({"reply": "음", "goal_progress": 10}), s, 2, prev_progress=50)
     assert r["goal_progress"] == 50
+
+
+def test_history_not_reply_only_json():
+    """이전 상대 대사를 {"reply":...} JSON 으로 넣으면 모델이 reply 만 답하게 된다 → 평문 + 출력 형식 안내."""
+    from app.prompts import character
+    from app import scenarios
+    s = scenarios.get("kim")
+    hist = [{"speaker": "npc", "text": s["opening"]}, {"speaker": "me", "text": "네"}, {"speaker": "npc", "text": "그래서?"}]
+    for h in ([], hist):
+        msgs = character.build_messages(s, h, "제 기여입니다", 2)
+        for m in msgs:
+            if m["role"] == "assistant":
+                assert not m["content"].lstrip().startswith("{"), m
+        assert "goal_progress" in msgs[-1]["content"] and "emotion" in msgs[-1]["content"]

@@ -83,18 +83,23 @@ def build_messages(s: dict, history: list[dict], user_text: str, turn_index: int
                    tone: dict | None = None, face: dict | None = None, difficulty: str = "normal",
                    world_ctx: str = "") -> list[dict]:
     msgs = [{"role": "system", "content": system_prompt(s, turn_index, difficulty, world_ctx)}]
+    # 이전 상대 대사는 JSON 이 아니라 평문으로 넣는다.
+    # ({"reply": ...} 만 넣으면 모델이 그걸 따라 해서 emotion·goal_progress 를 빼먹고 reply 만 답한다 → 감정 50, 목표 0% 고정)
     if not history:  # 첫마디(소문 버전 포함)는 클라이언트 history 첫 줄로 온다
-        msgs.append({"role": "assistant", "content": json.dumps({"reply": s["opening"]}, ensure_ascii=False)})
+        msgs.append({"role": "assistant", "content": s["opening"]})
     for h in history:
         if h.get("speaker") == "me":
             msgs.append({"role": "user", "content": h.get("text", "")})
         else:
-            msgs.append({"role": "assistant", "content": json.dumps({"reply": h.get("text", "")}, ensure_ascii=False)})
+            msgs.append({"role": "assistant", "content": h.get("text", "")})
     content = user_text or "(말이 없음)"
     if tone:
         content += "\n\n[목소리 톤 측정]\n" + describe_tone(tone)
     if face:
         content += "\n\n[표정 측정 — 상대(너)가 보고 있는 과장의 얼굴]\n" + describe_face(face)
+    content += ("\n\n[출력 형식] 위 과장의 말에 대해, 시스템에 적힌 JSON 형식 전체로만 답한다. "
+                "reply 하나만 쓰지 말고 emotion, reason, goal_progress(지금까지 기준), checklist_done(번호), "
+                "checkpoints, tone_feedback, mentions, team_issue_addressed, ending 을 모두 채운다.")
     msgs.append({"role": "user", "content": content})
     return msgs
 
