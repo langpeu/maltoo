@@ -3,7 +3,7 @@ import { Mic } from "./audio/mic.js";
 import { Conversation } from "./session.js";
 import { addPin, clearBand, initBand, pushLevel } from "./ui/band.js";
 import { analyzeFrame, computeBaseline, ToneTracker } from "./audio/tone.js";
-import { FaceCam } from "./face/camera.js";
+import { drawLandmarks, FaceCam } from "./face/camera.js";
 import { computeFaceBaseline, FaceTracker, PHASE_LABEL } from "./face/metrics.js";
 import { renderCost, resetCost } from "./ui/cost-panel.js";
 import {
@@ -134,6 +134,35 @@ function setupFace() {
   });
   return { cam: faceCam, tracker };
 }
+
+// ---------- 표정 인식 상태 표시 ----------
+function faceMiniHtml(f) {
+  if (!f || !f.face) return "";
+  const b = faceCam.tracker ? faceCam.tracker.b : { brow: 0.12, smile: 0.12 };
+  const frown = Math.max(0, Math.min(1, (f.m.brow - b.brow) / 0.4));
+  const smile = Math.max(0, Math.min(1, f.m.smile));
+  const front = f.flags.away ? 0.2 : 1 - Math.min(0.8, Math.abs(f.m.yaw) * 4);
+  const row = (label, v, hot) => `<div class="fm-row"><span>${label}</span><div class="fm-bar"><i class="${hot ? "hot" : ""}" style="width:${Math.round(v * 100)}%"></i></div><b>${Math.round(v * 100)}</b></div>`;
+  return row("찌푸림", frown, f.flags.frown) + row("미소", smile, false) + row("시선 정면", front, f.flags.away);
+}
+
+function updateFaceUI() {
+  const h = faceCam.health();
+  const views = [
+    { chip: "bl-face-chip", mini: "bl-face-mini", overlay: "bl-overlay", visible: !$("view-baseline").hidden },
+    { chip: "face-chip", mini: "face-mini", overlay: "self-overlay", visible: !$("view-talk").hidden },
+  ];
+  for (const v of views) {
+    if (!v.visible) continue;
+    $(v.chip).textContent = h.text;
+    $(v.chip).className = `face-chip ${v.chip === "face-chip" ? "inline " : ""}${h.state}`;
+    $(v.mini).innerHTML = h.state === "ok" || h.state === "warn" ? faceMiniHtml(faceCam.lastFrame) : "";
+    drawLandmarks($(v.overlay), faceCam.running ? faceCam.lastLandmarks : null, h.state);
+  }
+  $("selfview").classList.remove("ok", "warn", "error");
+  if (["ok", "warn", "error"].includes(h.state)) $("selfview").classList.add(h.state);
+}
+setInterval(updateFaceUI, 100);
 
 $("btn-self-hide").addEventListener("click", () => { selfHidden = true; $("selfview").hidden = true; $("btn-self-show").hidden = false; });
 $("btn-self-show").addEventListener("click", () => { selfHidden = false; $("selfview").hidden = false; $("btn-self-show").hidden = true; });
@@ -295,8 +324,10 @@ function openBaseline(mode) {
   blMode = mode;
   document.querySelectorAll("#bl-lines li").forEach((li) => li.classList.remove("now", "done"));
   $("bl-cam-off").hidden = true;
-  openCamera($("bl-video")).then((ok) => {
-    if (!ok) { $("bl-cam-off").hidden = false; $("bl-cam-off").textContent = "📷 카메라를 쓸 수 없습니다 (목소리만 측정)"; }
+  openCamera($("bl-video")).then(async (ok) => {
+    if (!ok) { $("bl-cam-off").hidden = false; $("bl-cam-off").textContent = "📷 카메라를 쓸 수 없습니다 (목소리만 측정)"; return; }
+    // 측정 전에도 얼굴 인식이 되는지 바로 보이도록 미리보기 분석 시작
+    if (faceCfg && (await faceCam.prepare(faceCfg))) faceCam.start(new FaceTracker(null), { fps: faceCfg.fps });
   });
   $("bl-status").textContent = '준비되면 "측정 시작"을 누르세요';
   $("bl-sec").textContent = "0 / 5문장";

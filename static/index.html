@@ -93,7 +93,10 @@
         <div class="bl-grid">
           <div class="bl-cam">
             <video id="bl-video" autoplay muted playsinline></video>
+            <canvas class="lm-overlay" id="bl-overlay"></canvas>
             <div class="bl-cam-off" id="bl-cam-off">📷 카메라 꺼짐</div>
+            <div class="face-chip" id="bl-face-chip">📷 카메라 꺼짐</div>
+            <div class="face-mini" id="bl-face-mini"></div>
             <p class="small muted" id="bl-cam-note">얼굴이 화면 가운데 오고, 밝은 곳이면 좋습니다. 읽는 동안 평소 표정도 함께 측정합니다. 영상은 저장하거나 보내지 않습니다.</p>
           </div>
           <ol class="read-list" id="bl-lines">
@@ -132,6 +135,7 @@
             <div class="p-tag"><b id="talk-name">이름</b><span id="p-expr">평온</span></div>
             <div class="selfview" id="selfview" hidden>
               <video id="self-video" autoplay muted playsinline></video>
+              <canvas class="lm-overlay" id="self-overlay"></canvas>
               <span class="self-flag" id="self-flag"></span>
               <button class="self-hide" id="btn-self-hide" type="button" title="연습 중 내 얼굴을 보면 평소와 다르게 행동하기 쉽습니다">숨기기</button>
             </div>
@@ -191,6 +195,8 @@
         <div class="meter"><span>차가움</span><div class="meter-track warm"><div class="meter-dot" id="m-warmth"></div></div><span>따뜻함</span></div>
         <p class="reason small" id="tone-note">말하는 동안 실시간으로 움직입니다.</p>
         <div class="panel-head tone-head"><h2>🙂 내 표정</h2><span class="small muted" id="face-base"></span></div>
+        <div class="face-chip inline" id="face-chip">📷 카메라 꺼짐</div>
+        <div class="face-mini" id="face-mini"></div>
         <p class="reason small" id="face-note">카메라를 켜면 표정도 함께 분석합니다.</p>
       </section>
       <section class="card panel-block" id="cost-panel">

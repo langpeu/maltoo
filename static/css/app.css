@@ -419,3 +419,23 @@ code { background: var(--yellow-soft); border: 1px solid var(--ink); border-radi
 .pr-cue.live { color: var(--danger); }
 .read-list li.done::after { content: " ✓"; font-weight: 900; color: var(--ok); }
 .read-list li.done { opacity: .6; }
+
+/* 표정 인식 상태 */
+.lm-overlay { position: absolute; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; }
+.bl-cam .lm-overlay { aspect-ratio: 4 / 3; height: auto; border-radius: 14px; }
+.face-chip { margin-top: 8px; display: inline-block; font-size: 12px; font-weight: 800; border: 2px solid var(--ink);
+  border-radius: 999px; padding: 2px 10px; background: #f3f3f3; }
+.face-chip.inline { margin: 0 0 6px; }
+.face-chip.ok { background: #d3f9d8; }
+.face-chip.warn { background: #fff3bf; }
+.face-chip.error { background: #ffc9c9; }
+.face-chip.loading { background: #e7f5ff; }
+.face-mini { display: grid; gap: 3px; margin: 6px 0; font-size: 11px; font-weight: 700; }
+.face-mini:empty { display: none; }
+.fm-row { display: grid; grid-template-columns: 56px 1fr 30px; gap: 6px; align-items: center; }
+.fm-bar { height: 8px; border: 2px solid var(--ink); border-radius: 999px; overflow: hidden; }
+.fm-bar i { display: block; height: 100%; background: var(--yellow); transition: width .2s; }
+.fm-bar i.hot { background: var(--danger); }
+.fm-row b { text-align: right; }
+.selfview.ok { border-color: #2b8a3e; }
+.selfview.warn, .selfview.error { border-color: var(--danger); }
