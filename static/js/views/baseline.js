@@ -18,7 +18,7 @@ let blCapture = null;
 
 export async function loadBaseline() {
   try {
-    const r = await api("/api/blState.baseline");
+    const r = await api("/api/baseline");
     blState.baseline = r.tone;
     blState.face = r.face;
   } catch { blState.baseline = null; }
@@ -162,7 +162,7 @@ async function finishBaseline(tracker, faceTr) {
   }
   try {
     const fb = faceTr ? computeFaceBaseline(faceTr.all) : null;
-    const saved = await api("/api/blState.baseline", { method: "POST", body: { tone: b, face: fb } });
+    const saved = await api("/api/baseline", { method: "POST", body: { tone: b, face: fb } });
     blState.baseline = saved.tone;
     blState.face = saved.face;
   } catch (e) {

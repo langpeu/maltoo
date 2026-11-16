@@ -31,3 +31,19 @@ def test_all_js_modules_parse(tmp_path):
         if r.returncode:
             bad.append(f"{f.relative_to(root)}: {r.stderr.strip().splitlines()[0] if r.stderr else ''}")
     assert not bad, bad
+
+
+def test_js_api_paths_exist():
+    """브라우저 JS 가 부르는 /api 경로(따옴표 고정 문자열)가 실제 서버 라우트에 있는지."""
+    import re
+    from pathlib import Path
+
+    from main import create_app
+    routes = set(create_app().openapi()["paths"])  # 포함된 라우터까지 전부
+    root = Path(__file__).resolve().parent.parent / "static" / "js"
+    bad = []
+    for f in root.rglob("*.js"):
+        for m in re.finditer(r'(?:api|fetch)\(\s*"(/api/[^"?]+)', f.read_text(encoding="utf-8")):
+            if m.group(1) not in routes:
+                bad.append(f"{f.relative_to(root)}: {m.group(1)}")
+    assert not bad, bad
