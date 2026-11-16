@@ -155,14 +155,22 @@ def match_checklist(raw, checklist: list[str]) -> list[str]:
 
 
 def goal_state(s: dict, gpt_progress: int, done: list[str], prev_done: list[str] | None, ending: str | None) -> tuple[int, list[str]]:
-    """목표 달성도: 이미 달성한 항목은 유지하고, 체크리스트 비율보다 낮게 보이지 않게, 성공이면 100."""
+    """목표 달성도는 체크한 항목 수에 맞춘다 (체크 1개인데 60% 같은 어긋남 방지).
+
+    - 이미 달성한 항목은 유지
+    - % = 체크 비율 + 다음 항목에 대한 부분 점수(최대 반 칸). 예) 3개 중 1개 → 33~49%, 2개 → 67~83%, 3개 → 100%
+    - 성공 결말이면 전부 체크, 100%
+    """
     cl = s["checklist"]
     allp = [c for c in cl if c in set(done) | set(prev_done or [])]
-    ratio = round(100 * len(allp) / len(cl)) if cl else 0
-    p = max(gpt_progress, ratio if len(allp) < len(cl) else max(ratio - 10, 0))
-    if ending == "success":
-        p, allp = 100, list(cl)
-    return min(p, 100), allp
+    if ending == "success" or (cl and len(allp) == len(cl)):
+        return 100, list(cl)
+    if not cl:
+        return min(max(gpt_progress, 0), 100), []
+    step = 100 / len(cl)
+    lo = round(step * len(allp))
+    hi = round(step * len(allp) + step / 2)
+    return max(lo, min(gpt_progress, hi)), allp
 
 
 def parse(raw: str, s: dict, turn_index: int, user_text: str = "", valid_ids: set | None = None,

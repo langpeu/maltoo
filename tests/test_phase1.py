@@ -219,12 +219,17 @@ def test_goal_progress_robust():
     from app import scenarios
     import json
     s = scenarios.get("kim")
-    r = character.parse(json.dumps({"reply": "음", "goal_progress": "40%"}), s, 1)
+    r = character.parse(json.dumps({"reply": "음", "goal_progress": "40%", "checklist_done": [1]}), s, 1)
     assert r["goal_progress"] == 40
     r = character.parse(json.dumps({"reply": "음", "goal": {"progress": 30, "checklist": [1]}}), s, 1)
     assert r["checklist_done"] == [s["checklist"][0]] and r["goal_progress"] >= 33
-    r = character.parse(json.dumps({"reply": "음", "goal_progress": 10}), s, 2, prev_progress=50)
-    assert r["goal_progress"] == 50
+    r = character.parse(json.dumps({"reply": "음", "goal_progress": 10, "checklist_done": [1]}), s, 2, prev_progress=40)
+    assert r["goal_progress"] == 40  # 떨어지지 않음
+    # 체크 수와 맞춤: 1개 체크인데 gpt 가 60% → 반 칸(49%)까지만
+    r = character.parse(json.dumps({"reply": "음", "goal_progress": 60, "checklist_done": [1]}), s, 2)
+    assert r["goal_progress"] == 50 and len(r["checklist_done"]) == 1
+    r = character.parse(json.dumps({"reply": "음", "goal_progress": 60}), s, 2)
+    assert r["goal_progress"] == 17  # 체크 0개면 0~17%
 
 
 def test_history_not_reply_only_json():
