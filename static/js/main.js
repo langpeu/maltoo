@@ -4,7 +4,7 @@ import { Conversation } from "./session.js";
 import { addPin, clearBand, initBand, pushLevel } from "./ui/band.js";
 import { analyzeFrame, computeBaseline, ToneTracker } from "./audio/tone.js";
 import { drawLandmarks, FaceCam } from "./face/camera.js";
-import { computeFaceBaseline, FaceTracker, PHASE_LABEL } from "./face/metrics.js";
+import { computeFaceBaseline, CP, FaceTracker, PHASE_LABEL } from "./face/metrics.js";
 import { renderCost, resetCost } from "./ui/cost-panel.js";
 import { setVoiceFxConfig, setVoiceFxStrength, voiceFxStrength } from "./audio/voicefx.js";
 import {
@@ -108,6 +108,7 @@ function stopConversation() {
 
 // ---------- 표정 ----------
 let captures = [];
+let worstFrame = null; // 체크포인트가 없을 때 쓰는 '가장 안 좋았던 순간' 사진
 let selfHidden = false;
 
 function setupFace() {
@@ -136,6 +137,10 @@ function setupFace() {
         const i = captures.reduce((mi, x, j) => (x.severity < captures[mi].severity ? j : mi), 0);
         if (c.severity > captures[i].severity) captures[i] = { ...c, img };
       }
+    },
+    onWorse: (w) => {
+      const img = faceCam.capture(480);
+      if (img) worstFrame = { ...w, severity: w.score, icon: CP[w.type].icon, label: CP[w.type].label, img };
     },
   });
   faceCam.prepare(faceCfg).then((ok) => {
@@ -233,6 +238,7 @@ async function startTalk() {
   talkUI._ttsWarned = false;
   $("tone-base").textContent = baseline ? "평소 목소리 기준" : "기준 미측정";
   captures = [];
+  worstFrame = null;
   const face = setupFace();
   setMeters({ arousal: 50, warmth: 50 });
   $("tone-note").textContent = "말하는 동안 실시간으로 움직입니다.";
@@ -733,7 +739,8 @@ async function finishWorld(r) {
 }
 
 function worstCapture() {
-  return captures.reduce((w, c) => (!w || (c.severity || 0) > (w.severity || 0) ? c : w), null);
+  const cp = captures.reduce((w, c) => (!w || (c.severity || 0) > (w.severity || 0) ? c : w), null);
+  return cp || worstFrame;
 }
 
 function renderGameResult(r, fin) {

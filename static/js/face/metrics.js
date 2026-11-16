@@ -47,7 +47,7 @@ export function frameMetrics(bs, lm) {
   return m;
 }
 
-const CP = {
+export const CP = {
   frown: { icon: "😠", label: "미간 찌푸림", note: "미간을 찌푸렸습니다. 불만이나 공격성으로 읽힐 수 있습니다." },
   roll: { icon: "🙄", label: "눈 굴림", note: "눈을 위로 굴렸습니다. 상대는 무시당했다고 느낍니다." },
   away: { icon: "👀", label: "시선 회피", note: "시선을 피했습니다. 회피하거나 자신 없어 보일 수 있습니다." },
@@ -58,10 +58,14 @@ const CP = {
 };
 export const FACE_CHECKPOINTS = CP;
 
+const SEVERITY_W = { roll: 1.0, smirk: 0.95, frown: 0.85, chinup: 0.8, press: 0.75, mouthdown: 0.7, away: 0.6 };
+
 export class FaceTracker {
-  constructor(baseline, { onCheckpoint } = {}) {
+  constructor(baseline, { onCheckpoint, onWorse } = {}) {
     this.b = { ...DEFAULT_FACE_BASELINE, ...(baseline || {}) };
     this.onCheckpoint = onCheckpoint;
+    this.onWorse = onWorse;      // 지금까지 중 가장 안 좋은 프레임이 갱신될 때 (사진 캡처용)
+    this.worst = { score: 0, t: -1e9 };
     this.frames = [];     // 이번 턴 프레임
     this.all = [];        // 기준선 계산용(측정 화면)
     this.checkpoints = [];
@@ -93,7 +97,14 @@ export class FaceTracker {
     const f = { t, phase, face: true, m, flags: this.flags(m) };
     this.frames.push(f);
     this.all.push(f);
-    if (phase !== "idle") this.detect(f);
+    if (phase !== "idle") {
+      this.detect(f);
+      const w = this.badness(f);
+      if (w.type && w.score >= 5 && w.score > this.worst.score + 2 && t - this.worst.t > 300) {
+        this.worst = { ...w, t, phase };
+        this.onWorse && this.onWorse(this.worst);
+      }
+    }
     return f;
   }
 
@@ -114,21 +125,34 @@ export class FaceTracker {
 
   // 체크포인트 심각도 0~100: 표정 종류의 무게(상대가 느끼는 불쾌감) × 그 순간 평소 대비 강도.
   // 결과 화면에서 '가장 안 좋았던 표정' 사진을 고를 때 쓴다.
-  severity(type, f) {
-    const W = { roll: 1.0, smirk: 0.95, frown: 0.85, chinup: 0.8, press: 0.75, mouthdown: 0.7, away: 0.6 };
-    const m = f.m || {};
+  // 그 순간 표정 종류별 강도 0~1 (평소 대비)
+  intensity(type, m) {
     const b = this.b;
     const over = (v, base, span) => Math.max(0, Math.min(1, ((v || 0) - (base || 0)) / span));
-    const k = {
+    return {
       frown: over(m.brow, b.brow, 0.6),
       mouthdown: over(m.frown, b.frown, 0.6),
       press: over(m.press, b.press, 0.6),
-      smirk: over(m.asym, b.asym, 0.5),
-      away: Math.max(over(m.lookSide, 0, 1), over(m.lookDown, 0, 1), over(Math.abs(m.yaw || 0), 0, 0.4)),
-      chinup: b.nose_ratio && m.noseRatio ? over(b.nose_ratio - m.noseRatio, 0, b.nose_ratio * 0.4) : 0.5,
+      smirk: Math.max(m.smileL || 0, m.smileR || 0) > 0.2 ? over(m.asym, b.asym, 0.5) : 0,
+      away: Math.max(over(m.lookSide, 0.2, 0.8), over(m.lookDown, 0.25, 0.75), over(Math.abs(m.yaw || 0), 0.05, 0.35)),
+      chinup: b.nose_ratio && m.noseRatio ? over(b.nose_ratio - m.noseRatio, 0, b.nose_ratio * 0.4) : 0,
       roll: 0.8,
-    }[type] ?? 0.5;
-    return Math.round((W[type] || 0.5) * (60 + 40 * k));
+    }[type] ?? 0;
+  }
+
+  severity(type, f) {
+    const k = type === "roll" ? 0.8 : this.intensity(type, f.m || {});
+    return Math.round((SEVERITY_W[type] || 0.5) * (60 + 40 * k));
+  }
+
+  // 체크포인트가 없어도 '가장 안 좋았던 순간'을 고르기 위한 프레임 점수 0~100 (체크포인트 점수보다 항상 낮게)
+  badness(f) {
+    let best = { type: null, score: 0 };
+    for (const type of ["frown", "mouthdown", "press", "smirk", "away", "chinup"]) {
+      const s = Math.round((SEVERITY_W[type] || 0.5) * 60 * this.intensity(type, f.m));
+      if (s > best.score) best = { type, score: s };
+    }
+    return best;
   }
 
   cp(type, f) {

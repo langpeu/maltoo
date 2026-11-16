@@ -22,6 +22,15 @@ def create_app() -> FastAPI:
     app.include_router(conversation.router)
     app.include_router(setup.router)
     app.include_router(report.router)
+
+    @app.middleware("http")
+    async def no_stale_js(request, call_next):
+        # 업데이트(git pull) 후 브라우저가 옛 JS/CSS를 쓰지 않도록: 매번 서버에 확인(바뀌지 않았으면 304)
+        resp = await call_next(request)
+        p = request.url.path
+        if p == "/" or p.startswith("/static/"):
+            resp.headers["Cache-Control"] = "no-cache"
+        return resp
     app.mount("/static", StaticFiles(directory=ROOT / "static"), name="static")
     app.mount("/assets", StaticFiles(directory=ROOT / "assets"), name="assets")
     (ROOT / ".runtime").mkdir(exist_ok=True)
