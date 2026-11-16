@@ -8,4 +8,6 @@
 
 | 파일 | 출처 |
 |---|---|
-| kim/opening.mp3 | ElevenLabs Eleven v4 (stability 50, similarity 75), 사용자가 직접 생성 |
+| kim/opening.mp3 | ElevenLabs Eleven v4 (stability 20, similarity 30), 사용자가 직접 생성 |
+| kim/nag1.mp3 | ElevenLabs Eleven v4 (stability 20, similarity 30) |
+| kim/nag2.mp3 | ElevenLabs Eleven v4 (stability 20, similarity 30) |
