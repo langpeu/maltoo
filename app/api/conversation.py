@@ -34,8 +34,9 @@ def tts_line(scenario_id: str, line: str, cached_only: bool = False,
     """고정 대사: 캐시가 있으면 비용 0, 없으면 생성해서 assets/audio 에 저장(커밋 대상)."""
     s = scenarios.get(scenario_id)
     text = scenarios.fixed_line(s, line)
-    v = s["voice"]
-    key = cache.audio_key(text, v["voice"], v["instructions"])
+    mood = scenarios.line_mood(s, line)
+    voice, instr = scenarios.voice_for(s, mood)
+    key = cache.audio_key(text, voice, instr)
     if cache.fixed_path(key).exists():
         if caller:
             usage.record(caller.key_id, "tts", model("tts"), 0.0, caller.session_id, cached=True,
@@ -45,15 +46,16 @@ def tts_line(scenario_id: str, line: str, cached_only: bool = False,
         raise HTTPException(404, {"code": "not_cached", "message": "아직 만들어 두지 않은 음성입니다."})
     if caller is None:
         raise HTTPException(401, {"code": "no_key", "message": "OpenAI API 키가 없습니다. 키를 먼저 입력하세요."})
-    data = caller.tts(text, v["voice"], v["instructions"])
-    cache.save_fixed(key, data, {"scenario": s["id"], "line": line, "text": text, "voice": v["voice"],
-                                 "instructions": v["instructions"], "model": model("tts")})
+    data = caller.tts(text, voice, instr)
+    cache.save_fixed(key, data, {"scenario": s["id"], "line": line, "text": text, "voice": voice, "mood": mood,
+                                 "instructions": instr, "model": model("tts")})
     return {"url": cache.fixed_url(key), "text": text, "cached": False}
 
 
 class SayIn(BaseModel):
     scenario_id: str
     text: str
+    mood: str = "calm"  # calm | annoyed | angry | explosive | softened | resigned | hurt (상대의 현재 감정)
 
 
 @router.post("/tts/say")
@@ -63,10 +65,10 @@ def tts_say(body: SayIn, caller: Caller = Depends(get_caller)):
     text = body.text.strip()[:500]
     if not text:
         raise HTTPException(400, {"code": "empty", "message": "읽을 문장이 없습니다."})
-    v = s["voice"]
-    key = cache.audio_key(text, v["voice"], v["instructions"])
+    voice, instr = scenarios.voice_for(s, body.mood)
+    key = cache.audio_key(text, voice, instr)
     if not cache.runtime_path(key).exists():
-        cache.save_runtime(key, caller.tts(text, v["voice"], v["instructions"]))
+        cache.save_runtime(key, caller.tts(text, voice, instr))
     return {"url": cache.runtime_url(key), "text": text}
 
 

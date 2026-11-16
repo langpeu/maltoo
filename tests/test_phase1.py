@@ -149,3 +149,22 @@ def test_reaction_cached_only(client, fake_openai):
     client.get("/api/tts/line/choi/react_angry_0", headers=H)  # 세팅처럼 생성
     r = client.get("/api/tts/line/choi/react_angry_0?cached_only=true", headers=H)
     assert r.status_code == 200 and r.json()["text"] == "뭐?!"
+
+
+def test_voice_emotion(client, fake_openai):
+    """목소리 지시문 = 인물 프로필 + 감정. 감정이 다르면 다른 음성(캐시 키)."""
+    from app import scenarios
+    s = scenarios.get("kim")
+    assert scenarios.line_mood(s, "nag1") == "annoyed" and scenarios.line_mood(s, "nag2") == "angry"
+    assert scenarios.line_mood(s, "react_soft_0") == "softened" and scenarios.line_mood(s, "end_fail") == "angry"
+    assert scenarios.line_mood(scenarios.get("choi"), "opening") == "angry"
+    assert scenarios.line_mood(scenarios.get("jung"), "end_resign") == "resigned"
+    _, calm = scenarios.voice_for(s, "calm")
+    _, angry = scenarios.voice_for(s, "angry")
+    assert "department head" in calm and "clearly angry" in angry and calm != angry
+
+    a = client.post("/api/tts/say", json={"scenario_id": "kim", "text": "그래서?", "mood": "calm"}, headers=H).json()
+    b = client.post("/api/tts/say", json={"scenario_id": "kim", "text": "그래서?", "mood": "explosive"}, headers=H).json()
+    assert a["url"] != b["url"]
+    tts = [kw for k, kw in fake_openai if k == "tts"]
+    assert "furious" in tts[-1]["instructions"]

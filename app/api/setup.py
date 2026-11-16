@@ -17,8 +17,8 @@ router = APIRouter(prefix="/api/setup")
 def _audio_jobs():
     for s in scenarios.all_scenarios():
         for line, text in scenarios.fixed_lines(s).items():
-            v = s["voice"]
-            key = cache.audio_key(text, v["voice"], v["instructions"])
+            voice, instr = scenarios.voice_for(s, scenarios.line_mood(s, line))
+            key = cache.audio_key(text, voice, instr)
             if not cache.fixed_path(key).exists():
                 yield {"kind": "audio", "scenario_id": s["id"], "line": line,
                        "label": f"{s['character']['name']} 음성 · {_line_label(line)} “{text}”",
@@ -85,12 +85,13 @@ def run_job(job: JobIn, caller: Caller = Depends(get_caller)):
 
     if job.kind == "audio":
         text = scenarios.fixed_line(s, job.line or "")
-        v = s["voice"]
-        key = cache.audio_key(text, v["voice"], v["instructions"])
+        mood = scenarios.line_mood(s, job.line or "")
+        voice, instr = scenarios.voice_for(s, mood)
+        key = cache.audio_key(text, voice, instr)
         if not cache.fixed_path(key).exists():
-            data = caller.tts(text, v["voice"], v["instructions"])
-            cache.save_fixed(key, data, {"scenario": s["id"], "line": job.line, "text": text, "voice": v["voice"],
-                                         "instructions": v["instructions"], "model": model("tts")})
+            data = caller.tts(text, voice, instr)
+            cache.save_fixed(key, data, {"scenario": s["id"], "line": job.line, "text": text, "voice": voice,
+                                         "mood": mood, "instructions": instr, "model": model("tts")})
         return {"ok": True, "url": cache.fixed_url(key)}
 
     if job.kind == "portrait":

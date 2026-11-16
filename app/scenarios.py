@@ -52,3 +52,38 @@ def fixed_line(s: dict, line: str) -> str:
     if line not in lines:
         raise HTTPException(400, {"code": "bad_line", "message": f"없는 고정 대사입니다: {line}"})
     return lines[line]
+
+
+# ---------- 목소리 (인물 프로필 + 감정) ----------
+
+_START_MOOD = {"angry": "angry", "neutral": "calm", "soft": "calm"}
+_REACT_MOOD = {"angry": "angry", "neutral": "calm", "soft": "softened"}
+_END_MOOD = {"success": "softened", "partial": "calm", "fail": "angry", "noresp": "angry", "resign": "resigned"}
+
+
+def line_mood(s: dict, line: str) -> str:
+    """고정 대사마다 어떤 감정으로 읽을지."""
+    if line == "opening":
+        return _START_MOOD.get(s.get("reaction_start", "neutral"), "calm")
+    if line == "nag1":
+        return "annoyed"
+    if line == "nag2":
+        return "angry"
+    if line.startswith("rumor_"):
+        return "annoyed"
+    if line.startswith("react_"):
+        return _REACT_MOOD.get(line.split("_")[1], "calm")
+    if line.startswith("end_"):
+        return _END_MOOD.get(line[4:], "calm")
+    return "calm"
+
+
+def voice_for(s: dict, mood: str = "calm") -> tuple[str, str]:
+    """(TTS 목소리, 지시문). 지시문 = 인물 프로필 + 현재 감정 + 공통 연기 지시 (config.json)."""
+    from .config import get_config
+    cfg = get_config()
+    moods = cfg.get("voice_moods", {})
+    v = s["voice"]
+    parts = [v.get("profile") or v.get("instructions", ""), moods.get(mood) or moods.get("calm", ""),
+             cfg.get("voice_style_suffix", "")]
+    return v["voice"], "\n".join(p for p in parts if p).strip()

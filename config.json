@@ -158,5 +158,15 @@
       "answer_seconds": 3,
       "prompt": "난이도: 매운 맛. 상대는 성격이 훨씬 강하게 드러나고 매우 설득하기 어렵다. 과장의 말꼬리를 잡고, 사소한 톤·표정 실수도 바로 지적하며, 좋은 제안에도 두 번 이상 반박하거나 더 큰 요구를 한다. 힌트는 절대 주지 않는다. 체크리스트는 구체적이고 차분하게 말했을 때만 달성으로 보고, success 는 마지막 답변 전에는 거의 주지 않는다. 다만 욕설·인신공격은 하지 않는다."
     }
-  }
+  },
+  "voice_moods": {
+    "calm": "Current emotion: composed and in character, but not warm. Normal speaking volume.",
+    "annoyed": "Current emotion: irritated and impatient. Tighter voice, clipped endings, a bit faster, a small annoyed sigh or 'tsk' is fine. Volume slightly raised.",
+    "angry": "Current emotion: clearly angry. Raised voice, hard stress on key words, faster pace, sharp sentence endings, audible frustration in the breath. Not screaming yet.",
+    "explosive": "Current emotion: furious, losing his/her temper. Loud, almost shouting, words punched out one by one, breathing hard, voice strained. Stay intelligible.",
+    "softened": "Current emotion: softened and somewhat persuaded. Lower volume, slower, warmer and more relaxed tone, a slight reluctant acceptance in the voice.",
+    "resigned": "Current emotion: has given up and decided to quit. Quiet, flat and cold, tired, slow, with a heavy final exhale. No anger left.",
+    "hurt": "Current emotion: hurt and sulking. Voice drops, slightly shaky, defensive, a sad sigh."
+  },
+  "voice_style_suffix": "Speak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress."
 }

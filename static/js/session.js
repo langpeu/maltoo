@@ -4,6 +4,9 @@
 import { api, sessionId } from "./api.js";
 import { playUrl } from "./audio/mic.js";
 import { analyzeFrame, ToneTracker } from "./audio/tone.js";
+import { exprFromEmotion } from "./ui/portrait.js";
+
+const ENDING_MOOD = { success: "softened", partial: "calm", fail: "angry", noresp: "angry", resign: "resigned", resigned: "resigned" };
 
 class Stopped extends Error {}
 
@@ -59,7 +62,7 @@ export class Conversation {
     if (this.s.lines[line]) return this.speakFixed(line);
     if (fallbackText) {
       this.history.push({ speaker: "npc", text: fallbackText });
-      return this.speakSay(fallbackText);
+      return this.speakSay(fallbackText, ENDING_MOOD[kind] || "calm");
     }
   }
 
@@ -85,11 +88,13 @@ export class Conversation {
   }
 
   // 실시간 대사: 음성 생성, 실패하면 글자로
-  async speakSay(text) {
+  // mood: 상대의 현재 감정 → 목소리에 실림 (기본: 마지막 턴 감정으로 계산한 표정과 같은 단계)
+  async speakSay(text, mood) {
     this.ui.status("npc-wait");
+    mood = mood || exprFromEmotion(this.lastEmotion);
     let r = null;
     try {
-      r = await api("/api/tts/say", { method: "POST", body: { scenario_id: this.s.id, text } });
+      r = await api("/api/tts/say", { method: "POST", body: { scenario_id: this.s.id, text, mood } });
     } catch (e) {
       if (e.status === 401) throw e;
       this.ui.ttsFailed(e);
@@ -200,6 +205,7 @@ export class Conversation {
         this.lastResult = r;
         meEntry.checkpoints = r.checkpoints || [];
         this.prevEmotion = { anger: r.emotion.anger, trust: r.emotion.trust };
+        this.lastEmotion = r.emotion;
         if (r.game) {
           this.gameSession = r.game.session || this.gameSession;
           this.mentions.push(...(r.game.mentions || []));
