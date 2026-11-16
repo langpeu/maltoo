@@ -290,22 +290,20 @@ function closeCamera() {
   $("bl-video").srcObject = null;
   $("self-video").srcObject = null;
 }
-function highlightLine(progress) {
-  const items = [...document.querySelectorAll("#bl-lines li")];
-  const k = Math.min(items.length - 1, Math.floor(progress * items.length));
-  items.forEach((li, i) => { li.classList.toggle("now", i === k); li.classList.toggle("done", i < k); });
-}
 
 function openBaseline(mode) {
   blMode = mode;
-  highlightLine(0);
   document.querySelectorAll("#bl-lines li").forEach((li) => li.classList.remove("now", "done"));
   $("bl-cam-off").hidden = true;
   openCamera($("bl-video")).then((ok) => {
     if (!ok) { $("bl-cam-off").hidden = false; $("bl-cam-off").textContent = "📷 카메라를 쓸 수 없습니다 (목소리만 측정)"; }
   });
   $("bl-status").textContent = '준비되면 "측정 시작"을 누르세요';
-  $("bl-sec").textContent = "0 / 10초";
+  $("bl-sec").textContent = "0 / 5문장";
+  $("bl-prompter").className = "prompter";
+  $("pr-step").textContent = "준비";
+  $("pr-text").textContent = '"측정 시작"을 누르면 여기에 읽을 문장이 나옵니다.';
+  $("pr-cue").textContent = "";
   $("bl-bar").style.width = "0%";
   $("bl-result").hidden = true;
   showError($("bl-error"), "");
@@ -327,30 +325,68 @@ $("btn-bl-start").addEventListener("click", async () => {
     $("btn-bl-start").disabled = false;
     return showError($("bl-error"), `마이크를 열 수 없습니다: ${e.message}`);
   }
-  $("bl-status").textContent = "🎙 듣고 있습니다. 편안하게 읽어주세요…";
   const tracker = new ToneTracker(null, { threshold: mic.threshold });
   const faceTr = new FaceTracker(null);
   if (faceCam.on) {
-    $("bl-status").textContent = "🎙 듣고 있습니다. 편안하게 읽어주세요… (표정 분석 준비 중)";
     faceCam.prepare(faceCfg).then((ok) => {
       if (!ok) return;
       faceCam.phase = "idle";
       faceCam.start(faceTr, { fps: faceCfg.fps });
     });
   }
-  const TARGET = 10; // 유성음 10초 모이면 자동 완료
+
+  // 3, 2, 1 카운트다운
+  const items = [...document.querySelectorAll("#bl-lines li")];
+  const pr = $("bl-prompter");
+  pr.classList.add("count");
+  $("pr-step").textContent = "곧 시작합니다";
+  $("pr-cue").textContent = "";
+  $("bl-status").textContent = "첫 문장을 읽을 준비를 하세요";
+  for (const n of [3, 2, 1]) { $("pr-text").textContent = n; await new Promise((r) => setTimeout(r, 800)); }
+  pr.classList.remove("count");
+
+  // 문장 하나씩: 1초 이상 말하고 0.7초 멈추면 다음 문장
+  let idx = 0, voicedMs = 0, quietMs = 0;
+  const showSentence = () => {
+    items.forEach((li, i) => { li.classList.toggle("now", i === idx); li.classList.toggle("done", i < idx); });
+    if (idx >= items.length) return;
+    pr.classList.add("reading");
+    $("pr-step").textContent = `${idx + 1} / ${items.length} · ${items[idx].dataset.k}`;
+    $("pr-text").textContent = items[idx].textContent;
+    $("pr-cue").textContent = "🎙 지금 이 문장을 읽어주세요";
+    $("pr-cue").className = "pr-cue";
+    $("bl-sec").textContent = `${idx} / ${items.length}문장`;
+    $("bl-bar").style.width = `${(idx / items.length) * 100}%`;
+    $("bl-status").textContent = "평소 말하듯 편안하게, 다 읽으면 잠깐 멈추세요";
+    $("btn-bl-done").disabled = false;
+    voicedMs = 0;
+    quietMs = 0;
+  };
+  const next = () => {
+    idx += 1;
+    if (idx >= items.length) {
+      items.forEach((li) => { li.classList.remove("now"); li.classList.add("done"); });
+      $("bl-sec").textContent = `${items.length} / ${items.length}문장`;
+      $("bl-bar").style.width = "100%";
+      return blCapture.stop();
+    }
+    showSentence();
+  };
+  blNext = next;
+  showSentence();
   blCapture = mic.capture({
-    maxMs: 30000,
+    maxMs: 90000,
     onTick: (t) => {
       const f = tracker.push(analyzeFrame(t.buf, t.sampleRate), t.elapsed);
-      const voiced = tracker.frames.filter((x) => x.voiced).length * 0.03;
-      $("bl-sec").textContent = `${voiced.toFixed(1)} / ${TARGET}초`;
-      $("bl-bar").style.width = `${Math.min(100, (voiced / TARGET) * 100)}%`;
       $("bl-level").style.width = `${Math.min(100, t.level * 400)}%`;
-      $("btn-bl-done").disabled = voiced < 6;
-      highlightLine(Math.min(0.99, voiced / TARGET));
-      if (voiced >= TARGET) blCapture.stop();
-      void f;
+      if (f.loud) {
+        voicedMs += 30;
+        quietMs = 0;
+        if (voicedMs > 300) { $("pr-cue").textContent = "👂 잘 듣고 있어요…"; $("pr-cue").className = "pr-cue live"; }
+      } else if (voicedMs > 0) {
+        quietMs += 30;
+      }
+      if (voicedMs >= 1000 && quietMs >= 700) next();
     },
   });
   const cap = blCapture;
@@ -360,7 +396,8 @@ $("btn-bl-start").addEventListener("click", async () => {
   await finishBaseline(tracker, faceTr);
 });
 
-$("btn-bl-done").addEventListener("click", () => blCapture && blCapture.stop());
+let blNext = null;
+$("btn-bl-done").addEventListener("click", () => blNext && blNext());
 
 async function finishBaseline(tracker, faceTr) {
   $("btn-bl-done").disabled = true;
@@ -368,7 +405,10 @@ async function finishBaseline(tracker, faceTr) {
   if (!b) {
     $("btn-bl-start").disabled = false;
     $("bl-status").textContent = "다시 시도해 주세요";
-    return showError($("bl-error"), "목소리가 충분히 들리지 않았습니다. 마이크 가까이에서 조금 더 길게 읽어주세요.");
+    $("bl-prompter").className = "prompter";
+    $("pr-text").textContent = "다시 한 번 해볼까요?";
+    $("pr-cue").textContent = "";
+    return showError($("bl-error"), "목소리가 충분히 들리지 않았습니다. 마이크 가까이에서 또박또박 읽어주세요.");
   }
   try {
     const fb = faceTr ? computeFaceBaseline(faceTr.all) : null;
@@ -380,6 +420,10 @@ async function finishBaseline(tracker, faceTr) {
     return showError($("bl-error"), e.message);
   }
   $("bl-status").textContent = "✅ 측정 완료";
+  $("bl-prompter").className = "prompter";
+  $("pr-step").textContent = "완료";
+  $("pr-text").textContent = "수고하셨습니다! 평소의 나를 기억해 둘게요.";
+  $("pr-cue").textContent = "";
   $("bl-result").innerHTML = `
     <li>평소 음높이<b>${Math.round(b.pitch_med)}Hz</b></li>
     <li>음높이 변화 폭<b>${b.range_st}반음</b></li>
