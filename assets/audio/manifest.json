@@ -1,1 +1,1292 @@
-{}
+{
+  "023e49851c81042d90cd": {
+    "scenario": "han",
+    "line": "end_fail",
+    "text": "됐어요. 다들 사정 있는데 혼자만 특별한가 봐요.",
+    "voice": "sage",
+    "mood": "angry",
+    "instructions": "Identity: Korean woman in her early 40s, team leader (팀장) at a robot manufacturing company, speaking to her subordinate (a 과장) who has a child.\nLanguage: Native Seoul Korean office speech.\nBaseline personality in the voice: moody and unpredictable — can sound sweet, then suddenly sharp; sarcastic, digs up past mistakes.\nPacing: medium, with sudden accelerations when irritated.\nEmphasis: sarcastic lift on '그래요?', '또', '애 핑계'; icy precision on criticism.\nPauses: audible annoyed sighs (한숨) before or after sentences.\nCurrent emotion: clearly angry. Raised voice, hard stress on key words, faster pace, sharp sentence endings, audible frustration in the breath. Not screaming yet.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:04:54"
+  },
+  "03448522bc7b1b0218f3": {
+    "scenario": "jung",
+    "line": "end_partial",
+    "text": "일단 검토는 해 보겠습니다.",
+    "voice": "echo",
+    "mood": "calm",
+    "instructions": "Identity: Korean man in his early 30s, assistant manager (주임) at a robot manufacturing company, speaking to his boss (a 과장).\nLanguage: Native Seoul Korean, technically polite form but cold.\nBaseline personality in the voice: skilled but defiant, cynical, argues about scope of work like a lawyer.\nPacing: steady, deliberate, crisp — every syllable clearly enunciated.\nEmphasis: flat and emotionless with a faint sneer; precise stress on '제 업무', '정확히', '근거'.\nPauses: measured pauses that feel like silent judgment; a tiny scoff is allowed.\nCurrent emotion: composed and in character, but not warm. Normal speaking volume.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:04:22"
+  },
+  "041ae354a7029b7b860c": {
+    "scenario": "kim",
+    "line": "end_success",
+    "text": "좋아. 이번 보고는 자네랑 같이 들어가지. 준비 잘해 와.",
+    "voice": "onyx",
+    "mood": "softened",
+    "instructions": "Identity: Korean man in his early 50s, department head (부장) at a robot manufacturing company, speaking to his subordinate (a 과장).\nLanguage: Native Seoul Korean. Natural, conversational office Korean, never read-aloud or announcer style.\nBaseline personality in the voice: easygoing, oily, smiling on the surface but quietly pressuring. Sounds friendly while making it clear who is in charge.\nPacing: relaxed and unhurried; stretches some words; lets sentence endings trail low and long.\nEmphasis: leans on words like '자네', '내가', '우리 팀' with a patronizing smile in the voice; a short dry chuckle is okay.\nPauses: deliberate little pauses before the pressuring part of a sentence.\nCurrent emotion: softened and somewhat persuaded. Lower volume, slower, warmer and more relaxed tone, a slight reluctant acceptance in the voice.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:02:27"
+  },
+  "04857ae2375f3690f900": {
+    "scenario": "park",
+    "line": "react_soft_1",
+    "text": "응, 그럴 수 있지.",
+    "voice": "coral",
+    "mood": "softened",
+    "instructions": "Identity: Korean woman in her mid-40s, team leader (팀장) at a robot manufacturing company, speaking to her subordinate (a 과장).\nLanguage: Native Seoul Korean. Natural, fast office Korean, never announcer style.\nBaseline personality in the voice: always in a hurry, scattered, overly familiar ('우리 과장님~') while pushing work onto others; sulks audibly when refused.\nPacing: fast, words tumbling over each other, quick rising endings like she has somewhere to be.\nEmphasis: stresses '금방', '잠깐만', '이거만' as if the request is tiny; sing-song coaxing on '~요'.\nPauses: very few; short breathy catch before asking for something.\nCurrent emotion: softened and somewhat persuaded. Lower volume, slower, warmer and more relaxed tone, a slight reluctant acceptance in the voice.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:02:54"
+  },
+  "0618e75e1de2b3c7e316": {
+    "scenario": "yoon",
+    "line": "react_angry_1",
+    "text": "저도 힘들다고요.",
+    "voice": "verse",
+    "mood": "angry",
+    "instructions": "Identity: Korean man in his mid-30s, assistant manager (대리) at a robot manufacturing company, speaking to his boss (a 과장). Exhausted from caring for a sick child every night.\nLanguage: Native Seoul Korean, polite form.\nBaseline personality in the voice: worn out, sleep-deprived, emotions close to the surface; gets defensive when criticized.\nPacing: slow and heavy, low energy; speeds up and wavers when emotional.\nEmphasis: tired, slightly hoarse; voice cracks or trembles on '저도', '진짜', '애가'.\nPauses: long tired breaths, hesitations, a shaky exhale before hard sentences.\nCurrent emotion: clearly angry. Raised voice, hard stress on key words, faster pace, sharp sentence endings, audible frustration in the breath. Not screaming yet.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:05:09"
+  },
+  "071526ff0cee5f7f7902": {
+    "scenario": "choi",
+    "line": "nag2",
+    "text": "꿀 먹은 벙어리야? 대답하라고!",
+    "voice": "ash",
+    "mood": "angry",
+    "instructions": "Identity: Korean man in his mid-50s, executive director (상무, division head) at a robot manufacturing company, speaking to a 과장 far below him.\nLanguage: Native Korean, blunt executive speech (반말 mixed with curt orders). Never polite announcer style.\nBaseline personality in the voice: hot-tempered, impatient, looking for someone to blame. Loud and commanding even when not yet angry.\nPacing: fast, clipped, short bursts; cuts sentences off abruptly.\nEmphasis: hard, punchy stress on '누가', '왜', '책임'; barks the last word of a sentence.\nPauses: sharp intakes of breath before shouting; heavy angry exhale.\nCurrent emotion: clearly angry. Raised voice, hard stress on key words, faster pace, sharp sentence endings, audible frustration in the breath. Not screaming yet.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:03:10"
+  },
+  "0840c71f5d29d601a92c": {
+    "scenario": "choi",
+    "line": "opening",
+    "text": "이게 지금 말이 돼? 일정이 이렇게 밀릴 때까지 대체 뭐 하고 있었어?",
+    "voice": "ash",
+    "mood": "angry",
+    "instructions": "Identity: Korean man in his mid-50s, executive director (상무, division head) at a robot manufacturing company, speaking to a 과장 far below him.\nLanguage: Native Korean, blunt executive speech (반말 mixed with curt orders). Never polite announcer style.\nBaseline personality in the voice: hot-tempered, impatient, looking for someone to blame. Loud and commanding even when not yet angry.\nPacing: fast, clipped, short bursts; cuts sentences off abruptly.\nEmphasis: hard, punchy stress on '누가', '왜', '책임'; barks the last word of a sentence.\nPauses: sharp intakes of breath before shouting; heavy angry exhale.\nCurrent emotion: clearly angry. Raised voice, hard stress on key words, faster pace, sharp sentence endings, audible frustration in the breath. Not screaming yet.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:03:07"
+  },
+  "091149c7db8f3bbf0a63": {
+    "scenario": "jung",
+    "line": "nag1",
+    "text": "답이 없으신 거 보니 제 말이 맞는 거죠?",
+    "voice": "echo",
+    "mood": "annoyed",
+    "instructions": "Identity: Korean man in his early 30s, assistant manager (주임) at a robot manufacturing company, speaking to his boss (a 과장).\nLanguage: Native Seoul Korean, technically polite form but cold.\nBaseline personality in the voice: skilled but defiant, cynical, argues about scope of work like a lawyer.\nPacing: steady, deliberate, crisp — every syllable clearly enunciated.\nEmphasis: flat and emotionless with a faint sneer; precise stress on '제 업무', '정확히', '근거'.\nPauses: measured pauses that feel like silent judgment; a tiny scoff is allowed.\nCurrent emotion: irritated and impatient. Tighter voice, clipped endings, a bit faster, a small annoyed sigh or 'tsk' is fine. Volume slightly raised.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:04:05"
+  },
+  "09c4c5994c5dc63449a4": {
+    "scenario": "yoon",
+    "line": "react_neutral_0",
+    "text": "…네.",
+    "voice": "verse",
+    "mood": "calm",
+    "instructions": "Identity: Korean man in his mid-30s, assistant manager (대리) at a robot manufacturing company, speaking to his boss (a 과장). Exhausted from caring for a sick child every night.\nLanguage: Native Seoul Korean, polite form.\nBaseline personality in the voice: worn out, sleep-deprived, emotions close to the surface; gets defensive when criticized.\nPacing: slow and heavy, low energy; speeds up and wavers when emotional.\nEmphasis: tired, slightly hoarse; voice cracks or trembles on '저도', '진짜', '애가'.\nPauses: long tired breaths, hesitations, a shaky exhale before hard sentences.\nCurrent emotion: composed and in character, but not warm. Normal speaking volume.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:05:11"
+  },
+  "0dc14f70fa5dbd1a1674": {
+    "scenario": "yoon",
+    "line": "react_angry_2",
+    "text": "하…",
+    "voice": "verse",
+    "mood": "angry",
+    "instructions": "Identity: Korean man in his mid-30s, assistant manager (대리) at a robot manufacturing company, speaking to his boss (a 과장). Exhausted from caring for a sick child every night.\nLanguage: Native Seoul Korean, polite form.\nBaseline personality in the voice: worn out, sleep-deprived, emotions close to the surface; gets defensive when criticized.\nPacing: slow and heavy, low energy; speeds up and wavers when emotional.\nEmphasis: tired, slightly hoarse; voice cracks or trembles on '저도', '진짜', '애가'.\nPauses: long tired breaths, hesitations, a shaky exhale before hard sentences.\nCurrent emotion: clearly angry. Raised voice, hard stress on key words, faster pace, sharp sentence endings, audible frustration in the breath. Not screaming yet.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:05:10"
+  },
+  "0e5e1cef8f5edd74f402": {
+    "scenario": "han",
+    "line": "react_neutral_2",
+    "text": "흠…",
+    "voice": "sage",
+    "mood": "calm",
+    "instructions": "Identity: Korean woman in her early 40s, team leader (팀장) at a robot manufacturing company, speaking to her subordinate (a 과장) who has a child.\nLanguage: Native Seoul Korean office speech.\nBaseline personality in the voice: moody and unpredictable — can sound sweet, then suddenly sharp; sarcastic, digs up past mistakes.\nPacing: medium, with sudden accelerations when irritated.\nEmphasis: sarcastic lift on '그래요?', '또', '애 핑계'; icy precision on criticism.\nPauses: audible annoyed sighs (한숨) before or after sentences.\nCurrent emotion: composed and in character, but not warm. Normal speaking volume.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:04:43"
+  },
+  "147592d453e68aa5c3cd": {
+    "scenario": "yoon",
+    "line": "opening",
+    "text": "…죄송합니다. 근데 과장님, 요즘 애가 밤마다 아파서 거의 못 자요. 저 정말 최선 다하고 있는 거예요.",
+    "voice": "verse",
+    "mood": "calm",
+    "instructions": "Identity: Korean man in his mid-30s, assistant manager (대리) at a robot manufacturing company, speaking to his boss (a 과장). Exhausted from caring for a sick child every night.\nLanguage: Native Seoul Korean, polite form.\nBaseline personality in the voice: worn out, sleep-deprived, emotions close to the surface; gets defensive when criticized.\nPacing: slow and heavy, low energy; speeds up and wavers when emotional.\nEmphasis: tired, slightly hoarse; voice cracks or trembles on '저도', '진짜', '애가'.\nPauses: long tired breaths, hesitations, a shaky exhale before hard sentences.\nCurrent emotion: composed and in character, but not warm. Normal speaking volume.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:05:01"
+  },
+  "15fed9a4c03d8bf030c4": {
+    "scenario": "park",
+    "line": "react_neutral_2",
+    "text": "어, 듣고 있어.",
+    "voice": "coral",
+    "mood": "calm",
+    "instructions": "Identity: Korean woman in her mid-40s, team leader (팀장) at a robot manufacturing company, speaking to her subordinate (a 과장).\nLanguage: Native Seoul Korean. Natural, fast office Korean, never announcer style.\nBaseline personality in the voice: always in a hurry, scattered, overly familiar ('우리 과장님~') while pushing work onto others; sulks audibly when refused.\nPacing: fast, words tumbling over each other, quick rising endings like she has somewhere to be.\nEmphasis: stresses '금방', '잠깐만', '이거만' as if the request is tiny; sing-song coaxing on '~요'.\nPauses: very few; short breathy catch before asking for something.\nCurrent emotion: composed and in character, but not warm. Normal speaking volume.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:02:51"
+  },
+  "1d1bee2f8271b772de13": {
+    "scenario": "jung",
+    "line": "react_angry_2",
+    "text": "논리적으로 말씀해 주시죠.",
+    "voice": "echo",
+    "mood": "angry",
+    "instructions": "Identity: Korean man in his early 30s, assistant manager (주임) at a robot manufacturing company, speaking to his boss (a 과장).\nLanguage: Native Seoul Korean, technically polite form but cold.\nBaseline personality in the voice: skilled but defiant, cynical, argues about scope of work like a lawyer.\nPacing: steady, deliberate, crisp — every syllable clearly enunciated.\nEmphasis: flat and emotionless with a faint sneer; precise stress on '제 업무', '정확히', '근거'.\nPauses: measured pauses that feel like silent judgment; a tiny scoff is allowed.\nCurrent emotion: clearly angry. Raised voice, hard stress on key words, faster pace, sharp sentence endings, audible frustration in the breath. Not screaming yet.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:04:10"
+  },
+  "1d258a058f9f4ec6bc62": {
+    "scenario": "choi",
+    "line": "nag1",
+    "text": "대답 안 해? 내 말 안 들려?",
+    "voice": "ash",
+    "mood": "annoyed",
+    "instructions": "Identity: Korean man in his mid-50s, executive director (상무, division head) at a robot manufacturing company, speaking to a 과장 far below him.\nLanguage: Native Korean, blunt executive speech (반말 mixed with curt orders). Never polite announcer style.\nBaseline personality in the voice: hot-tempered, impatient, looking for someone to blame. Loud and commanding even when not yet angry.\nPacing: fast, clipped, short bursts; cuts sentences off abruptly.\nEmphasis: hard, punchy stress on '누가', '왜', '책임'; barks the last word of a sentence.\nPauses: sharp intakes of breath before shouting; heavy angry exhale.\nCurrent emotion: irritated and impatient. Tighter voice, clipped endings, a bit faster, a small annoyed sigh or 'tsk' is fine. Volume slightly raised.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:03:09"
+  },
+  "21f3cb77952104c5dbec": {
+    "scenario": "lee",
+    "line": "end_noresp",
+    "text": "말씀 없으시면 저 그냥 자리로 갈게요.",
+    "voice": "nova",
+    "mood": "angry",
+    "instructions": "Identity: Korean woman in her late 20s, a third-year staff member (사원) at a robot manufacturing company, speaking to her boss (a 과장).\nLanguage: Native Seoul Korean, young office speech, polite form but sulky. Never announcer style.\nBaseline personality in the voice: defensive, feels wronged, always blaming the schedule or others.\nPacing: medium, speeding up when justifying herself, then trailing off.\nEmphasis: whiny stress on '그게', '저는', '원래'; endings mumble and fade ('…거든요…').\nPauses: small sighs and hesitant '아니…' before excuses.\nCurrent emotion: clearly angry. Raised voice, hard stress on key words, faster pace, sharp sentence endings, audible frustration in the breath. Not screaming yet.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:03:56"
+  },
+  "222a40dcaf24516c04c5": {
+    "scenario": "yoon",
+    "line": "rumor_0",
+    "text": "…과장님도 제가 자꾸 빠진다고 하셨다면서요.",
+    "voice": "verse",
+    "mood": "annoyed",
+    "instructions": "Identity: Korean man in his mid-30s, assistant manager (대리) at a robot manufacturing company, speaking to his boss (a 과장). Exhausted from caring for a sick child every night.\nLanguage: Native Seoul Korean, polite form.\nBaseline personality in the voice: worn out, sleep-deprived, emotions close to the surface; gets defensive when criticized.\nPacing: slow and heavy, low energy; speeds up and wavers when emotional.\nEmphasis: tired, slightly hoarse; voice cracks or trembles on '저도', '진짜', '애가'.\nPauses: long tired breaths, hesitations, a shaky exhale before hard sentences.\nCurrent emotion: irritated and impatient. Tighter voice, clipped endings, a bit faster, a small annoyed sigh or 'tsk' is fine. Volume slightly raised.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:05:29"
+  },
+  "22e31e474c452c1380bb": {
+    "scenario": "choi",
+    "line": "end_noresp",
+    "text": "대답도 못 하면서 무슨 과장이야. 나가!",
+    "voice": "ash",
+    "mood": "angry",
+    "instructions": "Identity: Korean man in his mid-50s, executive director (상무, division head) at a robot manufacturing company, speaking to a 과장 far below him.\nLanguage: Native Korean, blunt executive speech (반말 mixed with curt orders). Never polite announcer style.\nBaseline personality in the voice: hot-tempered, impatient, looking for someone to blame. Loud and commanding even when not yet angry.\nPacing: fast, clipped, short bursts; cuts sentences off abruptly.\nEmphasis: hard, punchy stress on '누가', '왜', '책임'; barks the last word of a sentence.\nPauses: sharp intakes of breath before shouting; heavy angry exhale.\nCurrent emotion: clearly angry. Raised voice, hard stress on key words, faster pace, sharp sentence endings, audible frustration in the breath. Not screaming yet.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:03:29"
+  },
+  "24ac87babc636ac830ae": {
+    "scenario": "choi",
+    "line": "react_angry_0",
+    "text": "뭐?!",
+    "voice": "ash",
+    "mood": "angry",
+    "instructions": "Identity: Korean man in his mid-50s, executive director (상무, division head) at a robot manufacturing company, speaking to a 과장 far below him.\nLanguage: Native Korean, blunt executive speech (반말 mixed with curt orders). Never polite announcer style.\nBaseline personality in the voice: hot-tempered, impatient, looking for someone to blame. Loud and commanding even when not yet angry.\nPacing: fast, clipped, short bursts; cuts sentences off abruptly.\nEmphasis: hard, punchy stress on '누가', '왜', '책임'; barks the last word of a sentence.\nPauses: sharp intakes of breath before shouting; heavy angry exhale.\nCurrent emotion: clearly angry. Raised voice, hard stress on key words, faster pace, sharp sentence endings, audible frustration in the breath. Not screaming yet.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:03:12"
+  },
+  "26a31e8de4cb9e718e2b": {
+    "scenario": "choi",
+    "line": "rumor_0",
+    "text": "자네가 나 없는 데서 무슨 말 했는지 다 들었어. 각오하고 들어와.",
+    "voice": "ash",
+    "mood": "annoyed",
+    "instructions": "Identity: Korean man in his mid-50s, executive director (상무, division head) at a robot manufacturing company, speaking to a 과장 far below him.\nLanguage: Native Korean, blunt executive speech (반말 mixed with curt orders). Never polite announcer style.\nBaseline personality in the voice: hot-tempered, impatient, looking for someone to blame. Loud and commanding even when not yet angry.\nPacing: fast, clipped, short bursts; cuts sentences off abruptly.\nEmphasis: hard, punchy stress on '누가', '왜', '책임'; barks the last word of a sentence.\nPauses: sharp intakes of breath before shouting; heavy angry exhale.\nCurrent emotion: irritated and impatient. Tighter voice, clipped endings, a bit faster, a small annoyed sigh or 'tsk' is fine. Volume slightly raised.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:03:30"
+  },
+  "27291cc18869d81aa1a6": {
+    "scenario": "jung",
+    "line": "end_noresp",
+    "text": "답이 없으시니 이 건은 없던 걸로 하겠습니다.",
+    "voice": "echo",
+    "mood": "angry",
+    "instructions": "Identity: Korean man in his early 30s, assistant manager (주임) at a robot manufacturing company, speaking to his boss (a 과장).\nLanguage: Native Seoul Korean, technically polite form but cold.\nBaseline personality in the voice: skilled but defiant, cynical, argues about scope of work like a lawyer.\nPacing: steady, deliberate, crisp — every syllable clearly enunciated.\nEmphasis: flat and emotionless with a faint sneer; precise stress on '제 업무', '정확히', '근거'.\nPauses: measured pauses that feel like silent judgment; a tiny scoff is allowed.\nCurrent emotion: clearly angry. Raised voice, hard stress on key words, faster pace, sharp sentence endings, audible frustration in the breath. Not screaming yet.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:04:25"
+  },
+  "2948f8de5c17f74d313f": {
+    "scenario": "choi",
+    "line": "react_neutral_0",
+    "text": "그래서?",
+    "voice": "ash",
+    "mood": "calm",
+    "instructions": "Identity: Korean man in his mid-50s, executive director (상무, division head) at a robot manufacturing company, speaking to a 과장 far below him.\nLanguage: Native Korean, blunt executive speech (반말 mixed with curt orders). Never polite announcer style.\nBaseline personality in the voice: hot-tempered, impatient, looking for someone to blame. Loud and commanding even when not yet angry.\nPacing: fast, clipped, short bursts; cuts sentences off abruptly.\nEmphasis: hard, punchy stress on '누가', '왜', '책임'; barks the last word of a sentence.\nPauses: sharp intakes of breath before shouting; heavy angry exhale.\nCurrent emotion: composed and in character, but not warm. Normal speaking volume.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:03:15"
+  },
+  "2ba862f710abaef4c514": {
+    "scenario": "choi",
+    "line": "rumor_1",
+    "text": "내가 소리만 지른다고? 그 얘기 나한테까지 들어왔어.",
+    "voice": "ash",
+    "mood": "annoyed",
+    "instructions": "Identity: Korean man in his mid-50s, executive director (상무, division head) at a robot manufacturing company, speaking to a 과장 far below him.\nLanguage: Native Korean, blunt executive speech (반말 mixed with curt orders). Never polite announcer style.\nBaseline personality in the voice: hot-tempered, impatient, looking for someone to blame. Loud and commanding even when not yet angry.\nPacing: fast, clipped, short bursts; cuts sentences off abruptly.\nEmphasis: hard, punchy stress on '누가', '왜', '책임'; barks the last word of a sentence.\nPauses: sharp intakes of breath before shouting; heavy angry exhale.\nCurrent emotion: irritated and impatient. Tighter voice, clipped endings, a bit faster, a small annoyed sigh or 'tsk' is fine. Volume slightly raised.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:03:32"
+  },
+  "2e4cf9477a577824ffe2": {
+    "scenario": "lee",
+    "line": "rumor_0",
+    "text": "…과장님이 저 일 못한다고 하셨다면서요?",
+    "voice": "nova",
+    "mood": "annoyed",
+    "instructions": "Identity: Korean woman in her late 20s, a third-year staff member (사원) at a robot manufacturing company, speaking to her boss (a 과장).\nLanguage: Native Seoul Korean, young office speech, polite form but sulky. Never announcer style.\nBaseline personality in the voice: defensive, feels wronged, always blaming the schedule or others.\nPacing: medium, speeding up when justifying herself, then trailing off.\nEmphasis: whiny stress on '그게', '저는', '원래'; endings mumble and fade ('…거든요…').\nPauses: small sighs and hesitant '아니…' before excuses.\nCurrent emotion: irritated and impatient. Tighter voice, clipped endings, a bit faster, a small annoyed sigh or 'tsk' is fine. Volume slightly raised.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:03:59"
+  },
+  "306af388dd02cb435db1": {
+    "scenario": "kim",
+    "line": "react_angry_2",
+    "text": "자네 말이 좀 세다?",
+    "voice": "onyx",
+    "mood": "angry",
+    "instructions": "Identity: Korean man in his early 50s, department head (부장) at a robot manufacturing company, speaking to his subordinate (a 과장).\nLanguage: Native Seoul Korean. Natural, conversational office Korean, never read-aloud or announcer style.\nBaseline personality in the voice: easygoing, oily, smiling on the surface but quietly pressuring. Sounds friendly while making it clear who is in charge.\nPacing: relaxed and unhurried; stretches some words; lets sentence endings trail low and long.\nEmphasis: leans on words like '자네', '내가', '우리 팀' with a patronizing smile in the voice; a short dry chuckle is okay.\nPauses: deliberate little pauses before the pressuring part of a sentence.\nCurrent emotion: clearly angry. Raised voice, hard stress on key words, faster pace, sharp sentence endings, audible frustration in the breath. Not screaming yet.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:02:16"
+  },
+  "30a81590722b4fdd56e2": {
+    "scenario": "jung",
+    "line": "react_angry_0",
+    "text": "지금 명령하시는 겁니까?",
+    "voice": "echo",
+    "mood": "angry",
+    "instructions": "Identity: Korean man in his early 30s, assistant manager (주임) at a robot manufacturing company, speaking to his boss (a 과장).\nLanguage: Native Seoul Korean, technically polite form but cold.\nBaseline personality in the voice: skilled but defiant, cynical, argues about scope of work like a lawyer.\nPacing: steady, deliberate, crisp — every syllable clearly enunciated.\nEmphasis: flat and emotionless with a faint sneer; precise stress on '제 업무', '정확히', '근거'.\nPauses: measured pauses that feel like silent judgment; a tiny scoff is allowed.\nCurrent emotion: clearly angry. Raised voice, hard stress on key words, faster pace, sharp sentence endings, audible frustration in the breath. Not screaming yet.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:04:08"
+  },
+  "32b02d36bd8f70b7ac85": {
+    "scenario": "jung",
+    "line": "react_neutral_1",
+    "text": "네, 들어보죠.",
+    "voice": "echo",
+    "mood": "calm",
+    "instructions": "Identity: Korean man in his early 30s, assistant manager (주임) at a robot manufacturing company, speaking to his boss (a 과장).\nLanguage: Native Seoul Korean, technically polite form but cold.\nBaseline personality in the voice: skilled but defiant, cynical, argues about scope of work like a lawyer.\nPacing: steady, deliberate, crisp — every syllable clearly enunciated.\nEmphasis: flat and emotionless with a faint sneer; precise stress on '제 업무', '정확히', '근거'.\nPauses: measured pauses that feel like silent judgment; a tiny scoff is allowed.\nCurrent emotion: composed and in character, but not warm. Normal speaking volume.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:04:13"
+  },
+  "32b033be5a40f572eac8": {
+    "scenario": "yoon",
+    "line": "react_soft_2",
+    "text": "네, 알겠어요.",
+    "voice": "verse",
+    "mood": "softened",
+    "instructions": "Identity: Korean man in his mid-30s, assistant manager (대리) at a robot manufacturing company, speaking to his boss (a 과장). Exhausted from caring for a sick child every night.\nLanguage: Native Seoul Korean, polite form.\nBaseline personality in the voice: worn out, sleep-deprived, emotions close to the surface; gets defensive when criticized.\nPacing: slow and heavy, low energy; speeds up and wavers when emotional.\nEmphasis: tired, slightly hoarse; voice cracks or trembles on '저도', '진짜', '애가'.\nPauses: long tired breaths, hesitations, a shaky exhale before hard sentences.\nCurrent emotion: softened and somewhat persuaded. Lower volume, slower, warmer and more relaxed tone, a slight reluctant acceptance in the voice.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:05:19"
+  },
+  "32cab37442d5d2c75b6e": {
+    "scenario": "kim",
+    "line": "react_neutral_2",
+    "text": "흠, 계속해 봐.",
+    "voice": "onyx",
+    "mood": "calm",
+    "instructions": "Identity: Korean man in his early 50s, department head (부장) at a robot manufacturing company, speaking to his subordinate (a 과장).\nLanguage: Native Seoul Korean. Natural, conversational office Korean, never read-aloud or announcer style.\nBaseline personality in the voice: easygoing, oily, smiling on the surface but quietly pressuring. Sounds friendly while making it clear who is in charge.\nPacing: relaxed and unhurried; stretches some words; lets sentence endings trail low and long.\nEmphasis: leans on words like '자네', '내가', '우리 팀' with a patronizing smile in the voice; a short dry chuckle is okay.\nPauses: deliberate little pauses before the pressuring part of a sentence.\nCurrent emotion: composed and in character, but not warm. Normal speaking volume.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:02:20"
+  },
+  "3360733224854bd3c3ad": {
+    "scenario": "park",
+    "line": "react_soft_0",
+    "text": "아, 그렇구나.",
+    "voice": "coral",
+    "mood": "softened",
+    "instructions": "Identity: Korean woman in her mid-40s, team leader (팀장) at a robot manufacturing company, speaking to her subordinate (a 과장).\nLanguage: Native Seoul Korean. Natural, fast office Korean, never announcer style.\nBaseline personality in the voice: always in a hurry, scattered, overly familiar ('우리 과장님~') while pushing work onto others; sulks audibly when refused.\nPacing: fast, words tumbling over each other, quick rising endings like she has somewhere to be.\nEmphasis: stresses '금방', '잠깐만', '이거만' as if the request is tiny; sing-song coaxing on '~요'.\nPauses: very few; short breathy catch before asking for something.\nCurrent emotion: softened and somewhat persuaded. Lower volume, slower, warmer and more relaxed tone, a slight reluctant acceptance in the voice.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:02:53"
+  },
+  "376a4894feceaa76a1d7": {
+    "scenario": "yoon",
+    "line": "react_neutral_1",
+    "text": "네, 듣고 있어요.",
+    "voice": "verse",
+    "mood": "calm",
+    "instructions": "Identity: Korean man in his mid-30s, assistant manager (대리) at a robot manufacturing company, speaking to his boss (a 과장). Exhausted from caring for a sick child every night.\nLanguage: Native Seoul Korean, polite form.\nBaseline personality in the voice: worn out, sleep-deprived, emotions close to the surface; gets defensive when criticized.\nPacing: slow and heavy, low energy; speeds up and wavers when emotional.\nEmphasis: tired, slightly hoarse; voice cracks or trembles on '저도', '진짜', '애가'.\nPauses: long tired breaths, hesitations, a shaky exhale before hard sentences.\nCurrent emotion: composed and in character, but not warm. Normal speaking volume.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:05:13"
+  },
+  "39fd8d06952fa9967a8f": {
+    "scenario": "jung",
+    "line": "react_soft_1",
+    "text": "알겠습니다.",
+    "voice": "echo",
+    "mood": "softened",
+    "instructions": "Identity: Korean man in his early 30s, assistant manager (주임) at a robot manufacturing company, speaking to his boss (a 과장).\nLanguage: Native Seoul Korean, technically polite form but cold.\nBaseline personality in the voice: skilled but defiant, cynical, argues about scope of work like a lawyer.\nPacing: steady, deliberate, crisp — every syllable clearly enunciated.\nEmphasis: flat and emotionless with a faint sneer; precise stress on '제 업무', '정확히', '근거'.\nPauses: measured pauses that feel like silent judgment; a tiny scoff is allowed.\nCurrent emotion: softened and somewhat persuaded. Lower volume, slower, warmer and more relaxed tone, a slight reluctant acceptance in the voice.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:04:17"
+  },
+  "3b0a0a0d3e08e60281f6": {
+    "scenario": "choi",
+    "line": "react_neutral_1",
+    "text": "요점만 말해.",
+    "voice": "ash",
+    "mood": "calm",
+    "instructions": "Identity: Korean man in his mid-50s, executive director (상무, division head) at a robot manufacturing company, speaking to a 과장 far below him.\nLanguage: Native Korean, blunt executive speech (반말 mixed with curt orders). Never polite announcer style.\nBaseline personality in the voice: hot-tempered, impatient, looking for someone to blame. Loud and commanding even when not yet angry.\nPacing: fast, clipped, short bursts; cuts sentences off abruptly.\nEmphasis: hard, punchy stress on '누가', '왜', '책임'; barks the last word of a sentence.\nPauses: sharp intakes of breath before shouting; heavy angry exhale.\nCurrent emotion: composed and in character, but not warm. Normal speaking volume.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:03:17"
+  },
+  "3dfe849dbf8bab693f96": {
+    "scenario": "lee",
+    "line": "react_soft_2",
+    "text": "네, 알겠어요.",
+    "voice": "nova",
+    "mood": "softened",
+    "instructions": "Identity: Korean woman in her late 20s, a third-year staff member (사원) at a robot manufacturing company, speaking to her boss (a 과장).\nLanguage: Native Seoul Korean, young office speech, polite form but sulky. Never announcer style.\nBaseline personality in the voice: defensive, feels wronged, always blaming the schedule or others.\nPacing: medium, speeding up when justifying herself, then trailing off.\nEmphasis: whiny stress on '그게', '저는', '원래'; endings mumble and fade ('…거든요…').\nPauses: small sighs and hesitant '아니…' before excuses.\nCurrent emotion: softened and somewhat persuaded. Lower volume, slower, warmer and more relaxed tone, a slight reluctant acceptance in the voice.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:03:49"
+  },
+  "3e0e4f7bbda077638825": {
+    "scenario": "kim",
+    "line": "rumor_1",
+    "text": "어디서 들었는데 말이야, 내가 공을 가로챈다고 했다며?",
+    "voice": "onyx",
+    "mood": "annoyed",
+    "instructions": "Identity: Korean man in his early 50s, department head (부장) at a robot manufacturing company, speaking to his subordinate (a 과장).\nLanguage: Native Seoul Korean. Natural, conversational office Korean, never read-aloud or announcer style.\nBaseline personality in the voice: easygoing, oily, smiling on the surface but quietly pressuring. Sounds friendly while making it clear who is in charge.\nPacing: relaxed and unhurried; stretches some words; lets sentence endings trail low and long.\nEmphasis: leans on words like '자네', '내가', '우리 팀' with a patronizing smile in the voice; a short dry chuckle is okay.\nPauses: deliberate little pauses before the pressuring part of a sentence.\nCurrent emotion: irritated and impatient. Tighter voice, clipped endings, a bit faster, a small annoyed sigh or 'tsk' is fine. Volume slightly raised.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:02:36"
+  },
+  "3e60898c839715cbc029": {
+    "scenario": "jung",
+    "line": "rumor_0",
+    "text": "제 얘기를 위에 하셨다고 들었습니다. 그런 식이면 저도 생각이 있습니다.",
+    "voice": "echo",
+    "mood": "annoyed",
+    "instructions": "Identity: Korean man in his early 30s, assistant manager (주임) at a robot manufacturing company, speaking to his boss (a 과장).\nLanguage: Native Seoul Korean, technically polite form but cold.\nBaseline personality in the voice: skilled but defiant, cynical, argues about scope of work like a lawyer.\nPacing: steady, deliberate, crisp — every syllable clearly enunciated.\nEmphasis: flat and emotionless with a faint sneer; precise stress on '제 업무', '정확히', '근거'.\nPauses: measured pauses that feel like silent judgment; a tiny scoff is allowed.\nCurrent emotion: irritated and impatient. Tighter voice, clipped endings, a bit faster, a small annoyed sigh or 'tsk' is fine. Volume slightly raised.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:04:28"
+  },
+  "406a5722065755b4ba7e": {
+    "scenario": "jung",
+    "line": "react_soft_0",
+    "text": "…그건 일리가 있네요.",
+    "voice": "echo",
+    "mood": "softened",
+    "instructions": "Identity: Korean man in his early 30s, assistant manager (주임) at a robot manufacturing company, speaking to his boss (a 과장).\nLanguage: Native Seoul Korean, technically polite form but cold.\nBaseline personality in the voice: skilled but defiant, cynical, argues about scope of work like a lawyer.\nPacing: steady, deliberate, crisp — every syllable clearly enunciated.\nEmphasis: flat and emotionless with a faint sneer; precise stress on '제 업무', '정확히', '근거'.\nPauses: measured pauses that feel like silent judgment; a tiny scoff is allowed.\nCurrent emotion: softened and somewhat persuaded. Lower volume, slower, warmer and more relaxed tone, a slight reluctant acceptance in the voice.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:04:16"
+  },
+  "423eb0e17c681ba44845": {
+    "scenario": "choi",
+    "line": "react_soft_0",
+    "text": "…그래.",
+    "voice": "ash",
+    "mood": "softened",
+    "instructions": "Identity: Korean man in his mid-50s, executive director (상무, division head) at a robot manufacturing company, speaking to a 과장 far below him.\nLanguage: Native Korean, blunt executive speech (반말 mixed with curt orders). Never polite announcer style.\nBaseline personality in the voice: hot-tempered, impatient, looking for someone to blame. Loud and commanding even when not yet angry.\nPacing: fast, clipped, short bursts; cuts sentences off abruptly.\nEmphasis: hard, punchy stress on '누가', '왜', '책임'; barks the last word of a sentence.\nPauses: sharp intakes of breath before shouting; heavy angry exhale.\nCurrent emotion: softened and somewhat persuaded. Lower volume, slower, warmer and more relaxed tone, a slight reluctant acceptance in the voice.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:03:19"
+  },
+  "42cc82899aa683d0218e": {
+    "scenario": "kim",
+    "line": "end_fail",
+    "text": "됐어. 자네는 자료나 넘겨. 이만 나가봐.",
+    "voice": "onyx",
+    "mood": "angry",
+    "instructions": "Identity: Korean man in his early 50s, department head (부장) at a robot manufacturing company, speaking to his subordinate (a 과장).\nLanguage: Native Seoul Korean. Natural, conversational office Korean, never read-aloud or announcer style.\nBaseline personality in the voice: easygoing, oily, smiling on the surface but quietly pressuring. Sounds friendly while making it clear who is in charge.\nPacing: relaxed and unhurried; stretches some words; lets sentence endings trail low and long.\nEmphasis: leans on words like '자네', '내가', '우리 팀' with a patronizing smile in the voice; a short dry chuckle is okay.\nPauses: deliberate little pauses before the pressuring part of a sentence.\nCurrent emotion: clearly angry. Raised voice, hard stress on key words, faster pace, sharp sentence endings, audible frustration in the breath. Not screaming yet.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:02:31"
+  },
+  "444d7dbf4eddca445ca2": {
+    "scenario": "choi",
+    "line": "end_partial",
+    "text": "일단 대책부터 가져와. 얘기는 그다음이야.",
+    "voice": "ash",
+    "mood": "calm",
+    "instructions": "Identity: Korean man in his mid-50s, executive director (상무, division head) at a robot manufacturing company, speaking to a 과장 far below him.\nLanguage: Native Korean, blunt executive speech (반말 mixed with curt orders). Never polite announcer style.\nBaseline personality in the voice: hot-tempered, impatient, looking for someone to blame. Loud and commanding even when not yet angry.\nPacing: fast, clipped, short bursts; cuts sentences off abruptly.\nEmphasis: hard, punchy stress on '누가', '왜', '책임'; barks the last word of a sentence.\nPauses: sharp intakes of breath before shouting; heavy angry exhale.\nCurrent emotion: composed and in character, but not warm. Normal speaking volume.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:03:26"
+  },
+  "4658c91cf40ce909745d": {
+    "scenario": "han",
+    "line": "react_soft_1",
+    "text": "아, 그건 몰랐네요.",
+    "voice": "sage",
+    "mood": "softened",
+    "instructions": "Identity: Korean woman in her early 40s, team leader (팀장) at a robot manufacturing company, speaking to her subordinate (a 과장) who has a child.\nLanguage: Native Seoul Korean office speech.\nBaseline personality in the voice: moody and unpredictable — can sound sweet, then suddenly sharp; sarcastic, digs up past mistakes.\nPacing: medium, with sudden accelerations when irritated.\nEmphasis: sarcastic lift on '그래요?', '또', '애 핑계'; icy precision on criticism.\nPauses: audible annoyed sighs (한숨) before or after sentences.\nCurrent emotion: softened and somewhat persuaded. Lower volume, slower, warmer and more relaxed tone, a slight reluctant acceptance in the voice.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:04:46"
+  },
+  "4664af5e5adafbc3f640": {
+    "scenario": "choi",
+    "line": "react_neutral_2",
+    "text": "음.",
+    "voice": "ash",
+    "mood": "calm",
+    "instructions": "Identity: Korean man in his mid-50s, executive director (상무, division head) at a robot manufacturing company, speaking to a 과장 far below him.\nLanguage: Native Korean, blunt executive speech (반말 mixed with curt orders). Never polite announcer style.\nBaseline personality in the voice: hot-tempered, impatient, looking for someone to blame. Loud and commanding even when not yet angry.\nPacing: fast, clipped, short bursts; cuts sentences off abruptly.\nEmphasis: hard, punchy stress on '누가', '왜', '책임'; barks the last word of a sentence.\nPauses: sharp intakes of breath before shouting; heavy angry exhale.\nCurrent emotion: composed and in character, but not warm. Normal speaking volume.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:03:18"
+  },
+  "4a38b6d148476987cca6": {
+    "scenario": "yoon",
+    "line": "nag1",
+    "text": "…과장님?",
+    "voice": "verse",
+    "mood": "annoyed",
+    "instructions": "Identity: Korean man in his mid-30s, assistant manager (대리) at a robot manufacturing company, speaking to his boss (a 과장). Exhausted from caring for a sick child every night.\nLanguage: Native Seoul Korean, polite form.\nBaseline personality in the voice: worn out, sleep-deprived, emotions close to the surface; gets defensive when criticized.\nPacing: slow and heavy, low energy; speeds up and wavers when emotional.\nEmphasis: tired, slightly hoarse; voice cracks or trembles on '저도', '진짜', '애가'.\nPauses: long tired breaths, hesitations, a shaky exhale before hard sentences.\nCurrent emotion: irritated and impatient. Tighter voice, clipped endings, a bit faster, a small annoyed sigh or 'tsk' is fine. Volume slightly raised.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:05:02"
+  },
+  "4b45707a2a746aef04a4": {
+    "scenario": "kim",
+    "line": "react_neutral_1",
+    "text": "그래서?",
+    "voice": "onyx",
+    "mood": "calm",
+    "instructions": "Identity: Korean man in his early 50s, department head (부장) at a robot manufacturing company, speaking to his subordinate (a 과장).\nLanguage: Native Seoul Korean. Natural, conversational office Korean, never read-aloud or announcer style.\nBaseline personality in the voice: easygoing, oily, smiling on the surface but quietly pressuring. Sounds friendly while making it clear who is in charge.\nPacing: relaxed and unhurried; stretches some words; lets sentence endings trail low and long.\nEmphasis: leans on words like '자네', '내가', '우리 팀' with a patronizing smile in the voice; a short dry chuckle is okay.\nPauses: deliberate little pauses before the pressuring part of a sentence.\nCurrent emotion: composed and in character, but not warm. Normal speaking volume.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:02:19"
+  },
+  "4c357a43149db5ecd4aa": {
+    "scenario": "yoon",
+    "line": "end_noresp",
+    "text": "…아무 말씀 없으시네요. 자리로 가 볼게요.",
+    "voice": "verse",
+    "mood": "angry",
+    "instructions": "Identity: Korean man in his mid-30s, assistant manager (대리) at a robot manufacturing company, speaking to his boss (a 과장). Exhausted from caring for a sick child every night.\nLanguage: Native Seoul Korean, polite form.\nBaseline personality in the voice: worn out, sleep-deprived, emotions close to the surface; gets defensive when criticized.\nPacing: slow and heavy, low energy; speeds up and wavers when emotional.\nEmphasis: tired, slightly hoarse; voice cracks or trembles on '저도', '진짜', '애가'.\nPauses: long tired breaths, hesitations, a shaky exhale before hard sentences.\nCurrent emotion: clearly angry. Raised voice, hard stress on key words, faster pace, sharp sentence endings, audible frustration in the breath. Not screaming yet.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:05:26"
+  },
+  "4d2646b53fac24f9bf87": {
+    "scenario": "park",
+    "line": "react_angry_0",
+    "text": "아니, 지금 그게 무슨 말이야?",
+    "voice": "coral",
+    "mood": "angry",
+    "instructions": "Identity: Korean woman in her mid-40s, team leader (팀장) at a robot manufacturing company, speaking to her subordinate (a 과장).\nLanguage: Native Seoul Korean. Natural, fast office Korean, never announcer style.\nBaseline personality in the voice: always in a hurry, scattered, overly familiar ('우리 과장님~') while pushing work onto others; sulks audibly when refused.\nPacing: fast, words tumbling over each other, quick rising endings like she has somewhere to be.\nEmphasis: stresses '금방', '잠깐만', '이거만' as if the request is tiny; sing-song coaxing on '~요'.\nPauses: very few; short breathy catch before asking for something.\nCurrent emotion: clearly angry. Raised voice, hard stress on key words, faster pace, sharp sentence endings, audible frustration in the breath. Not screaming yet.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:02:42"
+  },
+  "4ee4e9467136b72f9569": {
+    "scenario": "kim",
+    "line": "end_noresp",
+    "text": "말이 없는 걸 보니 내 말대로 하겠다는 거지? 나가봐.",
+    "voice": "onyx",
+    "mood": "angry",
+    "instructions": "Identity: Korean man in his early 50s, department head (부장) at a robot manufacturing company, speaking to his subordinate (a 과장).\nLanguage: Native Seoul Korean. Natural, conversational office Korean, never read-aloud or announcer style.\nBaseline personality in the voice: easygoing, oily, smiling on the surface but quietly pressuring. Sounds friendly while making it clear who is in charge.\nPacing: relaxed and unhurried; stretches some words; lets sentence endings trail low and long.\nEmphasis: leans on words like '자네', '내가', '우리 팀' with a patronizing smile in the voice; a short dry chuckle is okay.\nPauses: deliberate little pauses before the pressuring part of a sentence.\nCurrent emotion: clearly angry. Raised voice, hard stress on key words, faster pace, sharp sentence endings, audible frustration in the breath. Not screaming yet.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:02:33"
+  },
+  "4f46d1b858da2bfb8491": {
+    "scenario": "park",
+    "line": "react_soft_2",
+    "text": "알았어, 알았어.",
+    "voice": "coral",
+    "mood": "softened",
+    "instructions": "Identity: Korean woman in her mid-40s, team leader (팀장) at a robot manufacturing company, speaking to her subordinate (a 과장).\nLanguage: Native Seoul Korean. Natural, fast office Korean, never announcer style.\nBaseline personality in the voice: always in a hurry, scattered, overly familiar ('우리 과장님~') while pushing work onto others; sulks audibly when refused.\nPacing: fast, words tumbling over each other, quick rising endings like she has somewhere to be.\nEmphasis: stresses '금방', '잠깐만', '이거만' as if the request is tiny; sing-song coaxing on '~요'.\nPauses: very few; short breathy catch before asking for something.\nCurrent emotion: softened and somewhat persuaded. Lower volume, slower, warmer and more relaxed tone, a slight reluctant acceptance in the voice.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:02:55"
+  },
+  "50c7b05a6363c6764ee3": {
+    "scenario": "yoon",
+    "line": "end_resign",
+    "text": "죄송합니다. 그냥 그만두는 게 모두를 위한 것 같아요.",
+    "voice": "verse",
+    "mood": "resigned",
+    "instructions": "Identity: Korean man in his mid-30s, assistant manager (대리) at a robot manufacturing company, speaking to his boss (a 과장). Exhausted from caring for a sick child every night.\nLanguage: Native Seoul Korean, polite form.\nBaseline personality in the voice: worn out, sleep-deprived, emotions close to the surface; gets defensive when criticized.\nPacing: slow and heavy, low energy; speeds up and wavers when emotional.\nEmphasis: tired, slightly hoarse; voice cracks or trembles on '저도', '진짜', '애가'.\nPauses: long tired breaths, hesitations, a shaky exhale before hard sentences.\nCurrent emotion: has given up and decided to quit. Quiet, flat and cold, tired, slow, with a heavy final exhale. No anger left.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:05:27"
+  },
+  "53bc4331ccf00f6fcb43": {
+    "scenario": "jung",
+    "line": "react_neutral_0",
+    "text": "그래서요?",
+    "voice": "echo",
+    "mood": "calm",
+    "instructions": "Identity: Korean man in his early 30s, assistant manager (주임) at a robot manufacturing company, speaking to his boss (a 과장).\nLanguage: Native Seoul Korean, technically polite form but cold.\nBaseline personality in the voice: skilled but defiant, cynical, argues about scope of work like a lawyer.\nPacing: steady, deliberate, crisp — every syllable clearly enunciated.\nEmphasis: flat and emotionless with a faint sneer; precise stress on '제 업무', '정확히', '근거'.\nPauses: measured pauses that feel like silent judgment; a tiny scoff is allowed.\nCurrent emotion: composed and in character, but not warm. Normal speaking volume.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:04:12"
+  },
+  "53ebb2978a59e4c8b273": {
+    "scenario": "han",
+    "line": "react_angry_0",
+    "text": "하… 진짜.",
+    "voice": "sage",
+    "mood": "angry",
+    "instructions": "Identity: Korean woman in her early 40s, team leader (팀장) at a robot manufacturing company, speaking to her subordinate (a 과장) who has a child.\nLanguage: Native Seoul Korean office speech.\nBaseline personality in the voice: moody and unpredictable — can sound sweet, then suddenly sharp; sarcastic, digs up past mistakes.\nPacing: medium, with sudden accelerations when irritated.\nEmphasis: sarcastic lift on '그래요?', '또', '애 핑계'; icy precision on criticism.\nPauses: audible annoyed sighs (한숨) before or after sentences.\nCurrent emotion: clearly angry. Raised voice, hard stress on key words, faster pace, sharp sentence endings, audible frustration in the breath. Not screaming yet.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:04:36"
+  },
+  "541e2d6aea62fc062b14": {
+    "scenario": "park",
+    "line": "end_partial",
+    "text": "일단 오늘은 가. 근데 다음엔 미리 말해 줘.",
+    "voice": "coral",
+    "mood": "calm",
+    "instructions": "Identity: Korean woman in her mid-40s, team leader (팀장) at a robot manufacturing company, speaking to her subordinate (a 과장).\nLanguage: Native Seoul Korean. Natural, fast office Korean, never announcer style.\nBaseline personality in the voice: always in a hurry, scattered, overly familiar ('우리 과장님~') while pushing work onto others; sulks audibly when refused.\nPacing: fast, words tumbling over each other, quick rising endings like she has somewhere to be.\nEmphasis: stresses '금방', '잠깐만', '이거만' as if the request is tiny; sing-song coaxing on '~요'.\nPauses: very few; short breathy catch before asking for something.\nCurrent emotion: composed and in character, but not warm. Normal speaking volume.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:02:59"
+  },
+  "546b73813c54866b268e": {
+    "scenario": "park",
+    "line": "end_noresp",
+    "text": "대답 없으면 하는 걸로 알게. 부탁해.",
+    "voice": "coral",
+    "mood": "angry",
+    "instructions": "Identity: Korean woman in her mid-40s, team leader (팀장) at a robot manufacturing company, speaking to her subordinate (a 과장).\nLanguage: Native Seoul Korean. Natural, fast office Korean, never announcer style.\nBaseline personality in the voice: always in a hurry, scattered, overly familiar ('우리 과장님~') while pushing work onto others; sulks audibly when refused.\nPacing: fast, words tumbling over each other, quick rising endings like she has somewhere to be.\nEmphasis: stresses '금방', '잠깐만', '이거만' as if the request is tiny; sing-song coaxing on '~요'.\nPauses: very few; short breathy catch before asking for something.\nCurrent emotion: clearly angry. Raised voice, hard stress on key words, faster pace, sharp sentence endings, audible frustration in the breath. Not screaming yet.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:03:02"
+  },
+  "58c3417b75c4865aa7f3": {
+    "scenario": "lee",
+    "line": "react_neutral_1",
+    "text": "그래서요?",
+    "voice": "nova",
+    "mood": "calm",
+    "instructions": "Identity: Korean woman in her late 20s, a third-year staff member (사원) at a robot manufacturing company, speaking to her boss (a 과장).\nLanguage: Native Seoul Korean, young office speech, polite form but sulky. Never announcer style.\nBaseline personality in the voice: defensive, feels wronged, always blaming the schedule or others.\nPacing: medium, speeding up when justifying herself, then trailing off.\nEmphasis: whiny stress on '그게', '저는', '원래'; endings mumble and fade ('…거든요…').\nPauses: small sighs and hesitant '아니…' before excuses.\nCurrent emotion: composed and in character, but not warm. Normal speaking volume.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:03:43"
+  },
+  "58f906abf112664e6e5b": {
+    "scenario": "jung",
+    "line": "end_success",
+    "text": "알겠습니다. 2주만입니다. 방식은 말씀드린 대로 조정해서 하겠습니다.",
+    "voice": "echo",
+    "mood": "softened",
+    "instructions": "Identity: Korean man in his early 30s, assistant manager (주임) at a robot manufacturing company, speaking to his boss (a 과장).\nLanguage: Native Seoul Korean, technically polite form but cold.\nBaseline personality in the voice: skilled but defiant, cynical, argues about scope of work like a lawyer.\nPacing: steady, deliberate, crisp — every syllable clearly enunciated.\nEmphasis: flat and emotionless with a faint sneer; precise stress on '제 업무', '정확히', '근거'.\nPauses: measured pauses that feel like silent judgment; a tiny scoff is allowed.\nCurrent emotion: softened and somewhat persuaded. Lower volume, slower, warmer and more relaxed tone, a slight reluctant acceptance in the voice.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:04:20"
+  },
+  "596ad7ad1357f8e23704": {
+    "scenario": "jung",
+    "line": "end_resign",
+    "text": "더 이상 여기서 배울 게 없는 것 같네요. 사직서 내겠습니다.",
+    "voice": "echo",
+    "mood": "resigned",
+    "instructions": "Identity: Korean man in his early 30s, assistant manager (주임) at a robot manufacturing company, speaking to his boss (a 과장).\nLanguage: Native Seoul Korean, technically polite form but cold.\nBaseline personality in the voice: skilled but defiant, cynical, argues about scope of work like a lawyer.\nPacing: steady, deliberate, crisp — every syllable clearly enunciated.\nEmphasis: flat and emotionless with a faint sneer; precise stress on '제 업무', '정확히', '근거'.\nPauses: measured pauses that feel like silent judgment; a tiny scoff is allowed.\nCurrent emotion: has given up and decided to quit. Quiet, flat and cold, tired, slow, with a heavy final exhale. No anger left.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:04:27"
+  },
+  "5b420329aee880324e15": {
+    "scenario": "lee",
+    "line": "nag2",
+    "text": "말씀 없으신 거 보니 저만 잘못한 건 아니네요.",
+    "voice": "nova",
+    "mood": "angry",
+    "instructions": "Identity: Korean woman in her late 20s, a third-year staff member (사원) at a robot manufacturing company, speaking to her boss (a 과장).\nLanguage: Native Seoul Korean, young office speech, polite form but sulky. Never announcer style.\nBaseline personality in the voice: defensive, feels wronged, always blaming the schedule or others.\nPacing: medium, speeding up when justifying herself, then trailing off.\nEmphasis: whiny stress on '그게', '저는', '원래'; endings mumble and fade ('…거든요…').\nPauses: small sighs and hesitant '아니…' before excuses.\nCurrent emotion: clearly angry. Raised voice, hard stress on key words, faster pace, sharp sentence endings, audible frustration in the breath. Not screaming yet.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:03:37"
+  },
+  "5c2ad0a24bf602360392": {
+    "scenario": "kim",
+    "line": "rumor_0",
+    "text": "자네, 요즘 내 얘기를 하고 다닌다며? 다 들었어.",
+    "voice": "onyx",
+    "mood": "annoyed",
+    "instructions": "Identity: Korean man in his early 50s, department head (부장) at a robot manufacturing company, speaking to his subordinate (a 과장).\nLanguage: Native Seoul Korean. Natural, conversational office Korean, never read-aloud or announcer style.\nBaseline personality in the voice: easygoing, oily, smiling on the surface but quietly pressuring. Sounds friendly while making it clear who is in charge.\nPacing: relaxed and unhurried; stretches some words; lets sentence endings trail low and long.\nEmphasis: leans on words like '자네', '내가', '우리 팀' with a patronizing smile in the voice; a short dry chuckle is okay.\nPauses: deliberate little pauses before the pressuring part of a sentence.\nCurrent emotion: irritated and impatient. Tighter voice, clipped endings, a bit faster, a small annoyed sigh or 'tsk' is fine. Volume slightly raised.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:02:35"
+  },
+  "5c54c7e359c47477c237": {
+    "scenario": "yoon",
+    "line": "nag2",
+    "text": "역시 제가 그냥 그만두는 게 낫겠죠.",
+    "voice": "verse",
+    "mood": "angry",
+    "instructions": "Identity: Korean man in his mid-30s, assistant manager (대리) at a robot manufacturing company, speaking to his boss (a 과장). Exhausted from caring for a sick child every night.\nLanguage: Native Seoul Korean, polite form.\nBaseline personality in the voice: worn out, sleep-deprived, emotions close to the surface; gets defensive when criticized.\nPacing: slow and heavy, low energy; speeds up and wavers when emotional.\nEmphasis: tired, slightly hoarse; voice cracks or trembles on '저도', '진짜', '애가'.\nPauses: long tired breaths, hesitations, a shaky exhale before hard sentences.\nCurrent emotion: clearly angry. Raised voice, hard stress on key words, faster pace, sharp sentence endings, audible frustration in the breath. Not screaming yet.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:05:04"
+  },
+  "5d6910c891e7dbe2a0b0": {
+    "scenario": "choi",
+    "line": "react_soft_2",
+    "text": "흠, 그건 몰랐네.",
+    "voice": "ash",
+    "mood": "softened",
+    "instructions": "Identity: Korean man in his mid-50s, executive director (상무, division head) at a robot manufacturing company, speaking to a 과장 far below him.\nLanguage: Native Korean, blunt executive speech (반말 mixed with curt orders). Never polite announcer style.\nBaseline personality in the voice: hot-tempered, impatient, looking for someone to blame. Loud and commanding even when not yet angry.\nPacing: fast, clipped, short bursts; cuts sentences off abruptly.\nEmphasis: hard, punchy stress on '누가', '왜', '책임'; barks the last word of a sentence.\nPauses: sharp intakes of breath before shouting; heavy angry exhale.\nCurrent emotion: softened and somewhat persuaded. Lower volume, slower, warmer and more relaxed tone, a slight reluctant acceptance in the voice.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:03:22"
+  },
+  "5e340ebb9aad3bc54021": {
+    "scenario": "jung",
+    "line": "react_soft_2",
+    "text": "그 정도면 괜찮겠네요.",
+    "voice": "echo",
+    "mood": "softened",
+    "instructions": "Identity: Korean man in his early 30s, assistant manager (주임) at a robot manufacturing company, speaking to his boss (a 과장).\nLanguage: Native Seoul Korean, technically polite form but cold.\nBaseline personality in the voice: skilled but defiant, cynical, argues about scope of work like a lawyer.\nPacing: steady, deliberate, crisp — every syllable clearly enunciated.\nEmphasis: flat and emotionless with a faint sneer; precise stress on '제 업무', '정확히', '근거'.\nPauses: measured pauses that feel like silent judgment; a tiny scoff is allowed.\nCurrent emotion: softened and somewhat persuaded. Lower volume, slower, warmer and more relaxed tone, a slight reluctant acceptance in the voice.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:04:18"
+  },
+  "5f178cf010d1dd0907b4": {
+    "scenario": "han",
+    "line": "react_angry_2",
+    "text": "또 시작이네요.",
+    "voice": "sage",
+    "mood": "angry",
+    "instructions": "Identity: Korean woman in her early 40s, team leader (팀장) at a robot manufacturing company, speaking to her subordinate (a 과장) who has a child.\nLanguage: Native Seoul Korean office speech.\nBaseline personality in the voice: moody and unpredictable — can sound sweet, then suddenly sharp; sarcastic, digs up past mistakes.\nPacing: medium, with sudden accelerations when irritated.\nEmphasis: sarcastic lift on '그래요?', '또', '애 핑계'; icy precision on criticism.\nPauses: audible annoyed sighs (한숨) before or after sentences.\nCurrent emotion: clearly angry. Raised voice, hard stress on key words, faster pace, sharp sentence endings, audible frustration in the breath. Not screaming yet.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:04:39"
+  },
+  "60446ebc376af8ce4a56": {
+    "scenario": "park",
+    "line": "opening",
+    "text": "이거 월요일 아침 회의 자료인데, 오늘 좀 정리해 줄 수 있지? 오래 안 걸려.",
+    "voice": "coral",
+    "mood": "calm",
+    "instructions": "Identity: Korean woman in her mid-40s, team leader (팀장) at a robot manufacturing company, speaking to her subordinate (a 과장).\nLanguage: Native Seoul Korean. Natural, fast office Korean, never announcer style.\nBaseline personality in the voice: always in a hurry, scattered, overly familiar ('우리 과장님~') while pushing work onto others; sulks audibly when refused.\nPacing: fast, words tumbling over each other, quick rising endings like she has somewhere to be.\nEmphasis: stresses '금방', '잠깐만', '이거만' as if the request is tiny; sing-song coaxing on '~요'.\nPauses: very few; short breathy catch before asking for something.\nCurrent emotion: composed and in character, but not warm. Normal speaking volume.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:02:38"
+  },
+  "61cbc764a8a0e47a76ff": {
+    "scenario": "yoon",
+    "line": "end_fail",
+    "text": "…네. 제가 다 잘못했죠.",
+    "voice": "verse",
+    "mood": "angry",
+    "instructions": "Identity: Korean man in his mid-30s, assistant manager (대리) at a robot manufacturing company, speaking to his boss (a 과장). Exhausted from caring for a sick child every night.\nLanguage: Native Seoul Korean, polite form.\nBaseline personality in the voice: worn out, sleep-deprived, emotions close to the surface; gets defensive when criticized.\nPacing: slow and heavy, low energy; speeds up and wavers when emotional.\nEmphasis: tired, slightly hoarse; voice cracks or trembles on '저도', '진짜', '애가'.\nPauses: long tired breaths, hesitations, a shaky exhale before hard sentences.\nCurrent emotion: clearly angry. Raised voice, hard stress on key words, faster pace, sharp sentence endings, audible frustration in the breath. Not screaming yet.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:05:24"
+  },
+  "61e08c3ac410eda09eab": {
+    "scenario": "park",
+    "line": "react_angry_1",
+    "text": "하, 진짜…",
+    "voice": "coral",
+    "mood": "angry",
+    "instructions": "Identity: Korean woman in her mid-40s, team leader (팀장) at a robot manufacturing company, speaking to her subordinate (a 과장).\nLanguage: Native Seoul Korean. Natural, fast office Korean, never announcer style.\nBaseline personality in the voice: always in a hurry, scattered, overly familiar ('우리 과장님~') while pushing work onto others; sulks audibly when refused.\nPacing: fast, words tumbling over each other, quick rising endings like she has somewhere to be.\nEmphasis: stresses '금방', '잠깐만', '이거만' as if the request is tiny; sing-song coaxing on '~요'.\nPauses: very few; short breathy catch before asking for something.\nCurrent emotion: clearly angry. Raised voice, hard stress on key words, faster pace, sharp sentence endings, audible frustration in the breath. Not screaming yet.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:02:45"
+  },
+  "6326f47470e7b02ebb0a": {
+    "scenario": "han",
+    "line": "react_soft_0",
+    "text": "…그래요.",
+    "voice": "sage",
+    "mood": "softened",
+    "instructions": "Identity: Korean woman in her early 40s, team leader (팀장) at a robot manufacturing company, speaking to her subordinate (a 과장) who has a child.\nLanguage: Native Seoul Korean office speech.\nBaseline personality in the voice: moody and unpredictable — can sound sweet, then suddenly sharp; sarcastic, digs up past mistakes.\nPacing: medium, with sudden accelerations when irritated.\nEmphasis: sarcastic lift on '그래요?', '또', '애 핑계'; icy precision on criticism.\nPauses: audible annoyed sighs (한숨) before or after sentences.\nCurrent emotion: softened and somewhat persuaded. Lower volume, slower, warmer and more relaxed tone, a slight reluctant acceptance in the voice.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:04:44"
+  },
+  "6536399f933e7ea834cc": {
+    "scenario": "kim",
+    "line": "nag1",
+    "text": "왜 말이 없어? 뭐 불만 있어?",
+    "voice": "onyx",
+    "mood": "annoyed",
+    "instructions": "Identity: Korean man in his early 50s, department head (부장) at a robot manufacturing company, speaking to his subordinate (a 과장).\nLanguage: Native Seoul Korean. Natural, conversational office Korean, never read-aloud or announcer style.\nBaseline personality in the voice: easygoing, oily, smiling on the surface but quietly pressuring. Sounds friendly while making it clear who is in charge.\nPacing: relaxed and unhurried; stretches some words; lets sentence endings trail low and long.\nEmphasis: leans on words like '자네', '내가', '우리 팀' with a patronizing smile in the voice; a short dry chuckle is okay.\nPauses: deliberate little pauses before the pressuring part of a sentence.\nCurrent emotion: irritated and impatient. Tighter voice, clipped endings, a bit faster, a small annoyed sigh or 'tsk' is fine. Volume slightly raised.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:02:10"
+  },
+  "674776f57cd9187c90eb": {
+    "scenario": "han",
+    "line": "nag2",
+    "text": "하… 됐어요. 알아서 하세요.",
+    "voice": "sage",
+    "mood": "angry",
+    "instructions": "Identity: Korean woman in her early 40s, team leader (팀장) at a robot manufacturing company, speaking to her subordinate (a 과장) who has a child.\nLanguage: Native Seoul Korean office speech.\nBaseline personality in the voice: moody and unpredictable — can sound sweet, then suddenly sharp; sarcastic, digs up past mistakes.\nPacing: medium, with sudden accelerations when irritated.\nEmphasis: sarcastic lift on '그래요?', '또', '애 핑계'; icy precision on criticism.\nPauses: audible annoyed sighs (한숨) before or after sentences.\nCurrent emotion: clearly angry. Raised voice, hard stress on key words, faster pace, sharp sentence endings, audible frustration in the breath. Not screaming yet.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:04:35"
+  },
+  "6954910cc2b59290930a": {
+    "scenario": "han",
+    "line": "end_partial",
+    "text": "일단 가세요. 근데 보고 자료는 오늘 밤까지 메일로 주세요.",
+    "voice": "sage",
+    "mood": "calm",
+    "instructions": "Identity: Korean woman in her early 40s, team leader (팀장) at a robot manufacturing company, speaking to her subordinate (a 과장) who has a child.\nLanguage: Native Seoul Korean office speech.\nBaseline personality in the voice: moody and unpredictable — can sound sweet, then suddenly sharp; sarcastic, digs up past mistakes.\nPacing: medium, with sudden accelerations when irritated.\nEmphasis: sarcastic lift on '그래요?', '또', '애 핑계'; icy precision on criticism.\nPauses: audible annoyed sighs (한숨) before or after sentences.\nCurrent emotion: composed and in character, but not warm. Normal speaking volume.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:04:51"
+  },
+  "6a9da081d745d9e4048b": {
+    "scenario": "park",
+    "line": "react_angry_2",
+    "text": "나 지금 바쁜 거 안 보여?",
+    "voice": "coral",
+    "mood": "angry",
+    "instructions": "Identity: Korean woman in her mid-40s, team leader (팀장) at a robot manufacturing company, speaking to her subordinate (a 과장).\nLanguage: Native Seoul Korean. Natural, fast office Korean, never announcer style.\nBaseline personality in the voice: always in a hurry, scattered, overly familiar ('우리 과장님~') while pushing work onto others; sulks audibly when refused.\nPacing: fast, words tumbling over each other, quick rising endings like she has somewhere to be.\nEmphasis: stresses '금방', '잠깐만', '이거만' as if the request is tiny; sing-song coaxing on '~요'.\nPauses: very few; short breathy catch before asking for something.\nCurrent emotion: clearly angry. Raised voice, hard stress on key words, faster pace, sharp sentence endings, audible frustration in the breath. Not screaming yet.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:02:47"
+  },
+  "6d899525d7cd842c0311": {
+    "scenario": "kim",
+    "line": "react_soft_0",
+    "text": "그래, 그래.",
+    "voice": "onyx",
+    "mood": "softened",
+    "instructions": "Identity: Korean man in his early 50s, department head (부장) at a robot manufacturing company, speaking to his subordinate (a 과장).\nLanguage: Native Seoul Korean. Natural, conversational office Korean, never read-aloud or announcer style.\nBaseline personality in the voice: easygoing, oily, smiling on the surface but quietly pressuring. Sounds friendly while making it clear who is in charge.\nPacing: relaxed and unhurried; stretches some words; lets sentence endings trail low and long.\nEmphasis: leans on words like '자네', '내가', '우리 팀' with a patronizing smile in the voice; a short dry chuckle is okay.\nPauses: deliberate little pauses before the pressuring part of a sentence.\nCurrent emotion: softened and somewhat persuaded. Lower volume, slower, warmer and more relaxed tone, a slight reluctant acceptance in the voice.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:02:22"
+  },
+  "6e65cc937b40d09bb803": {
+    "scenario": "choi",
+    "line": "end_success",
+    "text": "…알았어. 보고했던 건 내가 놓쳤군. 대책 정리해서 오후에 다시 보자.",
+    "voice": "ash",
+    "mood": "softened",
+    "instructions": "Identity: Korean man in his mid-50s, executive director (상무, division head) at a robot manufacturing company, speaking to a 과장 far below him.\nLanguage: Native Korean, blunt executive speech (반말 mixed with curt orders). Never polite announcer style.\nBaseline personality in the voice: hot-tempered, impatient, looking for someone to blame. Loud and commanding even when not yet angry.\nPacing: fast, clipped, short bursts; cuts sentences off abruptly.\nEmphasis: hard, punchy stress on '누가', '왜', '책임'; barks the last word of a sentence.\nPauses: sharp intakes of breath before shouting; heavy angry exhale.\nCurrent emotion: softened and somewhat persuaded. Lower volume, slower, warmer and more relaxed tone, a slight reluctant acceptance in the voice.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:03:24"
+  },
+  "733152dc09948d948fb4": {
+    "scenario": "han",
+    "line": "rumor_0",
+    "text": "저 없는 데서 제 얘기 하셨다면서요? 참 실망이네요.",
+    "voice": "sage",
+    "mood": "annoyed",
+    "instructions": "Identity: Korean woman in her early 40s, team leader (팀장) at a robot manufacturing company, speaking to her subordinate (a 과장) who has a child.\nLanguage: Native Seoul Korean office speech.\nBaseline personality in the voice: moody and unpredictable — can sound sweet, then suddenly sharp; sarcastic, digs up past mistakes.\nPacing: medium, with sudden accelerations when irritated.\nEmphasis: sarcastic lift on '그래요?', '또', '애 핑계'; icy precision on criticism.\nPauses: audible annoyed sighs (한숨) before or after sentences.\nCurrent emotion: irritated and impatient. Tighter voice, clipped endings, a bit faster, a small annoyed sigh or 'tsk' is fine. Volume slightly raised.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:04:58"
+  },
+  "7626c636dccb32d61e64": {
+    "scenario": "yoon",
+    "line": "end_partial",
+    "text": "네… 일단 노력해 볼게요.",
+    "voice": "verse",
+    "mood": "calm",
+    "instructions": "Identity: Korean man in his mid-30s, assistant manager (대리) at a robot manufacturing company, speaking to his boss (a 과장). Exhausted from caring for a sick child every night.\nLanguage: Native Seoul Korean, polite form.\nBaseline personality in the voice: worn out, sleep-deprived, emotions close to the surface; gets defensive when criticized.\nPacing: slow and heavy, low energy; speeds up and wavers when emotional.\nEmphasis: tired, slightly hoarse; voice cracks or trembles on '저도', '진짜', '애가'.\nPauses: long tired breaths, hesitations, a shaky exhale before hard sentences.\nCurrent emotion: composed and in character, but not warm. Normal speaking volume.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:05:23"
+  },
+  "78266b3e0568d8409404": {
+    "scenario": "yoon",
+    "line": "end_success",
+    "text": "말씀 감사합니다, 과장님. 유연근무 신청하고, 자료는 이번 주 안에 다시 검토해서 드릴게요.",
+    "voice": "verse",
+    "mood": "softened",
+    "instructions": "Identity: Korean man in his mid-30s, assistant manager (대리) at a robot manufacturing company, speaking to his boss (a 과장). Exhausted from caring for a sick child every night.\nLanguage: Native Seoul Korean, polite form.\nBaseline personality in the voice: worn out, sleep-deprived, emotions close to the surface; gets defensive when criticized.\nPacing: slow and heavy, low energy; speeds up and wavers when emotional.\nEmphasis: tired, slightly hoarse; voice cracks or trembles on '저도', '진짜', '애가'.\nPauses: long tired breaths, hesitations, a shaky exhale before hard sentences.\nCurrent emotion: softened and somewhat persuaded. Lower volume, slower, warmer and more relaxed tone, a slight reluctant acceptance in the voice.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:05:21"
+  },
+  "82e3d91c208ea671e6d5": {
+    "scenario": "kim",
+    "line": "opening",
+    "text": "아, 그 보고서 말이야. 방향은 내가 다 잡아준 거니까 임원 보고는 내가 할게. 자네는 자료만 깔끔하게 넘겨.",
+    "voice": "onyx",
+    "mood": "calm",
+    "instructions": "Identity: Korean man in his early 50s, department head (부장) at a robot manufacturing company, speaking to his subordinate (a 과장).\nLanguage: Native Seoul Korean. Natural, conversational office Korean, never read-aloud or announcer style.\nBaseline personality in the voice: easygoing, oily, smiling on the surface but quietly pressuring. Sounds friendly while making it clear who is in charge.\nPacing: relaxed and unhurried; stretches some words; lets sentence endings trail low and long.\nEmphasis: leans on words like '자네', '내가', '우리 팀' with a patronizing smile in the voice; a short dry chuckle is okay.\nPauses: deliberate little pauses before the pressuring part of a sentence.\nCurrent emotion: composed and in character, but not warm. Normal speaking volume.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:02:09"
+  },
+  "88cb70075bf42b36d923": {
+    "scenario": "kim",
+    "line": "react_soft_1",
+    "text": "음, 일리는 있네.",
+    "voice": "onyx",
+    "mood": "softened",
+    "instructions": "Identity: Korean man in his early 50s, department head (부장) at a robot manufacturing company, speaking to his subordinate (a 과장).\nLanguage: Native Seoul Korean. Natural, conversational office Korean, never read-aloud or announcer style.\nBaseline personality in the voice: easygoing, oily, smiling on the surface but quietly pressuring. Sounds friendly while making it clear who is in charge.\nPacing: relaxed and unhurried; stretches some words; lets sentence endings trail low and long.\nEmphasis: leans on words like '자네', '내가', '우리 팀' with a patronizing smile in the voice; a short dry chuckle is okay.\nPauses: deliberate little pauses before the pressuring part of a sentence.\nCurrent emotion: softened and somewhat persuaded. Lower volume, slower, warmer and more relaxed tone, a slight reluctant acceptance in the voice.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:02:24"
+  },
+  "89bc805fe0776ccb6c8b": {
+    "scenario": "lee",
+    "line": "end_partial",
+    "text": "네, 일단 해 볼게요…",
+    "voice": "nova",
+    "mood": "calm",
+    "instructions": "Identity: Korean woman in her late 20s, a third-year staff member (사원) at a robot manufacturing company, speaking to her boss (a 과장).\nLanguage: Native Seoul Korean, young office speech, polite form but sulky. Never announcer style.\nBaseline personality in the voice: defensive, feels wronged, always blaming the schedule or others.\nPacing: medium, speeding up when justifying herself, then trailing off.\nEmphasis: whiny stress on '그게', '저는', '원래'; endings mumble and fade ('…거든요…').\nPauses: small sighs and hesitant '아니…' before excuses.\nCurrent emotion: composed and in character, but not warm. Normal speaking volume.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:03:53"
+  },
+  "8d55d8b1830a3b4e22ed": {
+    "scenario": "park",
+    "line": "nag2",
+    "text": "그냥 한다는 걸로 알게.",
+    "voice": "coral",
+    "mood": "angry",
+    "instructions": "Identity: Korean woman in her mid-40s, team leader (팀장) at a robot manufacturing company, speaking to her subordinate (a 과장).\nLanguage: Native Seoul Korean. Natural, fast office Korean, never announcer style.\nBaseline personality in the voice: always in a hurry, scattered, overly familiar ('우리 과장님~') while pushing work onto others; sulks audibly when refused.\nPacing: fast, words tumbling over each other, quick rising endings like she has somewhere to be.\nEmphasis: stresses '금방', '잠깐만', '이거만' as if the request is tiny; sing-song coaxing on '~요'.\nPauses: very few; short breathy catch before asking for something.\nCurrent emotion: clearly angry. Raised voice, hard stress on key words, faster pace, sharp sentence endings, audible frustration in the breath. Not screaming yet.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:02:41"
+  },
+  "8e1bfb68637afa416546": {
+    "scenario": "lee",
+    "line": "end_success",
+    "text": "…알겠습니다. 내일 오후 3시까지 꼭 드릴게요. 앞으로는 중간에 미리 말씀드릴게요.",
+    "voice": "nova",
+    "mood": "softened",
+    "instructions": "Identity: Korean woman in her late 20s, a third-year staff member (사원) at a robot manufacturing company, speaking to her boss (a 과장).\nLanguage: Native Seoul Korean, young office speech, polite form but sulky. Never announcer style.\nBaseline personality in the voice: defensive, feels wronged, always blaming the schedule or others.\nPacing: medium, speeding up when justifying herself, then trailing off.\nEmphasis: whiny stress on '그게', '저는', '원래'; endings mumble and fade ('…거든요…').\nPauses: small sighs and hesitant '아니…' before excuses.\nCurrent emotion: softened and somewhat persuaded. Lower volume, slower, warmer and more relaxed tone, a slight reluctant acceptance in the voice.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:03:51"
+  },
+  "8e7b6587a9eb4b396983": {
+    "scenario": "yoon",
+    "line": "rumor_1",
+    "text": "제 얘기 하셨다는 거 들었어요. 저 정말 열심히 하고 있는데…",
+    "voice": "verse",
+    "mood": "annoyed",
+    "instructions": "Identity: Korean man in his mid-30s, assistant manager (대리) at a robot manufacturing company, speaking to his boss (a 과장). Exhausted from caring for a sick child every night.\nLanguage: Native Seoul Korean, polite form.\nBaseline personality in the voice: worn out, sleep-deprived, emotions close to the surface; gets defensive when criticized.\nPacing: slow and heavy, low energy; speeds up and wavers when emotional.\nEmphasis: tired, slightly hoarse; voice cracks or trembles on '저도', '진짜', '애가'.\nPauses: long tired breaths, hesitations, a shaky exhale before hard sentences.\nCurrent emotion: irritated and impatient. Tighter voice, clipped endings, a bit faster, a small annoyed sigh or 'tsk' is fine. Volume slightly raised.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:05:31"
+  },
+  "8eca770852d55af6e552": {
+    "scenario": "kim",
+    "line": "react_soft_2",
+    "text": "허허, 알았어.",
+    "voice": "onyx",
+    "mood": "softened",
+    "instructions": "Identity: Korean man in his early 50s, department head (부장) at a robot manufacturing company, speaking to his subordinate (a 과장).\nLanguage: Native Seoul Korean. Natural, conversational office Korean, never read-aloud or announcer style.\nBaseline personality in the voice: easygoing, oily, smiling on the surface but quietly pressuring. Sounds friendly while making it clear who is in charge.\nPacing: relaxed and unhurried; stretches some words; lets sentence endings trail low and long.\nEmphasis: leans on words like '자네', '내가', '우리 팀' with a patronizing smile in the voice; a short dry chuckle is okay.\nPauses: deliberate little pauses before the pressuring part of a sentence.\nCurrent emotion: softened and somewhat persuaded. Lower volume, slower, warmer and more relaxed tone, a slight reluctant acceptance in the voice.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:02:26"
+  },
+  "8fa1465fa39d2adcec9f": {
+    "scenario": "lee",
+    "line": "react_neutral_0",
+    "text": "…네.",
+    "voice": "nova",
+    "mood": "calm",
+    "instructions": "Identity: Korean woman in her late 20s, a third-year staff member (사원) at a robot manufacturing company, speaking to her boss (a 과장).\nLanguage: Native Seoul Korean, young office speech, polite form but sulky. Never announcer style.\nBaseline personality in the voice: defensive, feels wronged, always blaming the schedule or others.\nPacing: medium, speeding up when justifying herself, then trailing off.\nEmphasis: whiny stress on '그게', '저는', '원래'; endings mumble and fade ('…거든요…').\nPauses: small sighs and hesitant '아니…' before excuses.\nCurrent emotion: composed and in character, but not warm. Normal speaking volume.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:03:42"
+  },
+  "91964f36bd7e682a8477": {
+    "scenario": "han",
+    "line": "react_neutral_0",
+    "text": "그래서요?",
+    "voice": "sage",
+    "mood": "calm",
+    "instructions": "Identity: Korean woman in her early 40s, team leader (팀장) at a robot manufacturing company, speaking to her subordinate (a 과장) who has a child.\nLanguage: Native Seoul Korean office speech.\nBaseline personality in the voice: moody and unpredictable — can sound sweet, then suddenly sharp; sarcastic, digs up past mistakes.\nPacing: medium, with sudden accelerations when irritated.\nEmphasis: sarcastic lift on '그래요?', '또', '애 핑계'; icy precision on criticism.\nPauses: audible annoyed sighs (한숨) before or after sentences.\nCurrent emotion: composed and in character, but not warm. Normal speaking volume.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:04:40"
+  },
+  "924bfb0c4e753cc93bc6": {
+    "scenario": "jung",
+    "line": "nag2",
+    "text": "그럼 이 건은 없던 걸로 하겠습니다.",
+    "voice": "echo",
+    "mood": "angry",
+    "instructions": "Identity: Korean man in his early 30s, assistant manager (주임) at a robot manufacturing company, speaking to his boss (a 과장).\nLanguage: Native Seoul Korean, technically polite form but cold.\nBaseline personality in the voice: skilled but defiant, cynical, argues about scope of work like a lawyer.\nPacing: steady, deliberate, crisp — every syllable clearly enunciated.\nEmphasis: flat and emotionless with a faint sneer; precise stress on '제 업무', '정확히', '근거'.\nPauses: measured pauses that feel like silent judgment; a tiny scoff is allowed.\nCurrent emotion: clearly angry. Raised voice, hard stress on key words, faster pace, sharp sentence endings, audible frustration in the breath. Not screaming yet.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:04:06"
+  },
+  "9257df4517b579597b23": {
+    "scenario": "lee",
+    "line": "nag1",
+    "text": "…과장님? 왜 아무 말씀 안 하세요?",
+    "voice": "nova",
+    "mood": "annoyed",
+    "instructions": "Identity: Korean woman in her late 20s, a third-year staff member (사원) at a robot manufacturing company, speaking to her boss (a 과장).\nLanguage: Native Seoul Korean, young office speech, polite form but sulky. Never announcer style.\nBaseline personality in the voice: defensive, feels wronged, always blaming the schedule or others.\nPacing: medium, speeding up when justifying herself, then trailing off.\nEmphasis: whiny stress on '그게', '저는', '원래'; endings mumble and fade ('…거든요…').\nPauses: small sighs and hesitant '아니…' before excuses.\nCurrent emotion: irritated and impatient. Tighter voice, clipped endings, a bit faster, a small annoyed sigh or 'tsk' is fine. Volume slightly raised.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:03:35"
+  },
+  "935d06657aed820a3a17": {
+    "scenario": "jung",
+    "line": "end_fail",
+    "text": "그럼 다른 분께 맡기시죠. 저는 못 합니다.",
+    "voice": "echo",
+    "mood": "angry",
+    "instructions": "Identity: Korean man in his early 30s, assistant manager (주임) at a robot manufacturing company, speaking to his boss (a 과장).\nLanguage: Native Seoul Korean, technically polite form but cold.\nBaseline personality in the voice: skilled but defiant, cynical, argues about scope of work like a lawyer.\nPacing: steady, deliberate, crisp — every syllable clearly enunciated.\nEmphasis: flat and emotionless with a faint sneer; precise stress on '제 업무', '정확히', '근거'.\nPauses: measured pauses that feel like silent judgment; a tiny scoff is allowed.\nCurrent emotion: clearly angry. Raised voice, hard stress on key words, faster pace, sharp sentence endings, audible frustration in the breath. Not screaming yet.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:04:23"
+  },
+  "941acd081e4731358a88": {
+    "scenario": "lee",
+    "line": "react_soft_0",
+    "text": "아… 네.",
+    "voice": "nova",
+    "mood": "softened",
+    "instructions": "Identity: Korean woman in her late 20s, a third-year staff member (사원) at a robot manufacturing company, speaking to her boss (a 과장).\nLanguage: Native Seoul Korean, young office speech, polite form but sulky. Never announcer style.\nBaseline personality in the voice: defensive, feels wronged, always blaming the schedule or others.\nPacing: medium, speeding up when justifying herself, then trailing off.\nEmphasis: whiny stress on '그게', '저는', '원래'; endings mumble and fade ('…거든요…').\nPauses: small sighs and hesitant '아니…' before excuses.\nCurrent emotion: softened and somewhat persuaded. Lower volume, slower, warmer and more relaxed tone, a slight reluctant acceptance in the voice.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:03:47"
+  },
+  "96868b204e16b55639fb": {
+    "scenario": "park",
+    "line": "rumor_0",
+    "text": "과장, 나 없는 데서 내 얘기 했다며? 서운하네.",
+    "voice": "coral",
+    "mood": "annoyed",
+    "instructions": "Identity: Korean woman in her mid-40s, team leader (팀장) at a robot manufacturing company, speaking to her subordinate (a 과장).\nLanguage: Native Seoul Korean. Natural, fast office Korean, never announcer style.\nBaseline personality in the voice: always in a hurry, scattered, overly familiar ('우리 과장님~') while pushing work onto others; sulks audibly when refused.\nPacing: fast, words tumbling over each other, quick rising endings like she has somewhere to be.\nEmphasis: stresses '금방', '잠깐만', '이거만' as if the request is tiny; sing-song coaxing on '~요'.\nPauses: very few; short breathy catch before asking for something.\nCurrent emotion: irritated and impatient. Tighter voice, clipped endings, a bit faster, a small annoyed sigh or 'tsk' is fine. Volume slightly raised.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:03:03"
+  },
+  "9827a1bfb495ceb8883a": {
+    "scenario": "han",
+    "line": "end_success",
+    "text": "알겠어요. 보고는 내일 오전에 하고, 오늘은 얼른 가 보세요. 아이 괜찮길 바라요.",
+    "voice": "sage",
+    "mood": "softened",
+    "instructions": "Identity: Korean woman in her early 40s, team leader (팀장) at a robot manufacturing company, speaking to her subordinate (a 과장) who has a child.\nLanguage: Native Seoul Korean office speech.\nBaseline personality in the voice: moody and unpredictable — can sound sweet, then suddenly sharp; sarcastic, digs up past mistakes.\nPacing: medium, with sudden accelerations when irritated.\nEmphasis: sarcastic lift on '그래요?', '또', '애 핑계'; icy precision on criticism.\nPauses: audible annoyed sighs (한숨) before or after sentences.\nCurrent emotion: softened and somewhat persuaded. Lower volume, slower, warmer and more relaxed tone, a slight reluctant acceptance in the voice.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:04:49"
+  },
+  "9a88112f9e37345d6488": {
+    "scenario": "kim",
+    "line": "nag2",
+    "text": "자네 요즘 태도가 좀 그렇다?",
+    "voice": "onyx",
+    "mood": "angry",
+    "instructions": "Identity: Korean man in his early 50s, department head (부장) at a robot manufacturing company, speaking to his subordinate (a 과장).\nLanguage: Native Seoul Korean. Natural, conversational office Korean, never read-aloud or announcer style.\nBaseline personality in the voice: easygoing, oily, smiling on the surface but quietly pressuring. Sounds friendly while making it clear who is in charge.\nPacing: relaxed and unhurried; stretches some words; lets sentence endings trail low and long.\nEmphasis: leans on words like '자네', '내가', '우리 팀' with a patronizing smile in the voice; a short dry chuckle is okay.\nPauses: deliberate little pauses before the pressuring part of a sentence.\nCurrent emotion: clearly angry. Raised voice, hard stress on key words, faster pace, sharp sentence endings, audible frustration in the breath. Not screaming yet.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:02:12"
+  },
+  "9d81ed0d2236b230a914": {
+    "scenario": "lee",
+    "line": "end_fail",
+    "text": "…네. 알겠습니다.",
+    "voice": "nova",
+    "mood": "angry",
+    "instructions": "Identity: Korean woman in her late 20s, a third-year staff member (사원) at a robot manufacturing company, speaking to her boss (a 과장).\nLanguage: Native Seoul Korean, young office speech, polite form but sulky. Never announcer style.\nBaseline personality in the voice: defensive, feels wronged, always blaming the schedule or others.\nPacing: medium, speeding up when justifying herself, then trailing off.\nEmphasis: whiny stress on '그게', '저는', '원래'; endings mumble and fade ('…거든요…').\nPauses: small sighs and hesitant '아니…' before excuses.\nCurrent emotion: clearly angry. Raised voice, hard stress on key words, faster pace, sharp sentence endings, audible frustration in the breath. Not screaming yet.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:03:55"
+  },
+  "9e9313b26edf1d73c680": {
+    "scenario": "han",
+    "line": "react_neutral_1",
+    "text": "네, 계속하세요.",
+    "voice": "sage",
+    "mood": "calm",
+    "instructions": "Identity: Korean woman in her early 40s, team leader (팀장) at a robot manufacturing company, speaking to her subordinate (a 과장) who has a child.\nLanguage: Native Seoul Korean office speech.\nBaseline personality in the voice: moody and unpredictable — can sound sweet, then suddenly sharp; sarcastic, digs up past mistakes.\nPacing: medium, with sudden accelerations when irritated.\nEmphasis: sarcastic lift on '그래요?', '또', '애 핑계'; icy precision on criticism.\nPauses: audible annoyed sighs (한숨) before or after sentences.\nCurrent emotion: composed and in character, but not warm. Normal speaking volume.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:04:42"
+  },
+  "a637a2b811ffd829ee2f": {
+    "scenario": "choi",
+    "line": "react_angry_2",
+    "text": "변명은 됐고!",
+    "voice": "ash",
+    "mood": "angry",
+    "instructions": "Identity: Korean man in his mid-50s, executive director (상무, division head) at a robot manufacturing company, speaking to a 과장 far below him.\nLanguage: Native Korean, blunt executive speech (반말 mixed with curt orders). Never polite announcer style.\nBaseline personality in the voice: hot-tempered, impatient, looking for someone to blame. Loud and commanding even when not yet angry.\nPacing: fast, clipped, short bursts; cuts sentences off abruptly.\nEmphasis: hard, punchy stress on '누가', '왜', '책임'; barks the last word of a sentence.\nPauses: sharp intakes of breath before shouting; heavy angry exhale.\nCurrent emotion: clearly angry. Raised voice, hard stress on key words, faster pace, sharp sentence endings, audible frustration in the breath. Not screaming yet.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:03:14"
+  },
+  "a69baaec37c136d9fbf1": {
+    "scenario": "jung",
+    "line": "rumor_1",
+    "text": "저 없는 자리에서 제 평가를 하셨다던데요.",
+    "voice": "echo",
+    "mood": "annoyed",
+    "instructions": "Identity: Korean man in his early 30s, assistant manager (주임) at a robot manufacturing company, speaking to his boss (a 과장).\nLanguage: Native Seoul Korean, technically polite form but cold.\nBaseline personality in the voice: skilled but defiant, cynical, argues about scope of work like a lawyer.\nPacing: steady, deliberate, crisp — every syllable clearly enunciated.\nEmphasis: flat and emotionless with a faint sneer; precise stress on '제 업무', '정확히', '근거'.\nPauses: measured pauses that feel like silent judgment; a tiny scoff is allowed.\nCurrent emotion: irritated and impatient. Tighter voice, clipped endings, a bit faster, a small annoyed sigh or 'tsk' is fine. Volume slightly raised.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:04:30"
+  },
+  "a8e7a195a345cb202cf6": {
+    "scenario": "lee",
+    "line": "opening",
+    "text": "아, 그거요… 다른 팀에서 자료를 늦게 줘서요. 근데 솔직히 그 일정은 처음부터 좀 무리였어요.",
+    "voice": "nova",
+    "mood": "calm",
+    "instructions": "Identity: Korean woman in her late 20s, a third-year staff member (사원) at a robot manufacturing company, speaking to her boss (a 과장).\nLanguage: Native Seoul Korean, young office speech, polite form but sulky. Never announcer style.\nBaseline personality in the voice: defensive, feels wronged, always blaming the schedule or others.\nPacing: medium, speeding up when justifying herself, then trailing off.\nEmphasis: whiny stress on '그게', '저는', '원래'; endings mumble and fade ('…거든요…').\nPauses: small sighs and hesitant '아니…' before excuses.\nCurrent emotion: composed and in character, but not warm. Normal speaking volume.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:03:34"
+  },
+  "b16d4e9ae00635ce95b4": {
+    "scenario": "han",
+    "line": "end_noresp",
+    "text": "말 안 하실 거면 그냥 자리로 가세요.",
+    "voice": "sage",
+    "mood": "angry",
+    "instructions": "Identity: Korean woman in her early 40s, team leader (팀장) at a robot manufacturing company, speaking to her subordinate (a 과장) who has a child.\nLanguage: Native Seoul Korean office speech.\nBaseline personality in the voice: moody and unpredictable — can sound sweet, then suddenly sharp; sarcastic, digs up past mistakes.\nPacing: medium, with sudden accelerations when irritated.\nEmphasis: sarcastic lift on '그래요?', '또', '애 핑계'; icy precision on criticism.\nPauses: audible annoyed sighs (한숨) before or after sentences.\nCurrent emotion: clearly angry. Raised voice, hard stress on key words, faster pace, sharp sentence endings, audible frustration in the breath. Not screaming yet.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:04:56"
+  },
+  "b77e050fe4dac83c44b4": {
+    "scenario": "jung",
+    "line": "react_angry_1",
+    "text": "하, 네.",
+    "voice": "echo",
+    "mood": "angry",
+    "instructions": "Identity: Korean man in his early 30s, assistant manager (주임) at a robot manufacturing company, speaking to his boss (a 과장).\nLanguage: Native Seoul Korean, technically polite form but cold.\nBaseline personality in the voice: skilled but defiant, cynical, argues about scope of work like a lawyer.\nPacing: steady, deliberate, crisp — every syllable clearly enunciated.\nEmphasis: flat and emotionless with a faint sneer; precise stress on '제 업무', '정확히', '근거'.\nPauses: measured pauses that feel like silent judgment; a tiny scoff is allowed.\nCurrent emotion: clearly angry. Raised voice, hard stress on key words, faster pace, sharp sentence endings, audible frustration in the breath. Not screaming yet.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:04:09"
+  },
+  "b813a3b3ae7b8ee399ed": {
+    "scenario": "park",
+    "line": "react_neutral_1",
+    "text": "음… 빨리 말해 봐.",
+    "voice": "coral",
+    "mood": "calm",
+    "instructions": "Identity: Korean woman in her mid-40s, team leader (팀장) at a robot manufacturing company, speaking to her subordinate (a 과장).\nLanguage: Native Seoul Korean. Natural, fast office Korean, never announcer style.\nBaseline personality in the voice: always in a hurry, scattered, overly familiar ('우리 과장님~') while pushing work onto others; sulks audibly when refused.\nPacing: fast, words tumbling over each other, quick rising endings like she has somewhere to be.\nEmphasis: stresses '금방', '잠깐만', '이거만' as if the request is tiny; sing-song coaxing on '~요'.\nPauses: very few; short breathy catch before asking for something.\nCurrent emotion: composed and in character, but not warm. Normal speaking volume.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:02:50"
+  },
+  "b8f24aa95174452f3d63": {
+    "scenario": "kim",
+    "line": "react_angry_1",
+    "text": "허… 참.",
+    "voice": "onyx",
+    "mood": "angry",
+    "instructions": "Identity: Korean man in his early 50s, department head (부장) at a robot manufacturing company, speaking to his subordinate (a 과장).\nLanguage: Native Seoul Korean. Natural, conversational office Korean, never read-aloud or announcer style.\nBaseline personality in the voice: easygoing, oily, smiling on the surface but quietly pressuring. Sounds friendly while making it clear who is in charge.\nPacing: relaxed and unhurried; stretches some words; lets sentence endings trail low and long.\nEmphasis: leans on words like '자네', '내가', '우리 팀' with a patronizing smile in the voice; a short dry chuckle is okay.\nPauses: deliberate little pauses before the pressuring part of a sentence.\nCurrent emotion: clearly angry. Raised voice, hard stress on key words, faster pace, sharp sentence endings, audible frustration in the breath. Not screaming yet.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:02:15"
+  },
+  "bb521e0d3514a09e4752": {
+    "scenario": "park",
+    "line": "end_success",
+    "text": "알았어, 그럼 월요일 아침 9시까지 부탁해. 오늘은 들어가 봐.",
+    "voice": "coral",
+    "mood": "softened",
+    "instructions": "Identity: Korean woman in her mid-40s, team leader (팀장) at a robot manufacturing company, speaking to her subordinate (a 과장).\nLanguage: Native Seoul Korean. Natural, fast office Korean, never announcer style.\nBaseline personality in the voice: always in a hurry, scattered, overly familiar ('우리 과장님~') while pushing work onto others; sulks audibly when refused.\nPacing: fast, words tumbling over each other, quick rising endings like she has somewhere to be.\nEmphasis: stresses '금방', '잠깐만', '이거만' as if the request is tiny; sing-song coaxing on '~요'.\nPauses: very few; short breathy catch before asking for something.\nCurrent emotion: softened and somewhat persuaded. Lower volume, slower, warmer and more relaxed tone, a slight reluctant acceptance in the voice.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:02:57"
+  },
+  "bbe80555c24419d459ff": {
+    "scenario": "han",
+    "line": "nag1",
+    "text": "왜 대답이 없어요? 할 말 없죠?",
+    "voice": "sage",
+    "mood": "annoyed",
+    "instructions": "Identity: Korean woman in her early 40s, team leader (팀장) at a robot manufacturing company, speaking to her subordinate (a 과장) who has a child.\nLanguage: Native Seoul Korean office speech.\nBaseline personality in the voice: moody and unpredictable — can sound sweet, then suddenly sharp; sarcastic, digs up past mistakes.\nPacing: medium, with sudden accelerations when irritated.\nEmphasis: sarcastic lift on '그래요?', '또', '애 핑계'; icy precision on criticism.\nPauses: audible annoyed sighs (한숨) before or after sentences.\nCurrent emotion: irritated and impatient. Tighter voice, clipped endings, a bit faster, a small annoyed sigh or 'tsk' is fine. Volume slightly raised.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:04:34"
+  },
+  "bdaf9b8426c34ea77658": {
+    "scenario": "choi",
+    "line": "end_fail",
+    "text": "됐어! 이번 일은 자네 책임으로 정리해. 다들 나가!",
+    "voice": "ash",
+    "mood": "angry",
+    "instructions": "Identity: Korean man in his mid-50s, executive director (상무, division head) at a robot manufacturing company, speaking to a 과장 far below him.\nLanguage: Native Korean, blunt executive speech (반말 mixed with curt orders). Never polite announcer style.\nBaseline personality in the voice: hot-tempered, impatient, looking for someone to blame. Loud and commanding even when not yet angry.\nPacing: fast, clipped, short bursts; cuts sentences off abruptly.\nEmphasis: hard, punchy stress on '누가', '왜', '책임'; barks the last word of a sentence.\nPauses: sharp intakes of breath before shouting; heavy angry exhale.\nCurrent emotion: clearly angry. Raised voice, hard stress on key words, faster pace, sharp sentence endings, audible frustration in the breath. Not screaming yet.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:03:27"
+  },
+  "c12d036d17277a2aa521": {
+    "scenario": "choi",
+    "line": "react_soft_1",
+    "text": "알았어, 계속해.",
+    "voice": "ash",
+    "mood": "softened",
+    "instructions": "Identity: Korean man in his mid-50s, executive director (상무, division head) at a robot manufacturing company, speaking to a 과장 far below him.\nLanguage: Native Korean, blunt executive speech (반말 mixed with curt orders). Never polite announcer style.\nBaseline personality in the voice: hot-tempered, impatient, looking for someone to blame. Loud and commanding even when not yet angry.\nPacing: fast, clipped, short bursts; cuts sentences off abruptly.\nEmphasis: hard, punchy stress on '누가', '왜', '책임'; barks the last word of a sentence.\nPauses: sharp intakes of breath before shouting; heavy angry exhale.\nCurrent emotion: softened and somewhat persuaded. Lower volume, slower, warmer and more relaxed tone, a slight reluctant acceptance in the voice.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:03:21"
+  },
+  "c3062977bbf30d045ccb": {
+    "scenario": "choi",
+    "line": "react_angry_1",
+    "text": "그걸 말이라고 해?",
+    "voice": "ash",
+    "mood": "angry",
+    "instructions": "Identity: Korean man in his mid-50s, executive director (상무, division head) at a robot manufacturing company, speaking to a 과장 far below him.\nLanguage: Native Korean, blunt executive speech (반말 mixed with curt orders). Never polite announcer style.\nBaseline personality in the voice: hot-tempered, impatient, looking for someone to blame. Loud and commanding even when not yet angry.\nPacing: fast, clipped, short bursts; cuts sentences off abruptly.\nEmphasis: hard, punchy stress on '누가', '왜', '책임'; barks the last word of a sentence.\nPauses: sharp intakes of breath before shouting; heavy angry exhale.\nCurrent emotion: clearly angry. Raised voice, hard stress on key words, faster pace, sharp sentence endings, audible frustration in the breath. Not screaming yet.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:03:13"
+  },
+  "c5b154dfc6a6a174ce2b": {
+    "scenario": "han",
+    "line": "react_angry_1",
+    "text": "지금 저한테 짜증 내는 거예요?",
+    "voice": "sage",
+    "mood": "angry",
+    "instructions": "Identity: Korean woman in her early 40s, team leader (팀장) at a robot manufacturing company, speaking to her subordinate (a 과장) who has a child.\nLanguage: Native Seoul Korean office speech.\nBaseline personality in the voice: moody and unpredictable — can sound sweet, then suddenly sharp; sarcastic, digs up past mistakes.\nPacing: medium, with sudden accelerations when irritated.\nEmphasis: sarcastic lift on '그래요?', '또', '애 핑계'; icy precision on criticism.\nPauses: audible annoyed sighs (한숨) before or after sentences.\nCurrent emotion: clearly angry. Raised voice, hard stress on key words, faster pace, sharp sentence endings, audible frustration in the breath. Not screaming yet.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:04:37"
+  },
+  "c67ec269f87e17d4b220": {
+    "scenario": "lee",
+    "line": "react_angry_0",
+    "text": "아니, 그게 제 잘못이에요?",
+    "voice": "nova",
+    "mood": "angry",
+    "instructions": "Identity: Korean woman in her late 20s, a third-year staff member (사원) at a robot manufacturing company, speaking to her boss (a 과장).\nLanguage: Native Seoul Korean, young office speech, polite form but sulky. Never announcer style.\nBaseline personality in the voice: defensive, feels wronged, always blaming the schedule or others.\nPacing: medium, speeding up when justifying herself, then trailing off.\nEmphasis: whiny stress on '그게', '저는', '원래'; endings mumble and fade ('…거든요…').\nPauses: small sighs and hesitant '아니…' before excuses.\nCurrent emotion: clearly angry. Raised voice, hard stress on key words, faster pace, sharp sentence endings, audible frustration in the breath. Not screaming yet.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:03:38"
+  },
+  "c726dc1dea112e7c4225": {
+    "scenario": "lee",
+    "line": "react_angry_2",
+    "text": "왜 저한테만 그러세요?",
+    "voice": "nova",
+    "mood": "angry",
+    "instructions": "Identity: Korean woman in her late 20s, a third-year staff member (사원) at a robot manufacturing company, speaking to her boss (a 과장).\nLanguage: Native Seoul Korean, young office speech, polite form but sulky. Never announcer style.\nBaseline personality in the voice: defensive, feels wronged, always blaming the schedule or others.\nPacing: medium, speeding up when justifying herself, then trailing off.\nEmphasis: whiny stress on '그게', '저는', '원래'; endings mumble and fade ('…거든요…').\nPauses: small sighs and hesitant '아니…' before excuses.\nCurrent emotion: clearly angry. Raised voice, hard stress on key words, faster pace, sharp sentence endings, audible frustration in the breath. Not screaming yet.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:03:40"
+  },
+  "c7e674358dba7157dee4": {
+    "scenario": "jung",
+    "line": "react_neutral_2",
+    "text": "흠.",
+    "voice": "echo",
+    "mood": "calm",
+    "instructions": "Identity: Korean man in his early 30s, assistant manager (주임) at a robot manufacturing company, speaking to his boss (a 과장).\nLanguage: Native Seoul Korean, technically polite form but cold.\nBaseline personality in the voice: skilled but defiant, cynical, argues about scope of work like a lawyer.\nPacing: steady, deliberate, crisp — every syllable clearly enunciated.\nEmphasis: flat and emotionless with a faint sneer; precise stress on '제 업무', '정확히', '근거'.\nPauses: measured pauses that feel like silent judgment; a tiny scoff is allowed.\nCurrent emotion: composed and in character, but not warm. Normal speaking volume.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:04:14"
+  },
+  "c8403588415bb34940bb": {
+    "scenario": "lee",
+    "line": "rumor_1",
+    "text": "저에 대해 안 좋게 말씀하셨다는 얘기 들었어요.",
+    "voice": "nova",
+    "mood": "annoyed",
+    "instructions": "Identity: Korean woman in her late 20s, a third-year staff member (사원) at a robot manufacturing company, speaking to her boss (a 과장).\nLanguage: Native Seoul Korean, young office speech, polite form but sulky. Never announcer style.\nBaseline personality in the voice: defensive, feels wronged, always blaming the schedule or others.\nPacing: medium, speeding up when justifying herself, then trailing off.\nEmphasis: whiny stress on '그게', '저는', '원래'; endings mumble and fade ('…거든요…').\nPauses: small sighs and hesitant '아니…' before excuses.\nCurrent emotion: irritated and impatient. Tighter voice, clipped endings, a bit faster, a small annoyed sigh or 'tsk' is fine. Volume slightly raised.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:04:01"
+  },
+  "c92ecbe7cd142bfbf5ed": {
+    "scenario": "lee",
+    "line": "react_neutral_2",
+    "text": "음…",
+    "voice": "nova",
+    "mood": "calm",
+    "instructions": "Identity: Korean woman in her late 20s, a third-year staff member (사원) at a robot manufacturing company, speaking to her boss (a 과장).\nLanguage: Native Seoul Korean, young office speech, polite form but sulky. Never announcer style.\nBaseline personality in the voice: defensive, feels wronged, always blaming the schedule or others.\nPacing: medium, speeding up when justifying herself, then trailing off.\nEmphasis: whiny stress on '그게', '저는', '원래'; endings mumble and fade ('…거든요…').\nPauses: small sighs and hesitant '아니…' before excuses.\nCurrent emotion: composed and in character, but not warm. Normal speaking volume.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:03:45"
+  },
+  "c9d2997ca37861c0e0b3": {
+    "scenario": "yoon",
+    "line": "react_neutral_2",
+    "text": "음…",
+    "voice": "verse",
+    "mood": "calm",
+    "instructions": "Identity: Korean man in his mid-30s, assistant manager (대리) at a robot manufacturing company, speaking to his boss (a 과장). Exhausted from caring for a sick child every night.\nLanguage: Native Seoul Korean, polite form.\nBaseline personality in the voice: worn out, sleep-deprived, emotions close to the surface; gets defensive when criticized.\nPacing: slow and heavy, low energy; speeds up and wavers when emotional.\nEmphasis: tired, slightly hoarse; voice cracks or trembles on '저도', '진짜', '애가'.\nPauses: long tired breaths, hesitations, a shaky exhale before hard sentences.\nCurrent emotion: composed and in character, but not warm. Normal speaking volume.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:05:14"
+  },
+  "cb3ce946401908e851c5": {
+    "scenario": "park",
+    "line": "nag1",
+    "text": "왜 대답을 안 해? 바빠?",
+    "voice": "coral",
+    "mood": "annoyed",
+    "instructions": "Identity: Korean woman in her mid-40s, team leader (팀장) at a robot manufacturing company, speaking to her subordinate (a 과장).\nLanguage: Native Seoul Korean. Natural, fast office Korean, never announcer style.\nBaseline personality in the voice: always in a hurry, scattered, overly familiar ('우리 과장님~') while pushing work onto others; sulks audibly when refused.\nPacing: fast, words tumbling over each other, quick rising endings like she has somewhere to be.\nEmphasis: stresses '금방', '잠깐만', '이거만' as if the request is tiny; sing-song coaxing on '~요'.\nPauses: very few; short breathy catch before asking for something.\nCurrent emotion: irritated and impatient. Tighter voice, clipped endings, a bit faster, a small annoyed sigh or 'tsk' is fine. Volume slightly raised.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:02:39"
+  },
+  "cd7db784448693a520ba": {
+    "scenario": "park",
+    "line": "end_fail",
+    "text": "됐어, 내가 하지 뭐. 다들 바쁘다고 하니까.",
+    "voice": "coral",
+    "mood": "angry",
+    "instructions": "Identity: Korean woman in her mid-40s, team leader (팀장) at a robot manufacturing company, speaking to her subordinate (a 과장).\nLanguage: Native Seoul Korean. Natural, fast office Korean, never announcer style.\nBaseline personality in the voice: always in a hurry, scattered, overly familiar ('우리 과장님~') while pushing work onto others; sulks audibly when refused.\nPacing: fast, words tumbling over each other, quick rising endings like she has somewhere to be.\nEmphasis: stresses '금방', '잠깐만', '이거만' as if the request is tiny; sing-song coaxing on '~요'.\nPauses: very few; short breathy catch before asking for something.\nCurrent emotion: clearly angry. Raised voice, hard stress on key words, faster pace, sharp sentence endings, audible frustration in the breath. Not screaming yet.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:03:01"
+  },
+  "ce81dfae6163614c3bd9": {
+    "scenario": "lee",
+    "line": "end_resign",
+    "text": "저… 이번 달까지만 다닐게요. 더는 못 하겠어요.",
+    "voice": "nova",
+    "mood": "resigned",
+    "instructions": "Identity: Korean woman in her late 20s, a third-year staff member (사원) at a robot manufacturing company, speaking to her boss (a 과장).\nLanguage: Native Seoul Korean, young office speech, polite form but sulky. Never announcer style.\nBaseline personality in the voice: defensive, feels wronged, always blaming the schedule or others.\nPacing: medium, speeding up when justifying herself, then trailing off.\nEmphasis: whiny stress on '그게', '저는', '원래'; endings mumble and fade ('…거든요…').\nPauses: small sighs and hesitant '아니…' before excuses.\nCurrent emotion: has given up and decided to quit. Quiet, flat and cold, tired, slow, with a heavy final exhale. No anger left.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:03:58"
+  },
+  "d0efc53afaf5e62ad3d1": {
+    "scenario": "yoon",
+    "line": "react_soft_0",
+    "text": "…감사합니다.",
+    "voice": "verse",
+    "mood": "softened",
+    "instructions": "Identity: Korean man in his mid-30s, assistant manager (대리) at a robot manufacturing company, speaking to his boss (a 과장). Exhausted from caring for a sick child every night.\nLanguage: Native Seoul Korean, polite form.\nBaseline personality in the voice: worn out, sleep-deprived, emotions close to the surface; gets defensive when criticized.\nPacing: slow and heavy, low energy; speeds up and wavers when emotional.\nEmphasis: tired, slightly hoarse; voice cracks or trembles on '저도', '진짜', '애가'.\nPauses: long tired breaths, hesitations, a shaky exhale before hard sentences.\nCurrent emotion: softened and somewhat persuaded. Lower volume, slower, warmer and more relaxed tone, a slight reluctant acceptance in the voice.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:05:15"
+  },
+  "d13e28ce2e21375320d5": {
+    "scenario": "park",
+    "line": "react_neutral_0",
+    "text": "응, 그래서?",
+    "voice": "coral",
+    "mood": "calm",
+    "instructions": "Identity: Korean woman in her mid-40s, team leader (팀장) at a robot manufacturing company, speaking to her subordinate (a 과장).\nLanguage: Native Seoul Korean. Natural, fast office Korean, never announcer style.\nBaseline personality in the voice: always in a hurry, scattered, overly familiar ('우리 과장님~') while pushing work onto others; sulks audibly when refused.\nPacing: fast, words tumbling over each other, quick rising endings like she has somewhere to be.\nEmphasis: stresses '금방', '잠깐만', '이거만' as if the request is tiny; sing-song coaxing on '~요'.\nPauses: very few; short breathy catch before asking for something.\nCurrent emotion: composed and in character, but not warm. Normal speaking volume.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:02:48"
+  },
+  "d433df7e935b9a81481d": {
+    "scenario": "han",
+    "line": "rumor_1",
+    "text": "하… 제 험담 하고 다니신다는 얘기 들었어요.",
+    "voice": "sage",
+    "mood": "annoyed",
+    "instructions": "Identity: Korean woman in her early 40s, team leader (팀장) at a robot manufacturing company, speaking to her subordinate (a 과장) who has a child.\nLanguage: Native Seoul Korean office speech.\nBaseline personality in the voice: moody and unpredictable — can sound sweet, then suddenly sharp; sarcastic, digs up past mistakes.\nPacing: medium, with sudden accelerations when irritated.\nEmphasis: sarcastic lift on '그래요?', '또', '애 핑계'; icy precision on criticism.\nPauses: audible annoyed sighs (한숨) before or after sentences.\nCurrent emotion: irritated and impatient. Tighter voice, clipped endings, a bit faster, a small annoyed sigh or 'tsk' is fine. Volume slightly raised.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:04:59"
+  },
+  "d4a2c6c706f20c2bc153": {
+    "scenario": "yoon",
+    "line": "react_angry_0",
+    "text": "…제가 놀았다는 거예요?",
+    "voice": "verse",
+    "mood": "angry",
+    "instructions": "Identity: Korean man in his mid-30s, assistant manager (대리) at a robot manufacturing company, speaking to his boss (a 과장). Exhausted from caring for a sick child every night.\nLanguage: Native Seoul Korean, polite form.\nBaseline personality in the voice: worn out, sleep-deprived, emotions close to the surface; gets defensive when criticized.\nPacing: slow and heavy, low energy; speeds up and wavers when emotional.\nEmphasis: tired, slightly hoarse; voice cracks or trembles on '저도', '진짜', '애가'.\nPauses: long tired breaths, hesitations, a shaky exhale before hard sentences.\nCurrent emotion: clearly angry. Raised voice, hard stress on key words, faster pace, sharp sentence endings, audible frustration in the breath. Not screaming yet.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:05:05"
+  },
+  "d9508cefd1790cf2d413": {
+    "scenario": "jung",
+    "line": "opening",
+    "text": "그건 제 업무 범위가 아닌 것 같은데요. 그리고 그 방식은 비효율적이라, 하게 되더라도 제 방식대로 할게요.",
+    "voice": "echo",
+    "mood": "calm",
+    "instructions": "Identity: Korean man in his early 30s, assistant manager (주임) at a robot manufacturing company, speaking to his boss (a 과장).\nLanguage: Native Seoul Korean, technically polite form but cold.\nBaseline personality in the voice: skilled but defiant, cynical, argues about scope of work like a lawyer.\nPacing: steady, deliberate, crisp — every syllable clearly enunciated.\nEmphasis: flat and emotionless with a faint sneer; precise stress on '제 업무', '정확히', '근거'.\nPauses: measured pauses that feel like silent judgment; a tiny scoff is allowed.\nCurrent emotion: composed and in character, but not warm. Normal speaking volume.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:04:03"
+  },
+  "e170c94858900faf8fbf": {
+    "scenario": "lee",
+    "line": "react_soft_1",
+    "text": "그건 그렇네요.",
+    "voice": "nova",
+    "mood": "softened",
+    "instructions": "Identity: Korean woman in her late 20s, a third-year staff member (사원) at a robot manufacturing company, speaking to her boss (a 과장).\nLanguage: Native Seoul Korean, young office speech, polite form but sulky. Never announcer style.\nBaseline personality in the voice: defensive, feels wronged, always blaming the schedule or others.\nPacing: medium, speeding up when justifying herself, then trailing off.\nEmphasis: whiny stress on '그게', '저는', '원래'; endings mumble and fade ('…거든요…').\nPauses: small sighs and hesitant '아니…' before excuses.\nCurrent emotion: softened and somewhat persuaded. Lower volume, slower, warmer and more relaxed tone, a slight reluctant acceptance in the voice.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:03:48"
+  },
+  "e3d97cdfccd4be310fef": {
+    "scenario": "yoon",
+    "line": "react_soft_1",
+    "text": "네… 그렇게 말씀해 주시니.",
+    "voice": "verse",
+    "mood": "softened",
+    "instructions": "Identity: Korean man in his mid-30s, assistant manager (대리) at a robot manufacturing company, speaking to his boss (a 과장). Exhausted from caring for a sick child every night.\nLanguage: Native Seoul Korean, polite form.\nBaseline personality in the voice: worn out, sleep-deprived, emotions close to the surface; gets defensive when criticized.\nPacing: slow and heavy, low energy; speeds up and wavers when emotional.\nEmphasis: tired, slightly hoarse; voice cracks or trembles on '저도', '진짜', '애가'.\nPauses: long tired breaths, hesitations, a shaky exhale before hard sentences.\nCurrent emotion: softened and somewhat persuaded. Lower volume, slower, warmer and more relaxed tone, a slight reluctant acceptance in the voice.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:05:17"
+  },
+  "ec1c91a7a0d56033b01e": {
+    "scenario": "kim",
+    "line": "react_angry_0",
+    "text": "뭐? 지금 나한테 하는 소리야?",
+    "voice": "onyx",
+    "mood": "angry",
+    "instructions": "Identity: Korean man in his early 50s, department head (부장) at a robot manufacturing company, speaking to his subordinate (a 과장).\nLanguage: Native Seoul Korean. Natural, conversational office Korean, never read-aloud or announcer style.\nBaseline personality in the voice: easygoing, oily, smiling on the surface but quietly pressuring. Sounds friendly while making it clear who is in charge.\nPacing: relaxed and unhurried; stretches some words; lets sentence endings trail low and long.\nEmphasis: leans on words like '자네', '내가', '우리 팀' with a patronizing smile in the voice; a short dry chuckle is okay.\nPauses: deliberate little pauses before the pressuring part of a sentence.\nCurrent emotion: clearly angry. Raised voice, hard stress on key words, faster pace, sharp sentence endings, audible frustration in the breath. Not screaming yet.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:02:13"
+  },
+  "ec6b4409e9f1a444aa99": {
+    "scenario": "han",
+    "line": "react_soft_2",
+    "text": "알겠어요.",
+    "voice": "sage",
+    "mood": "softened",
+    "instructions": "Identity: Korean woman in her early 40s, team leader (팀장) at a robot manufacturing company, speaking to her subordinate (a 과장) who has a child.\nLanguage: Native Seoul Korean office speech.\nBaseline personality in the voice: moody and unpredictable — can sound sweet, then suddenly sharp; sarcastic, digs up past mistakes.\nPacing: medium, with sudden accelerations when irritated.\nEmphasis: sarcastic lift on '그래요?', '또', '애 핑계'; icy precision on criticism.\nPauses: audible annoyed sighs (한숨) before or after sentences.\nCurrent emotion: softened and somewhat persuaded. Lower volume, slower, warmer and more relaxed tone, a slight reluctant acceptance in the voice.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:04:47"
+  },
+  "f1c045037b7a0763d0a1": {
+    "scenario": "han",
+    "line": "opening",
+    "text": "또요? 지난주에도 조퇴했잖아요. 다른 사람들은 사정이 없어서 남아 있는 줄 알아요?",
+    "voice": "sage",
+    "mood": "angry",
+    "instructions": "Identity: Korean woman in her early 40s, team leader (팀장) at a robot manufacturing company, speaking to her subordinate (a 과장) who has a child.\nLanguage: Native Seoul Korean office speech.\nBaseline personality in the voice: moody and unpredictable — can sound sweet, then suddenly sharp; sarcastic, digs up past mistakes.\nPacing: medium, with sudden accelerations when irritated.\nEmphasis: sarcastic lift on '그래요?', '또', '애 핑계'; icy precision on criticism.\nPauses: audible annoyed sighs (한숨) before or after sentences.\nCurrent emotion: clearly angry. Raised voice, hard stress on key words, faster pace, sharp sentence endings, audible frustration in the breath. Not screaming yet.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:04:32"
+  },
+  "f485d59d23f309cb8216": {
+    "scenario": "kim",
+    "line": "react_neutral_0",
+    "text": "음…",
+    "voice": "onyx",
+    "mood": "calm",
+    "instructions": "Identity: Korean man in his early 50s, department head (부장) at a robot manufacturing company, speaking to his subordinate (a 과장).\nLanguage: Native Seoul Korean. Natural, conversational office Korean, never read-aloud or announcer style.\nBaseline personality in the voice: easygoing, oily, smiling on the surface but quietly pressuring. Sounds friendly while making it clear who is in charge.\nPacing: relaxed and unhurried; stretches some words; lets sentence endings trail low and long.\nEmphasis: leans on words like '자네', '내가', '우리 팀' with a patronizing smile in the voice; a short dry chuckle is okay.\nPauses: deliberate little pauses before the pressuring part of a sentence.\nCurrent emotion: composed and in character, but not warm. Normal speaking volume.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:02:17"
+  },
+  "f6435e8ec9f80d230196": {
+    "scenario": "lee",
+    "line": "react_angry_1",
+    "text": "…네, 그러시겠죠.",
+    "voice": "nova",
+    "mood": "angry",
+    "instructions": "Identity: Korean woman in her late 20s, a third-year staff member (사원) at a robot manufacturing company, speaking to her boss (a 과장).\nLanguage: Native Seoul Korean, young office speech, polite form but sulky. Never announcer style.\nBaseline personality in the voice: defensive, feels wronged, always blaming the schedule or others.\nPacing: medium, speeding up when justifying herself, then trailing off.\nEmphasis: whiny stress on '그게', '저는', '원래'; endings mumble and fade ('…거든요…').\nPauses: small sighs and hesitant '아니…' before excuses.\nCurrent emotion: clearly angry. Raised voice, hard stress on key words, faster pace, sharp sentence endings, audible frustration in the breath. Not screaming yet.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:03:39"
+  },
+  "f6b739ce93673e72e71a": {
+    "scenario": "park",
+    "line": "rumor_1",
+    "text": "어디서 들었는데, 내가 일정 무리하게 잡는다고 했다며?",
+    "voice": "coral",
+    "mood": "annoyed",
+    "instructions": "Identity: Korean woman in her mid-40s, team leader (팀장) at a robot manufacturing company, speaking to her subordinate (a 과장).\nLanguage: Native Seoul Korean. Natural, fast office Korean, never announcer style.\nBaseline personality in the voice: always in a hurry, scattered, overly familiar ('우리 과장님~') while pushing work onto others; sulks audibly when refused.\nPacing: fast, words tumbling over each other, quick rising endings like she has somewhere to be.\nEmphasis: stresses '금방', '잠깐만', '이거만' as if the request is tiny; sing-song coaxing on '~요'.\nPauses: very few; short breathy catch before asking for something.\nCurrent emotion: irritated and impatient. Tighter voice, clipped endings, a bit faster, a small annoyed sigh or 'tsk' is fine. Volume slightly raised.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:03:05"
+  },
+  "fd5eabf1d63d8e4a5145": {
+    "scenario": "kim",
+    "line": "end_partial",
+    "text": "일단 알았으니까, 다음에 다시 얘기하자고.",
+    "voice": "onyx",
+    "mood": "calm",
+    "instructions": "Identity: Korean man in his early 50s, department head (부장) at a robot manufacturing company, speaking to his subordinate (a 과장).\nLanguage: Native Seoul Korean. Natural, conversational office Korean, never read-aloud or announcer style.\nBaseline personality in the voice: easygoing, oily, smiling on the surface but quietly pressuring. Sounds friendly while making it clear who is in charge.\nPacing: relaxed and unhurried; stretches some words; lets sentence endings trail low and long.\nEmphasis: leans on words like '자네', '내가', '우리 팀' with a patronizing smile in the voice; a short dry chuckle is okay.\nPauses: deliberate little pauses before the pressuring part of a sentence.\nCurrent emotion: composed and in character, but not warm. Normal speaking volume.\nSpeak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+    "model": "gpt-4o-mini-tts",
+    "created_at": "2026-11-16T14:02:29"
+  }
+}
