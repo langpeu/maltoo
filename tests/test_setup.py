@@ -8,7 +8,7 @@ def test_status_counts(client, fake_openai):
     st = client.get("/api/setup/status").json()
     assert st["audio"]["missing"] == 21
     assert st["portraits"]["missing"] == 70  # 7명 × 5표정 × 2(입 다묾/벌림)
-    assert 1.0 < st["estimate_usd"] < 5.0
+    assert 0.5 < st["estimate_usd"] < 1.5
     first_kim = [j for j in st["jobs"] if j["kind"] == "portrait" and j["scenario_id"] == "kim"]
     assert (first_kim[0]["expr"], first_kim[0]["talk"]) == ("calm", False)  # 기본 사진이 먼저
     assert all(j["talk"] for j in first_kim[5:])  # 입 벌림은 표정 뒤
@@ -34,7 +34,9 @@ def test_portrait_chain_and_reuse(client, fake_openai):
     assert "eyes at about 40% from the top" in gp  # 공통 촬영 조건
     assert any("glaring over the top of his glasses" in e[1]["prompt"] for e in edits)  # 인물별 표정 지시
     assert sum(1 for e in edits if "mask" in e[1]) == 5  # 입 벌림만 마스크
-    assert all(e[1]["input_fidelity"] == "high" for e in edits)
+    assert all("input_fidelity" not in e[1] for e in edits)  # gpt-image-1-mini 는 high 미지원 → 생략
+    assert all(e[1]["model"] == "gpt-image-1-mini" for e in edits)
+    assert "mole on the left cheek" in [e for e in edits if "mask" not in e[1]][0][1]["prompt"]  # 편집에도 외모 재명시
 
     st2 = client.get("/api/setup/status").json()
     assert st2["portraits"]["missing"] == 60
@@ -49,7 +51,7 @@ def test_portrait_chain_and_reuse(client, fake_openai):
 
     from app import portraits
     m = json.loads(portraits.MANIFEST.read_text(encoding="utf-8"))
-    assert m["kim/calm.webp"]["model"] == "gpt-image-1.5" and "prompt_hash" in m["kim/calm.webp"]
+    assert m["kim/calm.webp"]["model"] == "gpt-image-1-mini" and "prompt_hash" in m["kim/calm.webp"]
 
 
 def test_setup_ignores_daily_limit_but_records_cost(client, fake_openai):
@@ -78,7 +80,7 @@ def test_setup_cost_not_counted_in_limit(client, fake_openai):
     for j in kim:
         client.post("/api/setup/job", json=j, headers=H)
     u = client.get("/api/usage", headers={**H, "X-Session-Id": "practice"}).json()
-    assert u["setup_usd"] > 0.3 and u["today_usd"] > 0.3
+    assert u["setup_usd"] > 0.1 and u["today_usd"] > 0.1
     assert u["today_limited_usd"] == 0 and u["daily_status"] == "ok"
     assert u["session_usd"] == 0  # 연습 비용에 섞이지 않음
     r = client.post("/api/tts/say", json={"scenario_id": "kim", "text": "그래서?"}, headers=H)

@@ -7,7 +7,7 @@
 import base64
 
 from fastapi import HTTPException, Request
-from openai import (APIConnectionError, AuthenticationError, OpenAI,
+from openai import (APIConnectionError, AuthenticationError, BadRequestError, OpenAI,
                     PermissionDeniedError, RateLimitError)
 
 from . import usage
@@ -102,8 +102,9 @@ class Caller:
         f = get_config()["portraits"]
         self._check(cost)
         kwargs = dict(model=m, image=("base.webp", image, "image/webp"), prompt=prompt, size=f["size"],
-                      quality=f["quality"], output_format=f["format"], output_compression=f["compression"],
-                      input_fidelity="high", n=1)
+                      quality=f["quality"], output_format=f["format"], output_compression=f["compression"], n=1)
+        if f.get("input_fidelity"):
+            kwargs["input_fidelity"] = f["input_fidelity"]
         if mask is not None:
             kwargs["mask"] = ("mask.png", mask, "image/png")
         with translate_errors():
@@ -161,6 +162,11 @@ class translate_errors:
                 raise HTTPException(402, {"code": "insufficient_quota",
                                           "message": "OpenAI 계정의 크레딧이 부족합니다. 결제 설정을 확인하세요."})
             raise HTTPException(429, {"code": "rate_limited", "message": "요청이 너무 많습니다. 잠시 후 다시 시도하세요."})
+        if isinstance(exc, BadRequestError):
+            body = getattr(exc, "body", None) or {}
+            msg = body.get("message") if isinstance(body, dict) else None
+            raise HTTPException(400, {"code": "bad_request",
+                                      "message": f"OpenAI가 요청을 거절했습니다: {msg or '잘못된 요청'}"})
         if isinstance(exc, APIConnectionError):
             raise HTTPException(503, {"code": "connection", "message": "OpenAI 서버에 연결할 수 없습니다. 인터넷 연결을 확인하세요."})
         raise HTTPException(502, {"code": "openai_error", "message": f"OpenAI 오류: {type(exc).__name__}"})

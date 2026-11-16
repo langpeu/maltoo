@@ -4,6 +4,7 @@
 1. calm(평온) 기본 사진: images.generate
 2. 나머지 표정 4장: 기본 사진을 기준으로 images.edit (input_fidelity=high) → 같은 얼굴 유지
 3. 표정별 입 벌린 사진 5장: 해당 표정 사진 + 입 주변 마스크로 images.edit → 입만 바뀌어 정확히 겹침
+(input_fidelity 는 config 로 지정. gpt-image-1-mini 는 low 만 지원하므로 생략하고, 대신 편집 프롬프트에 외모를 다시 적는다)
 
 파일: assets/characters/<id>/<expr>.webp, <expr>_talk.webp  (GitHub 에 커밋해서 재사용)
 manifest: 파일별 프롬프트 해시·모델·생성일. 키에 모델 이름은 넣지 않는다.
@@ -74,10 +75,12 @@ def expression_prompt(expr: str, s: dict | None = None) -> str:
     note = ""
     if s:
         note = s["character"].get("expression_notes", {}).get(expr, "")
+    who = f"The person is: {s['character']['appearance_prompt']} " if s else ""
     return (
-        "Keep exactly the same person: identical face shape, eyes, nose, skin, moles, hairstyle, glasses, clothing, "
-        "background, framing, camera angle and lighting. Do not change identity or age. "
-        f"Change only the facial expression to: {EXPRESSIONS[expr][1]}"
+        "Keep exactly the same person from the input photo: identical face shape, eyes, nose, skin, moles, hairstyle, "
+        "glasses, clothing, background, framing, camera angle and lighting. Do not change identity or age. "
+        + who
+        + f"Change only the facial expression to: {EXPRESSIONS[expr][1]}"
         + (f"; specifically for this person: {note}" if note else "")
         + ". Keep the mouth closed. Photorealistic."
     )
