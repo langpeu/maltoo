@@ -1,9 +1,9 @@
 """ElevenLabs 고정 대사 일괄 생성 API (설정 → 🎙 ElevenLabs 고정 대사)."""
 
 from fastapi import APIRouter, HTTPException, Request
-from pydantic import BaseModel
 
 from .. import cache, eleven, scenarios
+from ..schemas import ElevenLineIn
 
 router = APIRouter(prefix="/api/eleven")
 
@@ -39,16 +39,8 @@ def voices(request: Request):
     return {"voices": eleven.list_voices(_key(request))}
 
 
-class LineIn(BaseModel):
-    scenario_id: str
-    line: str
-    voice_id: str
-    voice_name: str = ""
-    force: bool = False
-
-
 @router.post("/line")
-def make_line(body: LineIn, request: Request):
+def make_line(body: ElevenLineIn, request: Request):
     key = _key(request)
     s = scenarios.get(body.scenario_id)
     scenarios.fixed_line(s, body.line)  # 없는 대사면 400

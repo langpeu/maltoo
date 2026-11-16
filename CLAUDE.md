@@ -22,10 +22,12 @@ maltoo/
 │  ├─ cache.py          # 음성/이미지 캐시 키 계산, manifest 관리
 │  ├─ prompts/          # 인물 연기, 턴 분석, 최종 리포트 프롬프트
 │  ├─ report.py         # 교정 리포트 점수 계산·코칭 프롬프트
+│  ├─ schemas.py        # API 요청 본문 모델 (Pydantic) — 라우터는 여기서 가져다 씀
 │  ├─ world.py          # 인물 관계, 소문 전파, 누적 기억(호감·신뢰·연봉) 갱신
-│  └─ db.py             # SQLite (sessions, turns, usage, baseline, world_state, rumors)
+│  └─ db.py             # SQLite (sessions, turns, usage, baseline, world_state, rumors) → data/maltoo.db
 ├─ scenarios/           # 시나리오 정의 JSON (인물, 상황, 목표, 첫마디, 재촉 대사, 소문 버전 첫마디)
 │  └─ world.json        # 조직도, 인물 간 관계
+├─ data/               # 개인 기록 DB maltoo.db (커밋 안 함, 예전 루트 data.db 는 자동 이동)
 ├─ .runtime/           # 실시간 대사 음성 (커밋 안 함)
 ├─ static/
 │  ├─ index.html

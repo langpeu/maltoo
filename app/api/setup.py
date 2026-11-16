@@ -5,11 +5,11 @@
 """
 
 from fastapi import APIRouter, Depends, HTTPException
-from pydantic import BaseModel
 
 from .. import cache, portraits, scenarios, usage
 from ..config import model
 from ..openai_client import Caller, get_caller
+from ..schemas import JobIn
 
 router = APIRouter(prefix="/api/setup")
 
@@ -68,15 +68,6 @@ def status():
         "jobs": audio + photos,  # 순서 중요: 인물별 기본 사진 → 표정 → 입 벌림
         "portraits_status": portraits.status(scenarios.all_scenarios())["characters"],
     }
-
-
-class JobIn(BaseModel):
-    kind: str
-    scenario_id: str
-    line: str | None = None
-    expr: str | None = None
-    talk: bool = False
-    ending_id: str | None = None
 
 
 @router.post("/job")

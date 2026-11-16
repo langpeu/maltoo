@@ -88,3 +88,23 @@ def test_api_key_never_stored(client, fake_openai, tmp_path):
 def test_index_and_logo_served(client):
     assert "랑프두잇" in client.get("/").text
     assert client.get("/assets/brand/logo.jpg").status_code == 200
+
+
+def test_legacy_db_moves_to_data_dir(tmp_path, monkeypatch):
+    """루트 data.db 가 있으면 처음 실행 때 data/maltoo.db 로 옮겨지고 내용이 유지된다."""
+    import sqlite3
+
+    from app import db
+    monkeypatch.delenv("MALTOO_DB", raising=False)
+    monkeypatch.setattr(db, "LEGACY_DB", tmp_path / "data.db")
+    monkeypatch.setattr(db, "DATA_DIR", tmp_path / "data")
+    con = sqlite3.connect(tmp_path / "data.db")
+    con.execute("CREATE TABLE marker (v TEXT)")
+    con.execute("INSERT INTO marker VALUES ('kept')")
+    con.commit()
+    con.close()
+    db.init_db()
+    assert not (tmp_path / "data.db").exists() and (tmp_path / "data" / "maltoo.db").exists()
+    con = sqlite3.connect(tmp_path / "data" / "maltoo.db")
+    assert con.execute("SELECT v FROM marker").fetchone()[0] == "kept"
+    con.close()

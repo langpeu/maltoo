@@ -1,4 +1,4 @@
-"""SQLite 저장소. data.db 는 개인 기록이므로 .gitignore 대상.
+"""SQLite 저장소. data/maltoo.db 는 개인 기록이므로 .gitignore 대상 (예전 위치 data.db 는 처음 실행 때 자동으로 옮김).
 
 API 키 원문은 어떤 테이블에도 저장하지 않는다. key_id 는 키 끝 4자리.
 """
@@ -81,11 +81,31 @@ CREATE TABLE IF NOT EXISTS rumors (
 """
 
 
+DATA_DIR = ROOT / "data"
+LEGACY_DB = ROOT / "data.db"  # 예전 위치 (루트)
+
+
 def db_path() -> Path:
-    return Path(os.environ.get("MALTOO_DB", ROOT / "data.db"))
+    return Path(os.environ.get("MALTOO_DB", DATA_DIR / "maltoo.db"))
+
+
+def _migrate_legacy_location() -> None:
+    """루트의 data.db(+ -wal/-shm/-journal)를 data/maltoo.db 로 옮긴다. 이미 새 파일이 있으면 건드리지 않음."""
+    if "MALTOO_DB" in os.environ or not LEGACY_DB.exists():
+        return
+    new = db_path()
+    if new.exists():
+        return
+    new.parent.mkdir(parents=True, exist_ok=True)
+    for suffix in ("", "-wal", "-shm", "-journal"):
+        old = LEGACY_DB.with_name(LEGACY_DB.name + suffix)
+        if old.exists():
+            old.replace(new.with_name(new.name + suffix))
 
 
 def init_db() -> None:
+    _migrate_legacy_location()
+    db_path().parent.mkdir(parents=True, exist_ok=True)
     with connect() as con:
         con.executescript(SCHEMA)
         # 이전 버전 DB 마이그레이션

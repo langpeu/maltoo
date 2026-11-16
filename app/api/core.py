@@ -5,11 +5,11 @@ from datetime import datetime
 
 import httpx
 from fastapi import APIRouter, Depends, HTTPException, Request
-from pydantic import BaseModel
 
 from .. import db, usage
 from ..config import ROOT, get_config
 from ..openai_client import SESSION_HEADER, Caller, get_caller
+from ..schemas import BaselineIn, LimitsIn
 
 router = APIRouter(prefix="/api")
 
@@ -42,11 +42,6 @@ def get_usage(request: Request, caller: Caller = Depends(get_caller)):
     return usage.summary(caller.key_id, request.headers.get(SESSION_HEADER))
 
 
-class LimitsIn(BaseModel):
-    daily: float
-    monthly: float
-
-
 @router.put("/settings/limits")
 def put_limits(body: LimitsIn):
     try:
@@ -72,11 +67,6 @@ def test_chat(caller: Caller = Depends(get_caller)):
 
 
 # ---------- 평소 목소리(기준선) ----------
-
-class BaselineIn(BaseModel):
-    tone: dict | None = None
-    face: dict | None = None
-
 
 @router.get("/baseline")
 def get_baseline():

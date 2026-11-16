@@ -1,12 +1,12 @@
 """Phase 1 라우터: 시나리오, 음성 합성(캐시), 음성 인식, 대화 턴."""
 
 from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
-from pydantic import BaseModel
 
 from .. import cache, scenarios, usage, world
 from ..config import model
 from ..openai_client import Caller, get_caller, get_optional_caller
 from ..prompts import character
+from ..schemas import SayIn, TurnIn, WorldFinishIn, WorldStartIn
 
 router = APIRouter(prefix="/api")
 
@@ -54,12 +54,6 @@ def tts_line(scenario_id: str, line: str, cached_only: bool = False,
     return {"url": cache.fixed_url(key), "text": text, "cached": False, "mood": mood}
 
 
-class SayIn(BaseModel):
-    scenario_id: str
-    text: str
-    mood: str = "calm"  # calm | annoyed | angry | explosive | softened | resigned | hurt (상대의 현재 감정)
-
-
 @router.post("/tts/say")
 def tts_say(body: SayIn, caller: Caller = Depends(get_caller)):
     """실시간 대사: .runtime/tts 에 저장 (커밋하지 않음)."""
@@ -89,26 +83,6 @@ async def transcribe(audio: UploadFile = File(...), seconds: float = Form(0.0),
 
 
 # ---------- 대화 턴 ----------
-
-class Utter(BaseModel):
-    speaker: str  # me | npc
-    text: str
-
-
-class TurnIn(BaseModel):
-    scenario_id: str
-    history: list[Utter] = []
-    user_text: str
-    nag_count: int = 0
-    tone: dict | None = None  # 브라우저가 측정한 목소리 톤 요약 (녹음 원본 아님)
-    face: dict | None = None  # 브라우저가 측정한 표정 요약 (영상 아님)
-    difficulty: str = "normal"  # mild | normal | spicy
-    session_id: str = ""
-    prev_emotion: dict | None = None   # 직전 턴 상대 감정 (게임 수치 계산용)
-    game_session: dict | None = None   # 이번 판 누적 감액 {cut, recovered}
-    goal_done: list[str] = []          # 지금까지 달성한 체크리스트 항목 (유지용)
-    goal_progress: int = 0             # 직전 턴 목표 달성도 (떨어지지 않게)
-
 
 @router.post("/turn")
 def turn(body: TurnIn, caller: Caller = Depends(get_caller)):
@@ -145,20 +119,9 @@ def world_overview():
     return world.overview()
 
 
-class WorldStartIn(BaseModel):
-    scenario_id: str
-
-
 @router.post("/world/start")
 def world_start(body: WorldStartIn):
     return world.start(scenarios.get(body.scenario_id))
-
-
-class WorldFinishIn(BaseModel):
-    scenario_id: str
-    ending: str | None = None
-    session: dict | None = None
-    goal_progress: int = 0
 
 
 @router.post("/world/finish")

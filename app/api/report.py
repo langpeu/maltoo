@@ -4,32 +4,13 @@ import json
 from datetime import datetime
 
 from fastapi import APIRouter, Depends, HTTPException
-from pydantic import BaseModel
 
 from .. import cache, db, report, scenarios
 from ..config import get_config
 from ..openai_client import Caller, get_caller
+from ..schemas import CoachIn, ReportIn
 
 router = APIRouter(prefix="/api")
-
-
-class TurnRec(BaseModel):
-    speaker: str
-    text: str
-    tone: dict | None = None
-    face: dict | None = None
-    checkpoints: list[dict] | None = None
-
-
-class ReportIn(BaseModel):
-    session_id: str
-    scenario_id: str
-    turns: list[TurnRec]
-    ending: str | None = None
-    goal_progress: int = 0
-    started_at: str | None = None
-    difficulty: str = "normal"
-    game: dict | None = None  # 연봉·인사고과·퇴사·소문 요약 (Phase 5)
 
 
 @router.post("/report")
@@ -54,7 +35,7 @@ def make_report(body: ReportIn, caller: Caller = Depends(get_caller)):
     result = {**coach, "scores": scores, "per_turn": measured["per_turn"], "ending": body.ending,
               "difficulty": body.difficulty, "game": body.game}
 
-    # 기록 저장 (개인 기록: data.db, GitHub 에 올라가지 않음)
+    # 기록 저장 (개인 기록: data/maltoo.db, GitHub 에 올라가지 않음)
     now = datetime.now().isoformat(timespec="seconds")
     with db.connect() as con:
         con.execute(
@@ -105,10 +86,6 @@ def history_one(session_id: str):
         raise HTTPException(404, {"code": "no_session", "message": "기록이 없습니다."})
     return {"scenario_id": r["scenario_id"], "report": json.loads(r["summary"]),
             "turns": [{"speaker": t["speaker"], "text": t["text"]} for t in turns]}
-
-
-class CoachIn(BaseModel):
-    text: str
 
 
 @router.post("/tts/coach")
