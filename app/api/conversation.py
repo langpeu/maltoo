@@ -20,7 +20,8 @@ def list_scenarios():
     out = []
     for s in scenarios.all_scenarios():
         d = {k: s[k] for k in ("id", "kind", "title", "character", "situation", "goal", "checklist", "fail_conditions")}
-        d["lines"] = {line: scenarios.fixed_line(s, line) for line in scenarios.FIXED_LINES}  # 음성 실패 시 글자로
+        d["lines"] = scenarios.fixed_lines(s)  # 음성 실패 시 글자로 · 추임새/결말 선택용
+        d["reaction_start"] = s.get("reaction_start", "neutral")
         out.append(d)
     return out
 
@@ -28,7 +29,8 @@ def list_scenarios():
 # ---------- 음성 합성 ----------
 
 @router.get("/tts/line/{scenario_id}/{line}")
-def tts_line(scenario_id: str, line: str, caller: Caller | None = Depends(get_optional_caller)):
+def tts_line(scenario_id: str, line: str, cached_only: bool = False,
+             caller: Caller | None = Depends(get_optional_caller)):
     """고정 대사: 캐시가 있으면 비용 0, 없으면 생성해서 assets/audio 에 저장(커밋 대상)."""
     s = scenarios.get(scenario_id)
     text = scenarios.fixed_line(s, line)
@@ -39,6 +41,8 @@ def tts_line(scenario_id: str, line: str, caller: Caller | None = Depends(get_op
             usage.record(caller.key_id, "tts", model("tts"), 0.0, caller.session_id, cached=True,
                          saved_usd=usage.cost_tts(model("tts"), text), meta={"key": key})
         return {"url": cache.fixed_url(key), "text": text, "cached": True}
+    if cached_only:
+        raise HTTPException(404, {"code": "not_cached", "message": "아직 만들어 두지 않은 음성입니다."})
     if caller is None:
         raise HTTPException(401, {"code": "no_key", "message": "OpenAI API 키가 없습니다. 키를 먼저 입력하세요."})
     data = caller.tts(text, v["voice"], v["instructions"])

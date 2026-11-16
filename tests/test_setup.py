@@ -6,7 +6,7 @@ H = {"X-OpenAI-Key": KEY, "X-Session-Id": "setup"}
 
 def test_status_counts(client, fake_openai):
     st = client.get("/api/setup/status").json()
-    assert st["audio"]["missing"] == 21
+    assert st["audio"]["missing"] == 115  # 첫마디·재촉 21 + 추임새 63 + 결말 31
     assert st["portraits"]["missing"] == 70  # 7명 × 5표정 × 2(입 다묾/벌림)
     assert 0.5 < st["estimate_usd"] < 1.5
     first_kim = [j for j in st["jobs"] if j["kind"] == "portrait" and j["scenario_id"] == "kim"]

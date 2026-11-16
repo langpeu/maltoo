@@ -16,14 +16,24 @@ router = APIRouter(prefix="/api/setup")
 
 def _audio_jobs():
     for s in scenarios.all_scenarios():
-        for line in scenarios.FIXED_LINES:
-            text = scenarios.fixed_line(s, line)
+        for line, text in scenarios.fixed_lines(s).items():
             v = s["voice"]
             key = cache.audio_key(text, v["voice"], v["instructions"])
             if not cache.fixed_path(key).exists():
                 yield {"kind": "audio", "scenario_id": s["id"], "line": line,
-                       "label": f"{s['character']['name']} 음성 · {line}",
+                       "label": f"{s['character']['name']} 음성 · {_line_label(line)} “{text}”",
                        "cost": usage.cost_tts(model("tts"), text)}
+
+
+def _line_label(line: str) -> str:
+    if line == "opening":
+        return "첫마디"
+    if line.startswith("nag"):
+        return f"재촉 {line[-1]}"
+    if line.startswith("react_"):
+        return "추임새"
+    return {"end_success": "결말·성공", "end_partial": "결말·부분 성공", "end_fail": "결말·실패",
+            "end_noresp": "결말·응답 회피", "end_resign": "결말·퇴사"}.get(line, line)
 
 
 def _portrait_jobs():

@@ -14,6 +14,40 @@ export class Conversation {
     this.history = [];
     this.stopped = false;
     this.lastResult = null;
+    this.mood = scenario.reaction_start || "neutral";  // 추임새 그룹: angry | neutral | soft
+    this.lastReaction = null;
+  }
+
+  // 감정 수치 → 추임새 그룹
+  static moodOf(e) {
+    if (!e) return "neutral";
+    if (e.anger >= 55 || e.defensiveness >= 70) return "angry";
+    if (e.trust >= 60 && e.anger < 40) return "soft";
+    return "neutral";
+  }
+
+  // 추임새: 내 말이 끝나자마자 바로 재생 (저장된 음성이 있을 때만, 실패해도 무시)
+  async react() {
+    const ids = Object.keys(this.s.lines).filter((k) => k.startsWith(`react_${this.mood}_`) && k !== this.lastReaction);
+    if (!ids.length) return;
+    const id = ids[Math.floor(Math.random() * ids.length)];
+    this.lastReaction = id;
+    try {
+      const r = await api(`/api/tts/line/${this.s.id}/${id}?cached_only=true`);
+      if (this.stopped) return;
+      this.ui.npcReact(r.text);
+      await playUrl(r.url, { onTick: (t) => this.ui.npcTick(t) });
+    } catch { /* 추임새는 없어도 진행 */ }
+  }
+
+  // 결말 대사 (없으면 GPT가 만든 대사를 실시간 음성으로)
+  async speakEnding(kind, fallbackText) {
+    const line = `end_${kind}`;
+    if (this.s.lines[line]) return this.speakFixed(line);
+    if (fallbackText) {
+      this.history.push({ speaker: "npc", text: fallbackText });
+      return this.speakSay(fallbackText);
+    }
   }
 
   stop() { this.stopped = true; }
@@ -86,6 +120,7 @@ export class Conversation {
           nag += 1;
           if (nag > 2) {
             const last = this.lastResult || {};
+            await this.speakEnding("noresp");
             return this.finish({ ...last, ending: "fail", reason: "끝까지 대답하지 않았습니다 (응답 회피).",
                                  goal_progress: last.goal_progress || 0, checklist_done: last.checklist_done || [],
                                  noResponse: true });
@@ -94,8 +129,9 @@ export class Conversation {
           await this.speakFixed(`nag${nag}`);
         }
 
-        // 2) 음성 인식
+        // 2) 음성 인식 (동시에 상대 추임새를 바로 재생해서 공백을 없앰)
         this.ui.status("analyze");
+        const reacting = this.react();
         const fd = new FormData();
         fd.append("audio", rec.blob, "answer.webm");
         fd.append("seconds", String(rec.seconds || 0));
@@ -113,11 +149,17 @@ export class Conversation {
           body: { scenario_id: this.s.id, history: prior, user_text: myText, nag_count: nag },
         });
         this.guard();
+        await reacting;
+        this.guard();
         this.lastResult = r;
+        this.mood = Conversation.moodOf(r.emotion);
         this.ui.turnResult(r);
+        if (r.ending) {
+          await this.speakEnding(r.ending, r.reply);
+          return this.finish(r);
+        }
         this.history.push({ speaker: "npc", text: r.reply });
         await this.speakSay(r.reply);
-        if (r.ending) return this.finish(r);
       }
     } catch (e) {
       if (e instanceof Stopped) return;

@@ -7,7 +7,7 @@ from fastapi import HTTPException
 
 from .config import ROOT
 
-FIXED_LINES = ("opening", "nag1", "nag2")
+REACTION_GROUPS = ("angry", "neutral", "soft")
 
 
 @lru_cache(maxsize=1)
@@ -28,9 +28,24 @@ def get(scenario_id: str) -> dict:
     return s
 
 
+def fixed_lines(s: dict) -> dict[str, str]:
+    """미리 만들어 두는 고정 대사 전체 (id → 문장).
+
+    - opening, nag1, nag2           : 첫마디·재촉
+    - react_<그룹>_<n>              : 추임새 (내 말이 끝나자마자 바로 재생)
+    - end_<결말>                    : 결말 대사 (success/partial/fail/noresp, 부하 직원은 resign)
+    """
+    out = {"opening": s["opening"], "nag1": s["nags"][0], "nag2": s["nags"][1]}
+    for g in REACTION_GROUPS:
+        for n, text in enumerate(s.get("reactions", {}).get(g, [])):
+            out[f"react_{g}_{n}"] = text
+    for k, text in s.get("endings", {}).items():
+        out[f"end_{k}"] = text
+    return out
+
+
 def fixed_line(s: dict, line: str) -> str:
-    if line == "opening":
-        return s["opening"]
-    if line in ("nag1", "nag2"):
-        return s["nags"][int(line[-1]) - 1]
-    raise HTTPException(400, {"code": "bad_line", "message": "고정 대사는 opening, nag1, nag2 중 하나입니다."})
+    lines = fixed_lines(s)
+    if line not in lines:
+        raise HTTPException(400, {"code": "bad_line", "message": f"없는 고정 대사입니다: {line}"})
+    return lines[line]

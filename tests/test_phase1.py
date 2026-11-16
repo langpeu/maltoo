@@ -12,7 +12,7 @@ def test_scenarios_list(client):
     kinds = [s["kind"] for s in r]
     assert kinds.count("boss") == 4 and kinds.count("sub") == 3
     kim = next(s for s in r if s["id"] == "kim")
-    assert set(kim["lines"]) == {"opening", "nag1", "nag2"} and kim["lines"]["nag1"] == "왜 말이 없어? 뭐 불만 있어?"
+    assert {"opening", "nag1", "nag2", "end_success", "react_angry_0"} <= set(kim["lines"]) and kim["lines"]["nag1"] == "왜 말이 없어? 뭐 불만 있어?"
     genders = [s["character"]["gender"] for s in r]
     assert genders.count("여") == 3 and genders.count("남") == 4
 
@@ -126,3 +126,26 @@ def test_limit_blocks_tts(client, fake_openai):
     r = client.post("/api/tts/say", json={"scenario_id": "kim", "text": "그래서?"}, headers=H)
     assert r.status_code == 402
     assert not [c for c in fake_openai if c[0] == "tts"]
+
+
+def test_reactions_and_endings_lines():
+    from app import scenarios
+
+    for s in scenarios.all_scenarios():
+        lines = scenarios.fixed_lines(s)
+        for g in ("angry", "neutral", "soft"):
+            assert sum(1 for k in lines if k.startswith(f"react_{g}_")) == 3, (s["id"], g)
+        for e in ("success", "partial", "fail", "noresp"):
+            assert f"end_{e}" in lines
+        assert ("end_resign" in lines) == (s["kind"] == "sub")  # 퇴사 결말은 부하 직원만
+        assert all(t.strip() and t.strip(".… ") for t in lines.values())  # 빈 문장 없음
+    assert scenarios.get("choi")["reaction_start"] == "angry"
+
+
+def test_reaction_cached_only(client, fake_openai):
+    r = client.get("/api/tts/line/choi/react_angry_0?cached_only=true", headers=H)
+    assert r.status_code == 404  # 추임새는 즉시 재생용이라 없으면 만들지 않음
+    assert not [c for c in fake_openai if c[0] == "tts"]
+    client.get("/api/tts/line/choi/react_angry_0", headers=H)  # 세팅처럼 생성
+    r = client.get("/api/tts/line/choi/react_angry_0?cached_only=true", headers=H)
+    assert r.status_code == 200 and r.json()["text"] == "뭐?!"

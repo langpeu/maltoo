@@ -62,6 +62,7 @@ maltoo/
 - **API 키**: 브라우저 localStorage에만 저장. 요청 헤더(`X-OpenAI-Key`)로 받아 해당 요청에만 사용. 로그·DB·파일에 절대 남기지 않는다. 비용 집계는 키 끝 4자리로만 구분.
 - **비용 한도**: 모든 OpenAI 호출은 `usage.py`의 한도 검사를 거친다. 한도 초과 시 호출하지 않고 HTTP 402/429 + 안내 메시지. 호출 전 예상 비용으로 사전 검사.
   - 예외: 초기 세팅(`/api/setup/job`)은 사용자가 예상 비용을 확인하고 시작하므로 한도 검사를 생략하고 `exempt=1`로 기록한다 (표시는 하되 한도 합계에서 제외, session_id=`setup`).
+- **고정 대사 종류**: `scenarios.fixed_lines()` — opening·nag1·nag2, `react_<angry|neutral|soft>_<n>`(추임새, `cached_only`로만 재생·없으면 생략), `end_<success|partial|fail|noresp|resign>`(결말, 있으면 GPT 대사 대신 사용). 추임새 그룹은 직전 턴 감정으로 결정(시작값 `reaction_start`).
 - **초기 세팅**: 키 입력 시 `/api/setup/status`로 고정 음성·인물 사진 존재를 확인하고, 없으면 앱에서 생성한다. 생성물(`assets/`)은 사용자가 GitHub에 커밋해서 재사용한다. 앱 실행 중에는 사진을 새로 만들지 않는다.
 - **인물 사진**: 실사. 외모는 `scenarios.json`의 `appearance_prompt`(영어, 얼굴형·눈·눈썹·코·입·피부·머리·나이 흔적·체격·옷·소품·인상 항목별)와 `expression_notes`(인물별 표정)로 지정, 7명 공통 촬영 조건은 `portraits.PHOTO_SPEC`. 화면용 한국어 요약은 `appearance`. calm 기본 사진 → 표정 4종 edit → 표정별 입 벌림 edit(입 주변 마스크). 이미지 모델은 `gpt-image-1-mini`(사용자 지정) — `input_fidelity=high` 미지원이라 생략하고, 편집 프롬프트에 외모를 다시 명시해 얼굴을 유지한다. 입 움직임은 재생 음량으로 `_talk` 사진 투명도를 조절한다.
 - **영상 비전송**: 카메라 프레임은 서버로 보내지 않는다. 수치 요약만 전송. 캡처 이미지는 로컬 `captures/`에만.

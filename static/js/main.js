@@ -177,6 +177,11 @@ const talkUI = {
     $("npc-bubble").innerHTML = esc(text) + (muted ? ' <span class="muted-badge">🔇 음성 없이 글자로</span>' : "");
     addLog("npc", `<small>${esc(current.character.name)}${muted ? " · 🔇" : ""}</small>${esc(text)}`);
   },
+  npcReact(text) {
+    $("npc-bubble").textContent = text;
+    setSpeaking(true);
+    addLog("npc react", `<small>${esc(current.character.name)} · 반응</small>${esc(text)}`);
+  },
   ttsFailed(e) {
     if (!this._ttsWarned) toast(`음성을 만들지 못해 글자로 보여줍니다. (${e.message})`, 4500);
     this._ttsWarned = true;

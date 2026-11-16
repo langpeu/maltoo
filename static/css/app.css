@@ -333,3 +333,4 @@ code { background: var(--yellow-soft); border: 1px solid var(--ink); border-radi
 
 .muted-badge { display: inline-block; font-size: 12px; font-weight: 800; vertical-align: middle;
   border: 2px solid var(--ink); border-radius: 6px; padding: 1px 6px; background: #f3f3f3; margin-left: 6px; }
+.log li.react { opacity: .75; font-size: 14px; padding: 4px 10px; }
