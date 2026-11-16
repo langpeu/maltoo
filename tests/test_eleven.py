@@ -18,8 +18,14 @@ def test_eleven_flow(client, fake_openai, monkeypatch):
     assert park["done"] == 0 and park["missing_chars"] > 0
     # 직접 쓴 대본(김 부장)과 자동 대본(감정 태그)
     assert eleven.script_for(scenarios.get("kim"), "nag1").startswith("[snorts")
-    assert eleven.script_for(scenarios.get("park"), "nag2").startswith("[angry] ")
-    assert not eleven.script_for(scenarios.get("park"), "opening").startswith("[")  # 평온은 태그 없음
+    assert eleven.script_for(scenarios.get("park"), "nag2").startswith("[sulky")  # 직접 쓴 대본
+    assert eleven.script_for(scenarios.get("park"), "react_angry_0").startswith("[angry] ")  # 추임새는 감정 태그
+    assert not eleven.script_for(scenarios.get("park"), "react_neutral_0").startswith("[")  # 평온은 태그 없음
+    # 7명 모두 첫마디·재촉·결말·소문은 직접 쓴 대본
+    for s in scenarios.all_scenarios():
+        for line in scenarios.fixed_lines(s):
+            if not line.startswith("react_"):
+                assert eleven.script_for(s, line).startswith("["), (s["id"], line)
 
     body = {"scenario_id": "park", "line": "nag2", "voice_id": "v1", "voice_name": "박팀장"}
     r = client.post("/api/eleven/line", json=body, headers=H).json()

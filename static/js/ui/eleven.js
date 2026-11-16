@@ -21,6 +21,11 @@ let running = false;
 const openLines = new Set();
 
 function key() { return $("eleven-key").value.trim(); }
+const skipReact = () => $("eleven-skip-react").checked;
+const isReact = (line) => line.startsWith("react_");
+// 이번에 만들 대상 (추임새 건너뛰기 반영)
+const targets = (c) => c.lines.filter((l) => !l.custom && !(skipReact() && isReact(l.line)));
+const charsOf = (ls) => ls.reduce((a, l) => a + l.chars, 0);
 function headers() { return { "X-ElevenLabs-Key": key() }; }
 function err(msg) { $("eleven-error").textContent = msg || ""; $("eleven-error").hidden = !msg; }
 
@@ -33,8 +38,8 @@ function summary() {
   const all = state.characters;
   const done = all.reduce((a, c) => a + c.done, 0);
   const total = all.reduce((a, c) => a + c.total, 0);
-  const chars = all.reduce((a, c) => a + c.missing_chars, 0);
-  $("eleven-summary").textContent = `모델 ${state.model} · ElevenLabs 음성 ${done}/${total}개 · 남은 대사 약 ${chars.toLocaleString()}자(≈ 크레딧)`;
+  const chars = all.reduce((a, c) => a + charsOf(targets(c)), 0);
+  $("eleven-summary").textContent = `모델 ${state.model} · ElevenLabs 음성 ${done}/${total}개 · 만들 대사 약 ${chars.toLocaleString()}자(≈ 크레딧)${skipReact() ? " · 추임새 제외" : ""}`;
 }
 
 function render() {
@@ -46,7 +51,7 @@ function render() {
       <div class="ev-head">
         <b>${esc(c.name)}</b>
         <select data-pick="${c.id}">${opts(picks[c.id])}</select>
-        <span class="ev-count">${c.done}/${c.total}개 · 남은 ${c.missing_chars}자</span>
+        <span class="ev-count">${c.done}/${c.total}개 · 만들 ${targets(c).length}개 ${charsOf(targets(c))}자</span>
         <button type="button" class="btn" data-run="${c.id}">빠진 대사 만들기</button>
         <button type="button" class="btn btn-ghost" data-toggle="${c.id}">${openLines.has(c.id) ? "접기" : "대사 보기"}</button>
       </div>
@@ -78,7 +83,7 @@ async function runCharacter(cid) {
   if (running) return;
   if (!key()) { err("ElevenLabs API 키를 먼저 넣어 주세요."); return; }
   const c = state.characters.find((x) => x.id === cid);
-  const todo = c.lines.filter((l) => !l.custom);
+  const todo = targets(c);
   if (!todo.length) { err(""); $("eleven-summary").textContent = `${c.name}: 모두 만들어져 있습니다.`; return; }
   running = true; stopFlag = false; err("");
   $("btn-eleven-stop").hidden = false;
@@ -102,6 +107,7 @@ export function initEleven() {
   try { picks = JSON.parse(ls.get(LS_VOICES, "{}")) || {}; } catch { picks = {}; }
 
   $("eleven-key").addEventListener("change", () => ls.set(LS_KEY, key()));
+  $("eleven-skip-react").addEventListener("change", () => { if (state) render(); });
   $("btn-eleven-open").addEventListener("click", async () => {
     $("settings-modal").close();
     $("eleven-modal").showModal();
