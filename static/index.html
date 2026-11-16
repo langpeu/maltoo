@@ -19,6 +19,7 @@
     </div>
     <div class="topbar-right">
       <span class="tag">나 · 과장</span>
+      <span class="tag salary-chip" id="salary-chip" title="게임용 가상 연봉">💰 4,700만</span>
       <button class="btn btn-ghost" type="button" data-go="history">📈 기록</button>
       <button class="btn btn-ghost" id="btn-guide" type="button">❔ 안내</button>
       <button class="btn btn-ghost" id="btn-settings" type="button">⚙ 설정</button>
@@ -174,6 +175,7 @@
           <b id="result-progress-text">0%</b>
         </div>
         <ul class="checklist" id="result-checklist"></ul>
+        <div class="game-result" id="game-result" hidden></div>
 
         <section class="report" id="report">
           <div class="report-loading" id="report-loading">📝 말·톤·표정을 종합해서 교정 리포트를 쓰는 중…</div>
@@ -218,6 +220,21 @@
 
     <aside class="panel">
       <section class="card panel-block" id="state-panel" hidden>
+        <div class="game-box" id="game-boss" hidden>
+          <div class="panel-head"><h2>💰 내 연봉</h2><span class="small muted">가상 수치</span></div>
+          <div class="salary"><span id="salary-now">4,700만 원</span><span class="salary-delta" id="salary-delta"></span></div>
+          <ul class="game-reasons" id="boss-reasons"></ul>
+        </div>
+        <div class="game-box" id="game-sub" hidden>
+          <div class="panel-head"><h2>🚪 퇴사 위험도</h2><b id="risk-v">0%</b></div>
+          <div class="bar"><div class="bar-fill danger" id="risk-bar"></div></div>
+          <p class="stage" id="risk-stage"></p>
+          <div id="team-box" hidden>
+            <div class="panel-head"><h2>👥 팀 불만</h2><b id="team-v">0%</b></div>
+            <div class="bar"><div class="bar-fill warn" id="team-bar"></div></div>
+          </div>
+          <ul class="game-reasons" id="sub-reasons"></ul>
+        </div>
         <div class="panel-head"><h2 id="state-title">상대 감정</h2></div>
         <div class="gauge"><span>분노</span><div class="bar"><div class="bar-fill danger" id="g-anger"></div></div><b id="g-anger-v">-</b></div>
         <div class="gauge"><span>신뢰</span><div class="bar"><div class="bar-fill" id="g-trust"></div></div><b id="g-trust-v">-</b></div>
@@ -363,6 +380,11 @@
           <button type="button" class="btn btn-ghost" id="btn-test-chat">비용 표시 테스트</button>
         </div>
         <p class="note" id="test-reply" hidden></p>
+      </section>
+      <section class="settings-section">
+        <h3>🏢 새 회사 입사 (초기화)</h3>
+        <p class="note">연봉·인물 관계·퇴사·소문을 처음 상태로 되돌립니다. 연습 기록과 비용 기록은 그대로 남습니다.</p>
+        <button type="button" class="btn btn-danger" id="btn-world-reset">새 회사 입사</button>
       </section>
       <p class="error" id="settings-error" hidden></p>
       <div class="modal-actions">

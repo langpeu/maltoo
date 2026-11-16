@@ -6,8 +6,8 @@ H = {"X-OpenAI-Key": KEY, "X-Session-Id": "setup"}
 
 def test_status_counts(client, fake_openai):
     st = client.get("/api/setup/status").json()
-    assert st["audio"]["missing"] == 115  # 첫마디·재촉 21 + 추임새 63 + 결말 31
-    assert st["portraits"]["missing"] == 70  # 7명 × 5표정 × 2(입 다묾/벌림)
+    assert st["audio"]["missing"] == 129  # 첫마디·재촉 21 + 추임새 63 + 결말 31 + 소문 첫마디 14
+    assert st["portraits"]["missing"] == 74  # 7명 × 5표정 × 2(입 다묾/벌림) + 엔딩 장면 4
     assert 0.5 < st["estimate_usd"] < 1.5
     first_kim = [j for j in st["jobs"] if j["kind"] == "portrait" and j["scenario_id"] == "kim"]
     assert (first_kim[0]["expr"], first_kim[0]["talk"]) == ("calm", False)  # 기본 사진이 먼저
@@ -39,7 +39,7 @@ def test_portrait_chain_and_reuse(client, fake_openai):
     assert "mole on the left cheek" in [e for e in edits if "mask" not in e[1]][0][1]["prompt"]  # 편집에도 외모 재명시
 
     st2 = client.get("/api/setup/status").json()
-    assert st2["portraits"]["missing"] == 60
+    assert st2["portraits"]["missing"] == 64
     frames = st2["portraits_status"]["kim"]["frames"]
     assert frames["angry"]["closed"].endswith("/kim/angry.webp")
     assert frames["angry"]["talk"].endswith("/kim/angry_talk.webp")

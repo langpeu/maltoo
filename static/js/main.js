@@ -51,6 +51,7 @@ let current = null;
 
 async function loadScenarios() {
   scenarios = await api("/api/scenarios");
+  setTimeout(loadWorld, 0);
   try { setPortraitFrames((await api("/api/setup/status")).portraits_status); } catch { /* 사진 없음 */ }
   for (const kind of ["boss", "sub"]) {
     $(`grid-${kind}`).innerHTML = scenarios.filter((s) => s.kind === kind).map((s) => `
@@ -62,6 +63,7 @@ async function loadScenarios() {
         </div>
         <div class="sc-title">${esc(s.title)}</div>
         <div class="sc-goal">🎯 ${esc(s.goal)}</div>
+        <div class="sc-badges" data-badges="${s.id}"></div>
       </button>`).join("");
   }
 }
@@ -206,7 +208,7 @@ $("btn-stop").addEventListener("click", () => { stopConversation(); closeCamera(
 
 let myTurns = 0;
 
-function startTalk() {
+async function startTalk() {
   const s = current;
   myTurns = 0;
   showCharacter(s);
@@ -228,8 +230,18 @@ function startTalk() {
   setMeters({ arousal: 50, warmth: 50 });
   $("tone-note").textContent = "말하는 동안 실시간으로 움직입니다.";
   sessionStart = { id: (crypto.randomUUID && crypto.randomUUID()) || String(Date.now()), at: new Date().toISOString() };
+
+  // 회사 세계관: 누적 상태 + 소문이 퍼졌는지
+  let ws = null;
+  try { ws = await api("/api/world/start", { method: "POST", body: { scenario_id: s.id } }); } catch { /* 게임 장치 없이 진행 */ }
+  setupGamePanel(s, ws);
+  if (ws && ws.rumor) {
+    toast(`🗣 소문이 퍼졌습니다! ${ws.rumor.source}이(가) 당신이 한 말을 ${s.character.name}에게 전했습니다.`, 7000);
+  }
   convo = new Conversation(s, { mic, ui: talkUI, baseline, face, difficulty,
-                                answerMs: answerSeconds() * 1000 });
+                                answerMs: answerSeconds() * 1000, sessionId: sessionStart.id,
+                                openingLine: ws && ws.rumor ? ws.rumor.line : "opening",
+                                startAnger: ws ? ws.start_anger : 40 });
   convo.run();
 }
 
@@ -565,6 +577,7 @@ const talkUI = {
     addPin({ icon: c.icon, title: c.label, note: c.note, audio });
   },
   toneLive(sc) { setMeters(sc); },
+  gameUpdate(g) { updateGamePanel(g); },
   turnResult(r, li) {
     if (li) markTextCheckpoints(li, r.checkpoints || []);
     if (r.tone_feedback) $("tone-note").textContent = r.tone_feedback;
@@ -595,6 +608,8 @@ function showResult(r) {
     success: ["🟢 성공", "목표를 이뤘습니다!"],
     partial: ["🟡 부분 성공", "절반의 성과입니다."],
     fail: ["🔴 실패", "목표를 이루지 못했습니다."],
+    resign: ["🚪 퇴사", "상대가 회사를 떠났습니다."],
+    team_quit: ["👥 팀원 이탈", "목표는 이뤘지만 팀이 흔들렸습니다."],
   };
   const [badge, title] = map[r.ending] || map.partial;
   $("result-badge").textContent = badge;
@@ -611,14 +626,158 @@ function showResult(r) {
   refreshUsage();
   go("result");
   lastHistory = r.history || [];
-  requestReport(r);
+  finishWorld(r).then((game) => requestReport(r, game));
 }
+
+// ---------- 회사 세계관 (Phase 5) ----------
+let worldState = null;
+const won = (v) => `${Math.round(v / 10000).toLocaleString("ko-KR")}만`;
+
+async function loadWorld() {
+  try { worldState = await api("/api/world"); } catch { return; }
+  $("salary-chip").textContent = `💰 ${won(worldState.salary)}`;
+  for (const el of document.querySelectorAll("[data-badges]")) {
+    const st = worldState.characters[el.dataset.badges];
+    if (!st) continue;
+    const b = [];
+    if (st.kind === "sub") {
+      if (st.resigned) b.push('<span class="sc-badge bad">🚪 퇴사함</span>');
+      else b.push(`<span class="sc-badge ${st.resign_risk >= 60 ? "bad" : st.resign_risk >= 30 ? "warn" : ""}">퇴사 위험 ${Math.round(st.resign_risk)}%</span>`);
+    }
+    b.push(`<span class="sc-badge ${st.trust < 35 ? "bad" : ""}">신뢰 ${Math.round(st.trust)}</span>`);
+    if (st.rumor_pending) b.push('<span class="sc-badge rumor">🗣 무슨 말을 들은 것 같다</span>');
+    el.innerHTML = b.join("");
+    el.closest(".scenario").classList.toggle("resigned", !!st.resigned);
+  }
+}
+
+function setupGamePanel(s, ws) {
+  const boss = s.kind === "boss";
+  $("game-boss").hidden = !boss;
+  $("game-sub").hidden = boss;
+  $("boss-reasons").innerHTML = "";
+  $("sub-reasons").innerHTML = "";
+  $("salary-delta").textContent = "";
+  if (!ws) return;
+  if (boss) {
+    $("salary-now").textContent = `${won(ws.salary)} 원`;
+    if (ws.salary_delta) flashSalary(ws.salary_delta, ["🗣 소문 때문에 시작부터 감액"]);
+  } else {
+    setRisk(ws.state.resign_risk, "");
+    $("team-box").hidden = s.id !== "yoon";
+    if (s.id === "yoon") setTeam(ws.state.team);
+    if (ws.rumor) addReason("sub-reasons", `🗣 소문 때문에 퇴사 위험 +15`);
+  }
+}
+
+function addReason(id, text) {
+  const li = document.createElement("li");
+  li.textContent = text;
+  $(id).prepend(li);
+}
+
+function flashSalary(delta, reasons) {
+  const el = $("salary-now");
+  el.classList.remove("hit", "gain");
+  void el.offsetWidth;
+  el.classList.add(delta < 0 ? "hit" : "gain");
+  $("salary-delta").textContent = `${delta > 0 ? "+" : "−"}${won(Math.abs(delta))} 원`;
+  $("salary-delta").className = `salary-delta ${delta < 0 ? "minus" : "plus"}`;
+  for (const r of reasons) addReason("boss-reasons", r);
+}
+
+function setRisk(v, stage) {
+  $("risk-v").textContent = `${Math.round(v)}%`;
+  $("risk-bar").style.width = `${Math.min(100, v)}%`;
+  $("risk-stage").textContent = stage ? `👀 ${stage}` : "";
+}
+function setTeam(v) {
+  $("team-v").textContent = `${Math.round(v)}%`;
+  $("team-bar").style.width = `${Math.min(100, v)}%`;
+}
+
+function updateGamePanel(g) {
+  if (g.kind === "boss") {
+    $("salary-now").textContent = `${won(g.salary)} 원`;
+    $("salary-chip").textContent = `💰 ${won(g.salary)}`;
+    if (g.salary_delta) flashSalary(g.salary_delta, [`${g.salary_delta < 0 ? "📉" : "📈"} ${(g.reasons || []).join(" · ")}`]);
+  } else {
+    setRisk(g.resign_risk, g.stage);
+    if (g.team != null) setTeam(g.team);
+    if (g.risk_delta) addReason("sub-reasons", `${g.risk_delta > 0 ? "▲" : "▼"} 퇴사 위험 ${g.risk_delta > 0 ? "+" : ""}${g.risk_delta}`);
+  }
+  for (const m of g.mentions || []) {
+    addReason(g.kind === "boss" ? "boss-reasons" : "sub-reasons", `💬 ${m.effect}`);
+    toast(`💬 ${m.effect}`, 4000);
+  }
+  if (g.rumor_created) setTimeout(() => toast("🗣 방금 한 말이 누군가에게 전해질지도 모릅니다…", 4500), 1500);
+}
+
+async function finishWorld(r) {
+  let fin = null;
+  try {
+    fin = await api("/api/world/finish", { method: "POST",
+      body: { scenario_id: current.id, ending: r.worldEnding || r.ending, session: r.gameSession || null } });
+  } catch { /* 게임 장치 없이 */ }
+  renderGameResult(r, fin);
+  loadWorld();
+  const game = fin ? { ...fin, mentions: r.mentions || [], team_quit: r.ending === "team_quit" } : null;
+  return game;
+}
+
+function renderGameResult(r, fin) {
+  const box = $("game-result");
+  if (!fin) { box.hidden = true; return; }
+  const name = current.character.name;
+  let img = "", html = "";
+  if (fin.kind === "boss") {
+    img = "/assets/endings/review.webp";
+    const diff = fin.salary_after - fin.salary_before;
+    html = `<h2><span class="grade ${fin.grade}">${fin.grade}</span>인사고과 ${fin.grade}등급</h2>
+      <p class="big">연봉 ${won(fin.salary_before)} → ${won(fin.salary_after)} 원
+        <span class="salary-delta ${diff < 0 ? "minus" : diff > 0 ? "plus" : ""}">${diff ? (diff > 0 ? "+" : "−") + won(Math.abs(diff)) : "동결"}</span></p>
+      <p>이번 대화에서 깎인 금액: <b>${won(fin.session_cut || 0)} 원</b></p>
+      ${fin.meeting ? '<p class="error">💀 인사팀에서 면담을 요청했습니다.</p>' : ""}
+      <p class="small muted">연봉은 게임용 가상 수치입니다.</p>`;
+  } else if (fin.resigned && r.ending === "resign") {
+    img = `/assets/endings/resign_${current.id}.webp`;
+    html = `<h2>🚪 ${esc(name)}이(가) 사직서를 냈습니다</h2>
+      <p class="big">손실: ${esc(fin.loss_text)}</p>
+      <p class="small muted">설정 → 새 회사 입사로 처음부터 다시 할 수 있습니다. 채용 비용은 가상 수치입니다.</p>`;
+  } else if (r.ending === "team_quit") {
+    html = `<h2>👥 다른 팀원이 이탈했습니다</h2>
+      <p>${esc(name)}의 문제를 덮고 넘어가자, 팀원들의 불만이 쌓여 한 명이 팀을 떠났습니다.</p>
+      <p class="small muted">공감도 중요하지만, 문제는 분명하게 짚어야 합니다.</p>`;
+  } else {
+    html = `<h2>🚪 ${esc(name)}의 퇴사 위험도 ${Math.round(fin.resign_risk)}%</h2>
+      <p>${fin.resign_risk >= 60 ? "이직을 진지하게 고민하고 있습니다. 다음 대화가 중요합니다." : fin.resign_risk >= 30 ? "아직 버티고 있지만 마음이 떠나고 있습니다." : "팀에 남을 생각입니다."}</p>`;
+  }
+  box.className = `game-result ${img ? "" : "noimg"}`;
+  box.innerHTML = (img ? `<img src="${img}" alt="" onerror="this.remove(); this.parentNode && this.parentNode.classList.add('noimg')">` : "") + `<div>${html}</div>`;
+  box.hidden = false;
+}
+
+$("btn-world-reset").addEventListener("click", async (e) => {
+  const btn = e.currentTarget;
+  if (!btn.dataset.armed) {
+    btn.dataset.armed = "1";
+    btn.textContent = "정말 초기화할까요? 한 번 더 누르세요";
+    setTimeout(() => { delete btn.dataset.armed; btn.textContent = "새 회사 입사"; }, 4000);
+    return;
+  }
+  delete btn.dataset.armed;
+  btn.textContent = "새 회사 입사";
+  await api("/api/world/reset", { method: "POST" });
+  await loadWorld();
+  $("settings-modal").close();
+  toast("🏢 랑프두잇에 새로 입사했습니다. 연봉과 인간관계가 초기화되었습니다.", 5000);
+});
 
 // ---------- 교정 리포트 ----------
 let sessionStart = null;
 let lastHistory = [];
 
-async function requestReport(r) {
+async function requestReport(r, game = null) {
   $("report-loading").hidden = false;
   $("report-body").hidden = true;
   showError($("report-error"), "");
@@ -634,6 +793,7 @@ async function requestReport(r) {
         ending: r.ending || null,
         goal_progress: r.goal_progress || 0,
         difficulty: r.difficulty || difficulty,
+        game,
       },
     });
     renderReport(rep);
@@ -1005,7 +1165,9 @@ async function runSetup() {
 
   // 인물별로 묶어서 순서 유지(기본 사진 → 표정 → 입 벌림), 3명씩 동시에 진행
   const chains = {};
-  for (const j of st.jobs) (chains[`${j.kind}:${j.kind === "audio" ? "all" : j.scenario_id}`] ||= []).push(j);
+  const chainKey = (j) => j.kind === "audio" ? "audio"
+    : j.kind === "ending" && j.ending_id === "review" ? "ending:review" : `portrait:${j.scenario_id}`; // 사직서 장면은 그 인물 사진 뒤에
+  for (const j of st.jobs) (chains[chainKey(j)] ||= []).push(j);
   const queue = Object.values(chains);
   const worker = async () => {
     while (queue.length) {
@@ -1020,7 +1182,7 @@ async function runSetup() {
           done += 1;
           failed.push(j);
           setupLog(`✗ ${j.label} — ${e.message}`, true);
-          if (j.kind === "portrait") { done += chain.length - chain.indexOf(j) - 1; break; } // 기준 사진 실패 시 이 인물은 중단
+          if (j.kind === "portrait" && j.expr === "calm" && !j.talk) { done += chain.length - chain.indexOf(j) - 1; break; } // 기본 사진 실패 시 이 인물은 중단
         } finally { tick(); }
       }
       refreshUsage();

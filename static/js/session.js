@@ -8,12 +8,18 @@ import { analyzeFrame, ToneTracker } from "./audio/tone.js";
 class Stopped extends Error {}
 
 export class Conversation {
-  constructor(scenario, { mic, ui, baseline = null, face = null, difficulty = "normal", answerMs = 3000 }) {
+  constructor(scenario, { mic, ui, baseline = null, face = null, difficulty = "normal", answerMs = 3000,
+                          sessionId = "", openingLine = "opening", startAnger = 40 }) {
     this.s = scenario;
     this.face = face; // { cam, tracker } | null
     this.difficulty = difficulty;
     this.answerMs = answerMs;
     this.startedAt = new Date().toISOString();
+    this.sessionId = sessionId;
+    this.openingLine = openingLine;               // 소문이 퍼졌으면 rumor_<n>
+    this.prevEmotion = { anger: startAnger, trust: 50 };
+    this.gameSession = { cut: 0, recovered: 0 };   // 이번 판 연봉 감액·회복 누적
+    this.mentions = [];
     this.baseline = baseline;
     this.mic = mic;
     this.ui = ui;
@@ -118,7 +124,7 @@ export class Conversation {
   async run() {
     try {
       if (this.face) this.face.tracker.beginTurn();
-      await this.speakFixed("opening");
+      await this.speakFixed(this.openingLine);
       for (;;) {
         // 1) 3초 안에 대답 (재촉 최대 2회)
         let nag = 0;
@@ -151,6 +157,7 @@ export class Conversation {
           if (nag > 2) {
             const last = this.lastResult || {};
             await this.speakEnding("noresp");
+            this.noResponse = true;
             return this.finish({ ...last, ending: "fail", reason: "끝까지 대답하지 않았습니다 (응답 회피).",
                                  goal_progress: last.goal_progress || 0, checklist_done: last.checklist_done || [],
                                  noResponse: true });
@@ -184,17 +191,24 @@ export class Conversation {
         const r = await api("/api/turn", {
           method: "POST",
           body: { scenario_id: this.s.id, history: prior, user_text: myText, nag_count: nag, tone, face,
-                  difficulty: this.difficulty },
+                  difficulty: this.difficulty, session_id: this.sessionId,
+                  prev_emotion: this.prevEmotion, game_session: this.gameSession },
         });
         this.guard();
         await reacting;
         this.guard();
         this.lastResult = r;
         meEntry.checkpoints = r.checkpoints || [];
+        this.prevEmotion = { anger: r.emotion.anger, trust: r.emotion.trust };
+        if (r.game) {
+          this.gameSession = r.game.session || this.gameSession;
+          this.mentions.push(...(r.game.mentions || []));
+          this.ui.gameUpdate(r.game);
+        }
         this.mood = Conversation.moodOf(r.emotion);
         this.ui.turnResult(r, myLog);
         if (r.ending) {
-          await this.speakEnding(r.ending, r.reply);
+          await this.speakEnding(r.ending === "team_quit" ? "partial" : r.ending, r.reply);
           return this.finish(r);
         }
         this.history.push({ speaker: "npc", text: r.reply });
@@ -207,7 +221,9 @@ export class Conversation {
   }
 
   finish(r) {
-    this.ui.end({ ...r, history: this.history, startedAt: this.startedAt, difficulty: this.difficulty });
+    this.ui.end({ ...r, history: this.history, startedAt: this.startedAt, difficulty: this.difficulty,
+                  gameSession: this.gameSession, mentions: this.mentions,
+                  worldEnding: this.noResponse ? "noresp" : r.ending });
   }
 }
 

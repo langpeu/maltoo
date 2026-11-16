@@ -1,0 +1,37 @@
+{
+  "_comment": "랑프두잇 조직도와 인물 간 관계. attitude: -100(경멸) ~ +100(신뢰). 나는 항상 과장(me).",
+  "org": {
+    "choi": {"title": "상무(본부장)", "boss": null},
+    "kim":  {"title": "부장", "boss": "choi"},
+    "park": {"title": "팀장", "boss": "kim"},
+    "han":  {"title": "팀장", "boss": "kim"},
+    "me":   {"title": "과장", "boss": ["park", "han"]},
+    "lee":  {"title": "사원", "boss": "me"},
+    "jung": {"title": "주임", "boss": "me"},
+    "yoon": {"title": "대리", "boss": "me"}
+  },
+  "relations": [
+    {"from": "lee",  "to": "park", "attitude": -40, "note": "무리한 일정을 자꾸 떠넘겨서 불만이 많다"},
+    {"from": "lee",  "to": "jung", "attitude": 20,  "note": "일 잘하는 선배라고 생각한다"},
+    {"from": "jung", "to": "kim",  "attitude": -60, "note": "남의 공을 가로채는 사람이라 경멸한다"},
+    {"from": "jung", "to": "choi", "attitude": -20, "note": "소리만 지르는 임원이라고 생각한다"},
+    {"from": "yoon", "to": "han",  "attitude": -30, "note": "육아 조퇴 때마다 눈치를 줘서 무서워한다"},
+    {"from": "yoon", "to": "lee",  "attitude": 20,  "note": "같이 고생하는 동료로 여긴다"},
+    {"from": "park", "to": "han",  "attitude": -40, "note": "승진 경쟁 라이벌이다"},
+    {"from": "han",  "to": "park", "attitude": -40, "note": "승진 경쟁 라이벌이다"},
+    {"from": "park", "to": "lee",  "attitude": -10, "note": "일 처리가 느리다고 생각한다"},
+    {"from": "han",  "to": "yoon", "attitude": -20, "note": "자주 빠진다고 못마땅해한다"},
+    {"from": "choi", "to": "kim",  "attitude": 50,  "note": "오래 함께한 측근이라 편애한다"},
+    {"from": "kim",  "to": "choi", "attitude": 60,  "note": "충성하는 상사다"},
+    {"from": "kim",  "to": "jung", "attitude": -20, "note": "건방지다고 생각한다"}
+  ],
+  "start": {
+    "kim":  {"affinity": 50, "trust": 45},
+    "park": {"affinity": 55, "trust": 50},
+    "choi": {"affinity": 40, "trust": 40},
+    "han":  {"affinity": 40, "trust": 40},
+    "lee":  {"affinity": 50, "trust": 45, "resign_risk": 25},
+    "jung": {"affinity": 40, "trust": 50, "resign_risk": 20},
+    "yoon": {"affinity": 60, "trust": 55, "resign_risk": 35, "team": 30}
+  }
+}

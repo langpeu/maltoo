@@ -29,6 +29,7 @@ class ReportIn(BaseModel):
     goal_progress: int = 0
     started_at: str | None = None
     difficulty: str = "normal"
+    game: dict | None = None  # 연봉·인사고과·퇴사·소문 요약 (Phase 5)
 
 
 @router.post("/report")
@@ -39,7 +40,7 @@ def make_report(body: ReportIn, caller: Caller = Depends(get_caller)):
 
     coach = {"words_score": None, "summary": "", "strengths": [], "habits": [], "fixes": [], "next_practice": ""}
     if report.my_turns(turns):
-        msgs = report.build_report_messages(s, turns, body.ending, body.goal_progress, body.difficulty)
+        msgs = report.build_report_messages(s, turns, body.ending, body.goal_progress, body.difficulty, body.game)
         raw = caller.chat(msgs, max_tokens=1400, feature="chat", response_format={"type": "json_object"})
         coach = report.parse_report(raw, turns)
 
@@ -51,7 +52,7 @@ def make_report(body: ReportIn, caller: Caller = Depends(get_caller)):
     }
     scores["overall"] = report.combine(scores["words"], scores["tone"], scores["face"], scores["goal"])
     result = {**coach, "scores": scores, "per_turn": measured["per_turn"], "ending": body.ending,
-              "difficulty": body.difficulty}
+              "difficulty": body.difficulty, "game": body.game}
 
     # 기록 저장 (개인 기록: data.db, GitHub 에 올라가지 않음)
     now = datetime.now().isoformat(timespec="seconds")

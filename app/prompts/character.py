@@ -25,8 +25,13 @@ OUTPUT_SPEC = """반드시 아래 JSON 객체 하나만 출력한다. 다른 텍
      "note": "왜 그렇게 들리는지 + 어떻게 바꾸면 좋은지 한 줄 (한국어)"}
   ],
   "tone_feedback": "이번 발언의 목소리 톤과 표정이 상대에게 어떻게 보이고 들렸는지 한 줄 (한국어, 측정값 근거)",
+  "mentions": [{"character": "언급된 다른 인물의 id", "sentiment": "negative" | "positive" | "neutral",
+                "quote": "과장이 그 사람에 대해 한 말 (원문 일부)"}],
+  "team_issue_addressed": true | false | null,
   "ending": null | "success" | "partial" | "fail"
 }
+mentions 는 과장이 너 말고 다른 회사 인물을 언급했을 때만 넣는다 (없으면 빈 배열). 험담·비난·불평은 negative.
+team_issue_addressed 는 윤 대리 시나리오에서만: 과장이 실수 문제와 팀원들의 불만을 분명히 짚었으면 true, 덮고 넘어갔으면 false. 다른 시나리오는 null.
 checkpoints 는 0~3개. text_span 은 반드시 과장 발언 원문에 있는 그대로의 구절이어야 한다.
 aggressive=공격적·명령조, excuse=변명조, cold=차갑고 무뚝뚝함, sarcasm=비꼼, good=잘한 표현."""
 
@@ -36,7 +41,7 @@ def difficulty_line(difficulty: str) -> str:
     return (d.get(difficulty) or d.get("normal") or {}).get("prompt", "")
 
 
-def system_prompt(s: dict, turn_index: int, difficulty: str = "normal") -> str:
+def system_prompt(s: dict, turn_index: int, difficulty: str = "normal", world_ctx: str = "") -> str:
     company = get_config()["company"]
     c = s["character"]
     relation = "상사" if s["kind"] == "boss" else "부하 직원"
@@ -53,6 +58,7 @@ def system_prompt(s: dict, turn_index: int, difficulty: str = "normal") -> str:
 [체크리스트] {', '.join(s['checklist'])}
 [실패 조건] {', '.join(s['fail_conditions'])}
 [{difficulty_line(difficulty)}]
+{world_ctx}
 
 판단 규칙 (말 + 목소리 톤 + 표정):
 - 과장의 대사 뒤에 [목소리 톤 측정]과 [표정 측정]이 붙어 있다. 같은 말이라도 톤이 공격적이면(언성 상승, 끝 억양 뚝, 빠름, 강세, 한숨) 상대는 기분 나쁘게 받아들인다.
@@ -74,9 +80,10 @@ def system_prompt(s: dict, turn_index: int, difficulty: str = "normal") -> str:
 
 
 def build_messages(s: dict, history: list[dict], user_text: str, turn_index: int,
-                   tone: dict | None = None, face: dict | None = None, difficulty: str = "normal") -> list[dict]:
-    msgs = [{"role": "system", "content": system_prompt(s, turn_index, difficulty)}]
-    if not history or history[0].get("text") != s["opening"]:
+                   tone: dict | None = None, face: dict | None = None, difficulty: str = "normal",
+                   world_ctx: str = "") -> list[dict]:
+    msgs = [{"role": "system", "content": system_prompt(s, turn_index, difficulty, world_ctx)}]
+    if not history:  # 첫마디(소문 버전 포함)는 클라이언트 history 첫 줄로 온다
         msgs.append({"role": "assistant", "content": json.dumps({"reply": s["opening"]}, ensure_ascii=False)})
     for h in history:
         if h.get("speaker") == "me":
@@ -102,7 +109,7 @@ def _clamp(v, lo=0, hi=100, default=50):
 CP_TYPES = ("aggressive", "excuse", "cold", "sarcasm", "good")
 
 
-def parse(raw: str, s: dict, turn_index: int, user_text: str = "") -> dict:
+def parse(raw: str, s: dict, turn_index: int, user_text: str = "", valid_ids: set | None = None) -> dict:
     try:
         data = json.loads(raw)
     except json.JSONDecodeError:
@@ -137,8 +144,23 @@ def parse(raw: str, s: dict, turn_index: int, user_text: str = "") -> dict:
         "goal_progress": _clamp(data.get("goal_progress"), default=0),
         "checklist_done": done,
         "checkpoints": cps,
+        "mentions": _mentions(data.get("mentions"), valid_ids or set(), s["id"]),
+        "team_issue_addressed": data.get("team_issue_addressed") if isinstance(data.get("team_issue_addressed"), bool) else None,
         "tone_feedback": str(data.get("tone_feedback") or "").strip(),
         "ending": ending,
         "turn_index": turn_index,
         "max_turns": MAX_TURNS,
     }
+
+
+def _mentions(raw, valid_ids: set, self_id: str) -> list[dict]:
+    out = []
+    for m in (raw or [])[:4]:
+        if not isinstance(m, dict):
+            continue
+        cid = str(m.get("character") or "").strip()
+        if cid not in valid_ids or cid == self_id:
+            continue
+        sent = m.get("sentiment") if m.get("sentiment") in ("negative", "positive", "neutral") else "neutral"
+        out.append({"character": cid, "sentiment": sent, "quote": str(m.get("quote") or "").strip()[:120]})
+    return out

@@ -168,3 +168,61 @@ def generate_one(caller, s: dict, expr: str, talk: bool) -> None:
         prompt = TALK_PROMPT
         data = caller.image_edit(path(cid, expr).read_bytes(), prompt, cost, mask=MASK.read_bytes())
     _save(cid, expr, talk, data, prompt)
+
+
+# ---------- 엔딩 장면 (assets/endings) ----------
+
+ENDINGS_DIR = ROOT / "assets" / "endings"
+
+REVIEW_PROMPT = (
+    "Photorealistic photo, close-up of an office desk at a robot manufacturing company: a printed performance review "
+    "notice sheet and a pen, a small white robot arm model in the softly blurred background, warm muted yellow accent, "
+    "moody late-afternoon light, tense atmosphere. The paper has only illegible tiny lines, no readable text, "
+    "no logos, no people."
+)
+
+
+def resign_prompt(s: dict) -> str:
+    return (
+        "Keep exactly the same person, face, hairstyle, clothing, background and lighting. "
+        f"The person is: {s['character']['appearance_prompt']} "
+        "Now the person holds out a plain white envelope (a resignation letter) toward the camera with both hands, "
+        "with a resigned, tired, determined expression, mouth closed. The envelope has no readable text. Photorealistic."
+    )
+
+
+def ending_ids(all_scenarios: list[dict]) -> list[str]:
+    return ["review"] + [f"resign_{s['id']}" for s in all_scenarios if s["kind"] == "sub"]
+
+
+def ending_path(eid: str):
+    return ENDINGS_DIR / f"{eid}.{ext()}"
+
+
+def ending_url(eid: str) -> str:
+    return f"/assets/endings/{eid}.{ext()}"
+
+
+def ending_cost(eid: str) -> float:
+    return job_cost("calm", False) if eid == "review" else job_cost("angry", False)
+
+
+def generate_ending(caller, eid: str, by_id: dict) -> None:
+    if eid == "review":
+        prompt = REVIEW_PROMPT
+        data = caller.image_generate(prompt, ending_cost(eid))
+    else:
+        s = by_id[eid.removeprefix("resign_")]
+        base = path(s["id"], "calm")
+        if not base.exists():
+            raise FileNotFoundError("기준 사진이 없습니다")
+        prompt = resign_prompt(s)
+        data = caller.image_edit(base.read_bytes(), prompt, ending_cost(eid))
+    ENDINGS_DIR.mkdir(parents=True, exist_ok=True)
+    ending_path(eid).write_bytes(data)
+    m_path = ENDINGS_DIR / "manifest.json"
+    with _lock:
+        m = json.loads(m_path.read_text(encoding="utf-8")) if m_path.exists() else {}
+        m[f"{eid}.{ext()}"] = {"prompt_hash": _hash(prompt), "model": model("image"),
+                               "created_at": datetime.now().isoformat(timespec="seconds")}
+        m_path.write_text(json.dumps(dict(sorted(m.items())), ensure_ascii=False, indent=2), encoding="utf-8")

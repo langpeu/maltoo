@@ -46,10 +46,18 @@ def _portrait_jobs():
                        "cost": portraits.job_cost(expr, talk)}
 
 
+def _ending_jobs():
+    for eid in portraits.ending_ids(scenarios.all_scenarios()):
+        if not portraits.ending_path(eid).exists():
+            label = "인사고과 통보 장면" if eid == "review" else f"{scenarios.get(eid.removeprefix('resign_'))['character']['name']} 사직서 장면"
+            yield {"kind": "ending", "scenario_id": eid.removeprefix("resign_") if eid != "review" else "kim",
+                   "ending_id": eid, "label": f"엔딩 · {label}", "cost": portraits.ending_cost(eid)}
+
+
 @router.get("/status")
 def status():
     audio = list(_audio_jobs())
-    photos = list(_portrait_jobs())
+    photos = list(_portrait_jobs()) + list(_ending_jobs())  # 엔딩은 인물 기본 사진 뒤에
     return {
         "audio": {"missing": len(audio), "estimate_usd": sum(j["cost"] for j in audio)},
         "portraits": {"missing": len(photos), "estimate_usd": sum(j["cost"] for j in photos)},
@@ -66,6 +74,7 @@ class JobIn(BaseModel):
     line: str | None = None
     expr: str | None = None
     talk: bool = False
+    ending_id: str | None = None
 
 
 @router.post("/job")
@@ -95,5 +104,16 @@ def run_job(job: JobIn, caller: Caller = Depends(get_caller)):
             raise HTTPException(409, {"code": "need_base", "message": "기준 사진이 아직 없습니다. 순서대로 생성하세요."})
         portraits.generate_one(caller, s, job.expr, job.talk)
         return {"ok": True, "url": portraits.url(s["id"], job.expr, job.talk)}
+
+    if job.kind == "ending":
+        ids = portraits.ending_ids(scenarios.all_scenarios())
+        if job.ending_id not in ids:
+            raise HTTPException(400, {"code": "bad_ending", "message": "없는 엔딩 장면입니다."})
+        if not portraits.ending_path(job.ending_id).exists():
+            try:
+                portraits.generate_ending(caller, job.ending_id, {x["id"]: x for x in scenarios.all_scenarios()})
+            except FileNotFoundError:
+                raise HTTPException(409, {"code": "need_base", "message": "인물 기본 사진을 먼저 만들어야 합니다."})
+        return {"ok": True, "url": portraits.ending_url(job.ending_id)}
 
     raise HTTPException(400, {"code": "bad_kind", "message": "알 수 없는 작업입니다."})

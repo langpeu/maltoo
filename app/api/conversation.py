@@ -3,7 +3,7 @@
 from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
 from pydantic import BaseModel
 
-from .. import cache, scenarios, usage
+from .. import cache, scenarios, usage, world
 from ..config import model
 from ..openai_client import Caller, get_caller, get_optional_caller
 from ..prompts import character
@@ -99,6 +99,9 @@ class TurnIn(BaseModel):
     tone: dict | None = None  # 브라우저가 측정한 목소리 톤 요약 (녹음 원본 아님)
     face: dict | None = None  # 브라우저가 측정한 표정 요약 (영상 아님)
     difficulty: str = "normal"  # mild | normal | spicy
+    session_id: str = ""
+    prev_emotion: dict | None = None   # 직전 턴 상대 감정 (게임 수치 계산용)
+    game_session: dict | None = None   # 이번 판 누적 감액 {cut, recovered}
 
 
 @router.post("/turn")
@@ -111,6 +114,44 @@ def turn(body: TurnIn, caller: Caller = Depends(get_caller)):
     if body.nag_count:
         user_text = f"{user_text}\n(참고: 과장은 {body.nag_count}번 재촉을 받은 뒤에야 대답했다)"
     msgs = character.build_messages(s, [h.model_dump() for h in body.history], user_text, turn_index, body.tone, body.face,
-                                     body.difficulty)
-    raw = caller.chat(msgs, max_tokens=600, feature="chat", response_format={"type": "json_object"})
-    return character.parse(raw, s, turn_index, body.user_text.strip())
+                                     body.difficulty, world.prompt_context(s))
+    raw = caller.chat(msgs, max_tokens=700, feature="chat", response_format={"type": "json_object"})
+    parsed = character.parse(raw, s, turn_index, body.user_text.strip(), set(world.names()))
+    game = world.apply_turn(s, parsed, body.prev_emotion, body.tone, body.nag_count, body.game_session,
+                            seed=f"{body.session_id}:{turn_index}")
+    if game.get("ending_override"):
+        parsed["ending"] = game["ending_override"]
+    parsed["game"] = game
+    return parsed
+
+
+# ---------- 회사 세계관 ----------
+
+@router.get("/world")
+def world_overview():
+    return world.overview()
+
+
+class WorldStartIn(BaseModel):
+    scenario_id: str
+
+
+@router.post("/world/start")
+def world_start(body: WorldStartIn):
+    return world.start(scenarios.get(body.scenario_id))
+
+
+class WorldFinishIn(BaseModel):
+    scenario_id: str
+    ending: str | None = None
+    session: dict | None = None
+
+
+@router.post("/world/finish")
+def world_finish(body: WorldFinishIn):
+    return world.finish(scenarios.get(body.scenario_id), body.ending, body.session)
+
+
+@router.post("/world/reset")
+def world_reset():
+    return world.reset()

@@ -102,10 +102,29 @@ REPORT_SPEC = """반드시 아래 JSON 하나만 출력한다.
   "next_practice": "다음 연습 과제 한 줄"
 }
 fixes 는 가장 효과가 큰 순서로 최대 3개. better 는 상대 인물의 성격과 상황에 맞고, 과장의 목표를 이루는 데 도움이 되는 자연스러운 한국어 직장 말투로 쓴다.
-과장이 다른 사람을 험담했다면 즉효는 있어도 위험이 큰 전략이라고 짚는다(칭찬하지 않는다)."""
+과장이 다른 사람을 험담했다면 즉효는 있어도 위험이 큰 전략이라고 짚는다(칭찬하지 않는다). 소문이 퍼졌다면 그 결과도 알려준다.
+연봉 감액·퇴사 같은 게임 결과가 있으면 총평에서 어떤 행동 때문이었는지 연결해서 설명한다."""
 
 
-def build_report_messages(s: dict, turns: list[dict], ending: str | None, goal: int, difficulty: str) -> list[dict]:
+def game_line(game: dict | None) -> str:
+    if not game:
+        return ""
+    parts = []
+    if game.get("grade"):
+        parts.append(f"인사고과 {game['grade']}" + (" (인사팀 면담 요청)" if game.get("meeting") else ""))
+    if game.get("session_cut"):
+        parts.append(f"이번 대화로 연봉 {int(game['session_cut']) // 10000}만 원 감액")
+    if game.get("resign_risk") is not None and game.get("kind") == "sub":
+        parts.append(f"상대 퇴사 위험도 {int(game['resign_risk'])}%" + (" — 결국 퇴사함" if game.get("resigned") else ""))
+    for m in game.get("mentions") or []:
+        parts.append(f"{m.get('name')} 언급({m.get('sentiment')}): {m.get('effect', '')}" + (" → 소문이 퍼짐" if m.get("rumor") else ""))
+    if game.get("team_quit"):
+        parts.append("문제를 덮고 넘어가서 다른 팀원이 이탈함")
+    return "게임 결과: " + "; ".join(parts) if parts else ""
+
+
+def build_report_messages(s: dict, turns: list[dict], ending: str | None, goal: int, difficulty: str,
+                          game: dict | None = None) -> list[dict]:
     company = get_config()["company"]["name"]
     c = s["character"]
     lines = []
@@ -128,6 +147,7 @@ def build_report_messages(s: dict, turns: list[dict], ending: str | None, goal: 
 상황: {s['situation']}
 과장의 목표: {s['goal']} (체크리스트: {', '.join(s['checklist'])})
 결과: {ending or '미정'} / 목표 달성도 {goal}% / 난이도 {difficulty}
+{game_line(game)}
 말뿐 아니라 목소리 톤과 표정 측정값을 근거로 판단한다. 과장을 비난하지 말고, 바로 따라 할 수 있게 구체적으로 쓴다.
 
 {REPORT_SPEC}"""

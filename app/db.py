@@ -65,6 +65,9 @@ CREATE TABLE IF NOT EXISTS world_state (
     character_id TEXT PRIMARY KEY,
     affinity     REAL NOT NULL DEFAULT 50,
     trust        REAL NOT NULL DEFAULT 50,
+    resign_risk  REAL NOT NULL DEFAULT 0,
+    team         REAL NOT NULL DEFAULT 0,
+    resigned     INTEGER NOT NULL DEFAULT 0,
     updated_at   TEXT
 );
 CREATE TABLE IF NOT EXISTS rumors (
@@ -89,6 +92,11 @@ def init_db() -> None:
         cols = {r["name"] for r in con.execute("PRAGMA table_info(usage)")}
         if "exempt" not in cols:
             con.execute("ALTER TABLE usage ADD COLUMN exempt INTEGER NOT NULL DEFAULT 0")
+        wcols = {r["name"] for r in con.execute("PRAGMA table_info(world_state)")}
+        for col, ddl in (("resign_risk", "REAL NOT NULL DEFAULT 0"), ("team", "REAL NOT NULL DEFAULT 0"),
+                         ("resigned", "INTEGER NOT NULL DEFAULT 0")):
+            if col not in wcols:
+                con.execute(f"ALTER TABLE world_state ADD COLUMN {col} {ddl}")
 
 
 @contextmanager

@@ -34,6 +34,7 @@ def fixed_lines(s: dict) -> dict[str, str]:
     - opening, nag1, nag2           : 첫마디·재촉
     - react_<그룹>_<n>              : 추임새 (내 말이 끝나자마자 바로 재생)
     - end_<결말>                    : 결말 대사 (success/partial/fail/noresp, 부하 직원은 resign)
+    - rumor_<n>                     : 소문이 퍼진 뒤의 첫마디
     """
     out = {"opening": s["opening"], "nag1": s["nags"][0], "nag2": s["nags"][1]}
     for g in REACTION_GROUPS:
@@ -41,6 +42,8 @@ def fixed_lines(s: dict) -> dict[str, str]:
             out[f"react_{g}_{n}"] = text
     for k, text in s.get("endings", {}).items():
         out[f"end_{k}"] = text
+    for n, text in enumerate(s.get("rumor_openings", [])):
+        out[f"rumor_{n}"] = text
     return out
 
 
