@@ -1,10 +1,8 @@
 import { api, keyStore } from "./api.js";
-import { Mic, playUrl } from "./audio/mic.js";
 import { Conversation } from "./session.js";
 import { addPin, clearBand, initBand, pushLevel } from "./ui/band.js";
-import { analyzeFrame, computeBaseline, ToneTracker } from "./audio/tone.js";
-import { drawLandmarks, FaceCam } from "./face/camera.js";
-import { computeFaceBaseline, CP, FaceTracker, PHASE_LABEL } from "./face/metrics.js";
+import { drawLandmarks } from "./face/camera.js";
+import { CP, FaceTracker, PHASE_LABEL } from "./face/metrics.js";
 import { renderCost, resetCost } from "./ui/cost-panel.js";
 import { setVoiceFxConfig, setVoiceFxStrength, voiceFxStrength } from "./audio/voicefx.js";
 import { initEleven } from "./ui/eleven.js";
@@ -12,6 +10,8 @@ import { $, esc, showError, toast } from "./util.js";
 import { loadHistory } from "./views/history.js";
 import { checkSetup, initSetup, refreshSetupInfo, setKrwRate } from "./views/setup.js";
 import { initReport, requestReport } from "./views/report.js";
+import { closeCamera, faceCam, media, mic, openCamera } from "./media.js";
+import { blState, initBaseline, loadBaseline, openBaseline, renderBaselineLine } from "./views/baseline.js";
 import { finishWorld, initGame, loadWorld, setupGamePanel, updateGamePanel } from "./views/game.js";
 import {
   exprFromEmotion, framesOf, hasPhoto, setBreathing, setExpression, setMouth, setPortraitFrames, setSpeaking, showCharacter,
@@ -76,7 +76,7 @@ document.addEventListener("click", (e) => {
   const card = e.target.closest(".scenario");
   if (!card) return;
   const s = scenarios.find((x) => x.id === card.dataset.id);
-  if (!baseline && !baselineSkipped) {
+  if (!blState.baseline && !blState.skipped) {
     current = s;
     openBaseline("before-brief");
   } else openBrief(s);
@@ -102,7 +102,6 @@ function openBrief(s) {
 }
 
 // ---------- 대화 ----------
-const mic = new Mic();
 let convo = null;
 
 function stopConversation() {
@@ -118,7 +117,7 @@ let selfHidden = false;
 function setupFace() {
   $("selfview").hidden = true;
   $("btn-self-show").hidden = true;
-  $("face-base").textContent = faceBaseline ? "평소 표정 기준" : "기준 미측정";
+  $("face-base").textContent = blState.face ? "평소 표정 기준" : "기준 미측정";
   if (!faceCam.on) {
     $("face-note").textContent = "카메라가 꺼져 있어 표정은 분석하지 않습니다.";
     return null;
@@ -127,7 +126,7 @@ function setupFace() {
   $("selfview").hidden = selfHidden;
   $("btn-self-show").hidden = !selfHidden;
   $("face-note").textContent = "표정 분석을 준비하는 중…";
-  const tracker = new FaceTracker(faceBaseline, {
+  const tracker = new FaceTracker(blState.face, {
     onCheckpoint: (c) => {
       addPin({ icon: c.icon, title: `${c.label}${PHASE_LABEL[c.phase] ? " · " + PHASE_LABEL[c.phase] : ""}`, note: c.note });
       $("face-note").textContent = `${c.icon} ${c.note}`;
@@ -148,10 +147,10 @@ function setupFace() {
       if (img) worstFrame = { ...w, severity: w.score, icon: info.icon, label: info.label, img };
     },
   });
-  faceCam.prepare(faceCfg).then((ok) => {
+  faceCam.prepare(media.faceCfg).then((ok) => {
     if (!ok) { $("face-note").textContent = "표정 분석 모델을 불러오지 못했습니다. (인터넷 연결 확인) 목소리만 분석합니다."; return; }
     $("face-note").textContent = "표정을 보고 있습니다. 평소처럼 대화하세요.";
-    faceCam.start(tracker, { fps: faceCfg.fps });
+    faceCam.start(tracker, { fps: media.faceCfg.fps });
   });
   return { cam: faceCam, tracker };
 }
@@ -209,7 +208,7 @@ $("btn-start").addEventListener("click", async () => {
     await openCamera(null);
     $("brief-hint").textContent = "주변 소음을 확인하는 중입니다. 1초만 조용히 해주세요…";
     await mic.calibrate();
-    if (!baseline && !baselineSkipped) openBaseline("before-talk");
+    if (!blState.baseline && !blState.skipped) openBaseline("before-talk");
     else startTalk();
   } catch (e) {
     $("brief-hint").textContent = e.name === "NotAllowedError"
@@ -241,7 +240,7 @@ async function startTalk() {
   go("talk");
 
   talkUI._ttsWarned = false;
-  $("tone-base").textContent = baseline ? "평소 목소리 기준" : "기준 미측정";
+  $("tone-base").textContent = blState.baseline ? "평소 목소리 기준" : "기준 미측정";
   captures = [];
   worstFrame = null;
   const face = setupFace();
@@ -256,7 +255,7 @@ async function startTalk() {
   if (ws && ws.rumor) {
     toast(`🗣 소문이 퍼졌습니다! ${ws.rumor.source}이(가) 당신이 한 말을 ${s.character.name}에게 전했습니다.`, 7000);
   }
-  convo = new Conversation(s, { mic, ui: talkUI, baseline, face, difficulty,
+  convo = new Conversation(s, { mic, ui: talkUI, baseline: blState.baseline, face, difficulty,
                                 answerMs: answerSeconds() * 1000, sessionId: sessionStart.id,
                                 openingLine: ws && ws.rumor ? ws.rumor.line : "opening",
                                 startAnger: ws ? ws.start_anger : 40 });
@@ -308,215 +307,6 @@ function markTextCheckpoints(li, cps) {
   ul.innerHTML = cps.map((c) => `<li>${TEXT_CP[c.type] || c.type} — ${esc(c.note || "")}</li>`).join("");
   li.appendChild(ul);
 }
-
-// ---------- 평소 목소리 ----------
-let baseline = null;
-let baselineSkipped = false;
-let blMode = "before-talk";
-let blCapture = null;
-
-async function loadBaseline() {
-  try {
-    const r = await api("/api/baseline");
-    baseline = r.tone;
-    faceBaseline = r.face;
-  } catch { baseline = null; }
-  renderBaselineLine();
-}
-
-function renderBaselineLine() {
-  const t = baseline
-    ? `🎙 평소 목소리: 측정됨 (음높이 약 ${Math.round(baseline.pitch_med)}Hz) · <a id="link-bl">다시 측정</a>`
-    : `🎙 평소 목소리: 아직 측정 안 함 — 시작하면 30초 측정부터 합니다.`;
-  $("brief-baseline").innerHTML = t;
-  const a = $("link-bl");
-  if (a) a.onclick = async () => {
-    try { await mic.open(); await mic.calibrate(); openBaseline("before-talk"); }
-    catch (e) { $("brief-hint").textContent = `마이크를 열 수 없습니다: ${e.message}`; }
-  };
-  $("settings-baseline").textContent = baseline
-    ? `측정됨 · 음높이 ${Math.round(baseline.pitch_med)}Hz · 속도 ${baseline.rate}음절/초 · 표정 ${faceBaseline ? "측정됨" : "없음"}` : "아직 측정하지 않았습니다.";
-}
-
-const faceCam = new FaceCam();
-let faceCfg = null;
-let faceBaseline = null;
-
-async function openCamera(videoEl) {
-  const ok = await faceCam.open();
-  if (videoEl) faceCam.attach(videoEl);
-  if (ok && faceCfg && faceCam.status !== "ready") faceCam.prepare(faceCfg); // 모델은 미리 받아둠
-  return ok;
-}
-function closeCamera() {
-  faceCam.close();
-  $("bl-video").srcObject = null;
-  $("self-video").srcObject = null;
-}
-
-function openBaseline(mode) {
-  blMode = mode;
-  document.querySelectorAll("#bl-lines li").forEach((li) => li.classList.remove("now", "done"));
-  $("bl-cam-off").hidden = true;
-  openCamera($("bl-video")).then(async (ok) => {
-    if (!ok) { $("bl-cam-off").hidden = false; $("bl-cam-off").textContent = "📷 카메라를 쓸 수 없습니다 (목소리만 측정)"; return; }
-    // 측정 전에도 얼굴 인식이 되는지 바로 보이도록 미리보기 분석 시작
-    if (faceCfg && (await faceCam.prepare(faceCfg))) faceCam.start(new FaceTracker(null), { fps: faceCfg.fps });
-  });
-  $("bl-status").textContent = '준비되면 "측정 시작"을 누르세요';
-  $("bl-sec").textContent = "0 / 5문장";
-  $("bl-prompter").className = "prompter";
-  $("pr-step").textContent = "준비";
-  $("pr-text").textContent = '"측정 시작"을 누르면 여기에 읽을 문장이 나옵니다.';
-  $("pr-cue").textContent = "";
-  $("bl-bar").style.width = "0%";
-  $("bl-result").hidden = true;
-  showError($("bl-error"), "");
-  $("btn-bl-start").disabled = false;
-  $("btn-bl-done").disabled = true;
-  go("baseline");
-}
-
-$("btn-bl-start").addEventListener("click", async () => {
-  showError($("bl-error"), "");
-  $("btn-bl-start").disabled = true;
-  try {
-    await mic.open();
-    if (!mic.calibrated) {
-      $("bl-status").textContent = "주변 소음을 확인하는 중입니다. 1초만 조용히 해주세요…";
-      await mic.calibrate();
-    }
-  } catch (e) {
-    $("btn-bl-start").disabled = false;
-    return showError($("bl-error"), `마이크를 열 수 없습니다: ${e.message}`);
-  }
-  const tracker = new ToneTracker(null, { threshold: mic.threshold });
-  const faceTr = new FaceTracker(null);
-  if (faceCam.on) {
-    faceCam.prepare(faceCfg).then((ok) => {
-      if (!ok) return;
-      faceCam.phase = "idle";
-      faceCam.start(faceTr, { fps: faceCfg.fps });
-    });
-  }
-
-  // 3, 2, 1 카운트다운
-  const items = [...document.querySelectorAll("#bl-lines li")];
-  const pr = $("bl-prompter");
-  pr.classList.add("count");
-  $("pr-step").textContent = "곧 시작합니다";
-  $("pr-cue").textContent = "";
-  $("bl-status").textContent = "첫 문장을 읽을 준비를 하세요";
-  for (const n of [3, 2, 1]) { $("pr-text").textContent = n; await new Promise((r) => setTimeout(r, 800)); }
-  pr.classList.remove("count");
-
-  // 문장 하나씩: 1초 이상 말하고 0.7초 멈추면 다음 문장
-  let idx = 0, voicedMs = 0, quietMs = 0;
-  const showSentence = () => {
-    items.forEach((li, i) => { li.classList.toggle("now", i === idx); li.classList.toggle("done", i < idx); });
-    if (idx >= items.length) return;
-    pr.classList.add("reading");
-    $("pr-step").textContent = `${idx + 1} / ${items.length} · ${items[idx].dataset.k}`;
-    $("pr-text").textContent = items[idx].textContent;
-    $("pr-cue").textContent = "🎙 지금 이 문장을 읽어주세요";
-    $("pr-cue").className = "pr-cue";
-    $("bl-sec").textContent = `${idx} / ${items.length}문장`;
-    $("bl-bar").style.width = `${(idx / items.length) * 100}%`;
-    $("bl-status").textContent = "평소 말하듯 편안하게, 다 읽으면 잠깐 멈추세요";
-    $("btn-bl-done").disabled = false;
-    voicedMs = 0;
-    quietMs = 0;
-  };
-  const next = () => {
-    idx += 1;
-    if (idx >= items.length) {
-      items.forEach((li) => { li.classList.remove("now"); li.classList.add("done"); });
-      $("bl-sec").textContent = `${items.length} / ${items.length}문장`;
-      $("bl-bar").style.width = "100%";
-      return blCapture.stop();
-    }
-    showSentence();
-  };
-  blNext = next;
-  showSentence();
-  blCapture = mic.capture({
-    maxMs: 90000,
-    onTick: (t) => {
-      const f = tracker.push(analyzeFrame(t.buf, t.sampleRate), t.elapsed);
-      $("bl-level").style.width = `${Math.min(100, t.level * 400)}%`;
-      if (f.loud) {
-        voicedMs += 30;
-        quietMs = 0;
-        if (voicedMs > 300) { $("pr-cue").textContent = "👂 잘 듣고 있어요…"; $("pr-cue").className = "pr-cue live"; }
-      } else if (voicedMs > 0) {
-        quietMs += 30;
-      }
-      if (voicedMs >= 1000 && quietMs >= 700) next();
-    },
-  });
-  const cap = blCapture;
-  await cap.done;
-  faceCam.stop();
-  if (cap.skipped) return;
-  await finishBaseline(tracker, faceTr);
-});
-
-let blNext = null;
-$("btn-bl-done").addEventListener("click", () => blNext && blNext());
-
-async function finishBaseline(tracker, faceTr) {
-  $("btn-bl-done").disabled = true;
-  const b = computeBaseline(tracker.frames);
-  if (!b) {
-    $("btn-bl-start").disabled = false;
-    $("bl-status").textContent = "다시 시도해 주세요";
-    $("bl-prompter").className = "prompter";
-    $("pr-text").textContent = "다시 한 번 해볼까요?";
-    $("pr-cue").textContent = "";
-    return showError($("bl-error"), "목소리가 충분히 들리지 않았습니다. 마이크 가까이에서 또박또박 읽어주세요.");
-  }
-  try {
-    const fb = faceTr ? computeFaceBaseline(faceTr.all) : null;
-    const saved = await api("/api/baseline", { method: "POST", body: { tone: b, face: fb } });
-    baseline = saved.tone;
-    faceBaseline = saved.face;
-  } catch (e) {
-    $("btn-bl-start").disabled = false;
-    return showError($("bl-error"), e.message);
-  }
-  $("bl-status").textContent = "✅ 측정 완료";
-  $("bl-prompter").className = "prompter";
-  $("pr-step").textContent = "완료";
-  $("pr-text").textContent = "수고하셨습니다! 평소의 나를 기억해 둘게요.";
-  $("pr-cue").textContent = "";
-  $("bl-result").innerHTML = `
-    <li>평소 음높이<b>${Math.round(b.pitch_med)}Hz</b></li>
-    <li>음높이 변화 폭<b>${b.range_st}반음</b></li>
-    <li>말 속도<b>${b.rate}음절/초</b></li>
-    <li>표정 기본값<b>${faceBaseline ? "측정됨" : "없음"}</b></li>
-    <li>평소 미소<b>${faceBaseline ? Math.round(faceBaseline.smile * 100) + "%" : "-"}</b></li>
-    <li>눈 깜빡임<b>${faceBaseline ? faceBaseline.blink_per_min + "회/분" : "-"}</b></li>`;
-  $("bl-result").hidden = false;
-  renderBaselineLine();
-  setTimeout(afterBaseline, 1500);
-}
-
-function afterBaseline() {
-  faceCam.stop();
-  if (!(blMode === "before-talk" && current)) closeCamera();
-  if (blMode === "before-talk" && current) startTalk();
-  else if (blMode === "before-brief" && current) {
-    toast(baseline ? "내 기본값을 저장했습니다." : "일반 기본값으로 분석합니다. 설정에서 언제든 측정할 수 있습니다.", 4000);
-    openBrief(current);
-  } else go("select");
-}
-
-
-$("btn-bl-skip").addEventListener("click", () => {
-  if (blCapture) { blCapture.skipped = true; blCapture.stop(); }
-  baselineSkipped = true;
-  afterBaseline();
-});
 
 function setStatus(kind, text) {
   const st = $("talk-status");
@@ -781,9 +571,10 @@ $("btn-test-chat").addEventListener("click", async () => {
 
 // ---------- 시작 ----------
 initSetup({ loadScenarios, refreshUsage });
+initBaseline({ current: () => current, startTalk, openBrief, go });
 initGame({ current: () => current, captures: () => captures, worstFrame: () => worstFrame });
 initReport({
-  current: () => current, difficulty: () => difficulty, session: () => sessionStart, baseline: () => baseline,
+  current: () => current, difficulty: () => difficulty, session: () => sessionStart, baseline: () => blState.baseline,
   lastHistory: () => lastHistory, mic, refreshUsage,
 });
 initBand($("band-canvas"), $("band-tip"));
@@ -792,7 +583,7 @@ updateKeyHints();
 loadScenarios().catch(() => toast("시나리오를 불러오지 못했습니다."));
 api("/api/config").then((c) => {
   setKrwRate(c.krw_per_usd);
-  faceCfg = c.face;
+  media.faceCfg = c.face;
   if (c.difficulty) difficultyCfg = c.difficulty;
   if (c.voice_playback) setVoiceFxConfig(c.voice_playback);
 }).catch(() => {});
