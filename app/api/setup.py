@@ -1,0 +1,89 @@
+"""초기 세팅: 필요한 고정 음성·인물 사진이 있는지 확인하고, 없으면 한 장씩 생성.
+
+생성된 assets/ 를 GitHub 에 커밋하면 이후에는 확인만 하고 재사용한다.
+세팅 작업은 사용자가 예상 비용을 확인하고 시작하므로 일/월 한도 검사에서 제외한다 (비용은 기록).
+"""
+
+from fastapi import APIRouter, Depends, HTTPException
+from pydantic import BaseModel
+
+from .. import cache, portraits, scenarios, usage
+from ..config import model
+from ..openai_client import Caller, get_caller
+
+router = APIRouter(prefix="/api/setup")
+
+
+def _audio_jobs():
+    for s in scenarios.all_scenarios():
+        for line in scenarios.FIXED_LINES:
+            text = scenarios.fixed_line(s, line)
+            v = s["voice"]
+            key = cache.audio_key(text, v["voice"], v["instructions"])
+            if not cache.fixed_path(key).exists():
+                yield {"kind": "audio", "scenario_id": s["id"], "line": line,
+                       "label": f"{s['character']['name']} 음성 · {line}",
+                       "cost": usage.cost_tts(model("tts"), text)}
+
+
+def _portrait_jobs():
+    for s in scenarios.all_scenarios():
+        for expr, talk in portraits.jobs(s):
+            if not portraits.path(s["id"], expr, talk).exists():
+                label = portraits.EXPRESSIONS[expr][0] + (" · 입 벌림" if talk else "")
+                yield {"kind": "portrait", "scenario_id": s["id"], "expr": expr, "talk": talk,
+                       "label": f"{s['character']['name']} 사진 · {label}",
+                       "cost": portraits.job_cost(expr, talk)}
+
+
+@router.get("/status")
+def status():
+    audio = list(_audio_jobs())
+    photos = list(_portrait_jobs())
+    return {
+        "audio": {"missing": len(audio), "estimate_usd": sum(j["cost"] for j in audio)},
+        "portraits": {"missing": len(photos), "estimate_usd": sum(j["cost"] for j in photos)},
+        "missing": len(audio) + len(photos),
+        "estimate_usd": sum(j["cost"] for j in audio + photos),
+        "jobs": audio + photos,  # 순서 중요: 인물별 기본 사진 → 표정 → 입 벌림
+        "portraits_status": portraits.status(scenarios.all_scenarios())["characters"],
+    }
+
+
+class JobIn(BaseModel):
+    kind: str
+    scenario_id: str
+    line: str | None = None
+    expr: str | None = None
+    talk: bool = False
+
+
+@router.post("/job")
+def run_job(job: JobIn, caller: Caller = Depends(get_caller)):
+    caller.skip_limits = True
+    caller.session_id = "setup"  # '이번 연습' 비용에 섞이지 않게
+    s = scenarios.get(job.scenario_id)
+
+    if job.kind == "audio":
+        text = scenarios.fixed_line(s, job.line or "")
+        v = s["voice"]
+        key = cache.audio_key(text, v["voice"], v["instructions"])
+        if not cache.fixed_path(key).exists():
+            data = caller.tts(text, v["voice"], v["instructions"])
+            cache.save_fixed(key, data, {"scenario": s["id"], "line": job.line, "text": text, "voice": v["voice"],
+                                         "instructions": v["instructions"], "model": model("tts")})
+        return {"ok": True, "url": cache.fixed_url(key)}
+
+    if job.kind == "portrait":
+        if job.expr not in portraits.EXPRESSIONS:
+            raise HTTPException(400, {"code": "bad_expr", "message": "없는 표정입니다."})
+        if portraits.path(s["id"], job.expr, job.talk).exists():
+            return {"ok": True, "url": portraits.url(s["id"], job.expr, job.talk)}
+        need_base = job.expr != "calm" or job.talk
+        base = portraits.path(s["id"], "calm" if not job.talk else job.expr)
+        if need_base and not base.exists():
+            raise HTTPException(409, {"code": "need_base", "message": "기준 사진이 아직 없습니다. 순서대로 생성하세요."})
+        portraits.generate_one(caller, s, job.expr, job.talk)
+        return {"ok": True, "url": portraits.url(s["id"], job.expr, job.talk)}
+
+    raise HTTPException(400, {"code": "bad_kind", "message": "알 수 없는 작업입니다."})

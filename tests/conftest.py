@@ -94,10 +94,26 @@ class FakeOpenAI:
             speech = _Speech()
             transcriptions = _Transcriptions()
 
+        class _ImgResp:
+            class _D:
+                import base64 as _b
+                b64_json = _b.b64encode(b"RIFFfake-webp").decode()
+            data = [_D()]
+
+        class _Images:
+            def generate(self_inner, **kw):
+                outer.calls.append(("img_gen", kw))
+                return _ImgResp()
+
+            def edit(self_inner, **kw):
+                outer.calls.append(("img_edit", kw))
+                return _ImgResp()
+
         self.calls = FAKE_CALLS
         self.models = _Models()
         self.chat = _Chat()
         self.audio = _Audio()
+        self.images = _Images()
 
 
 FAKE_CALLS: list = []
@@ -105,7 +121,7 @@ FAKE_CALLS: list = []
 
 @pytest.fixture()
 def fake_openai(monkeypatch, tmp_path):
-    from app import cache, openai_client
+    from app import cache, openai_client, portraits
 
     FAKE_CALLS.clear()
     monkeypatch.setattr(openai_client, "make_client", lambda key: FakeOpenAI(key))
@@ -113,4 +129,6 @@ def fake_openai(monkeypatch, tmp_path):
     monkeypatch.setattr(cache, "AUDIO_DIR", tmp_path / "audio")
     monkeypatch.setattr(cache, "MANIFEST", tmp_path / "audio" / "manifest.json")
     monkeypatch.setattr(cache, "RUNTIME_DIR", tmp_path / "runtime")
+    monkeypatch.setattr(portraits, "DIR", tmp_path / "characters")
+    monkeypatch.setattr(portraits, "MANIFEST", tmp_path / "characters" / "manifest.json")
     return FAKE_CALLS

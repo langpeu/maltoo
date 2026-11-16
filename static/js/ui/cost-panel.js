@@ -31,8 +31,8 @@ export function renderCost(u) {
     $(`${id}-usd`).textContent = usdText(v);
   }
 
-  bar("limit-daily", u.today_usd, u.limits.daily, u.daily_status);
-  bar("limit-monthly", u.month_usd, u.limits.monthly, u.monthly_status);
+  bar("limit-daily", u.today_limited_usd, u.limits.daily, u.daily_status);
+  bar("limit-monthly", u.month_limited_usd, u.limits.monthly, u.monthly_status);
 
   for (const el of document.querySelectorAll("#by-feature [data-f]")) {
     el.textContent = usdText(u.by_feature_usd[el.dataset.f] || 0);
@@ -43,6 +43,9 @@ export function renderCost(u) {
   if (u.daily_status === "blocked" || u.monthly_status === "blocked") {
     note.textContent = "한도에 도달해서 OpenAI 호출이 차단되었습니다. 설정에서 한도를 조정할 수 있습니다.";
     note.classList.add("blocked");
+  } else if (u.setup_usd > 0) {
+    note.textContent = `추정치입니다. 이번 달 초기 세팅 비용 $${u.setup_usd.toFixed(2)}는 한도 계산에서 제외됩니다.`;
+    note.classList.remove("blocked");
   } else {
     note.textContent = "추정치입니다. 정확한 청구액은 OpenAI 대시보드에서 확인하세요.";
     note.classList.remove("blocked");

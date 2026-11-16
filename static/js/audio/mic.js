@@ -106,14 +106,38 @@ export class Mic {
   }
 }
 
+// 상대 음성 재생 + 실제 음량 측정 (입 모양·파형용)
+let playCtx = null;
+
 export function playUrl(url, { onTick } = {}) {
   return new Promise((resolve, reject) => {
-    const a = new Audio(url);
-    let timer;
-    if (onTick) timer = setInterval(() => onTick({ playing: !a.paused }), 60);
-    a.onended = () => { clearInterval(timer); resolve(); };
-    a.onerror = () => { clearInterval(timer); reject(new Error("음성을 재생하지 못했습니다.")); };
-    a.play().catch((e) => { clearInterval(timer); reject(e); });
+    const a = new Audio();
+    a.src = url;
+    let analyser = null;
+    let buf = null;
+    try {
+      playCtx = playCtx || new (window.AudioContext || window.webkitAudioContext)();
+      if (playCtx.state === "suspended") playCtx.resume();
+      const src = playCtx.createMediaElementSource(a);
+      analyser = playCtx.createAnalyser();
+      analyser.fftSize = 1024;
+      buf = new Float32Array(analyser.fftSize);
+      src.connect(analyser);
+      analyser.connect(playCtx.destination);
+    } catch { analyser = null; }
+
+    const level = () => {
+      if (!analyser) return a.paused ? 0 : 0.05 + Math.random() * 0.1;
+      analyser.getFloatTimeDomainData(buf);
+      let sum = 0;
+      for (let i = 0; i < buf.length; i++) sum += buf[i] * buf[i];
+      return Math.sqrt(sum / buf.length);
+    };
+    const timer = setInterval(() => onTick && onTick({ level: level() }), 33);
+    const done = (fn) => (arg) => { clearInterval(timer); onTick && onTick({ level: 0, ended: true }); fn(arg); };
+    a.onended = done(resolve);
+    a.onerror = done(() => reject(new Error("음성을 재생하지 못했습니다.")));
+    a.play().catch(done(reject));
   });
 }
 

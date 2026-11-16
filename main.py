@@ -11,7 +11,7 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
 from app import db
-from app.api import conversation, core
+from app.api import conversation, core, setup
 from app.config import ROOT, get_config
 
 
@@ -20,6 +20,7 @@ def create_app() -> FastAPI:
     app = FastAPI(title="말투 (maltoo)", docs_url="/api/docs")
     app.include_router(core.router)
     app.include_router(conversation.router)
+    app.include_router(setup.router)
     app.mount("/static", StaticFiles(directory=ROOT / "static"), name="static")
     app.mount("/assets", StaticFiles(directory=ROOT / "assets"), name="assets")
     (ROOT / ".runtime").mkdir(exist_ok=True)

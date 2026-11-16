@@ -246,6 +246,7 @@ body {
 .status.urgent { background: #ffe3e3; }
 .countdown { font-size: 44px; font-weight: 900; width: 64px; height: 64px; display: grid; place-items: center;
   border: var(--line); border-radius: 50%; background: var(--yellow); }
+.countdown[hidden] { display: none; }
 .status.urgent .countdown { background: var(--danger); color: #fff; }
 .log { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; max-height: 280px; overflow: auto; }
 .log li { padding: 8px 12px; border-radius: 10px; border: 2px solid var(--ink); line-height: 1.5; max-width: 85%; }
@@ -278,3 +279,54 @@ body {
 .band-body canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .band-empty { position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none; }
 .band-empty[hidden] { display: none; }
+
+/* ========== 대화 화면: 큰 실사 얼굴 ========== */
+.talk { padding: 20px; }
+.talk-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 14px; }
+.talk-goal { font-weight: 800; background: var(--yellow-soft); border: 2px solid var(--ink); border-radius: 10px; padding: 6px 12px; }
+.talk-grid { display: grid; grid-template-columns: minmax(280px, 1.05fr) 1fr; gap: 20px; align-items: start; }
+@media (max-width: 1100px) { .talk-grid { grid-template-columns: 1fr; } }
+
+.portrait {
+  position: relative; aspect-ratio: 1 / 1; width: 100%;
+  border: 4px solid var(--ink); border-radius: 18px; overflow: hidden;
+  background: var(--yellow); box-shadow: 6px 6px 0 var(--ink);
+}
+.p-fallback { position: absolute; inset: 0; display: grid; place-items: center; font-size: 160px; }
+.p-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.p-img[src=""], .p-img:not([src]) { display: none; }
+.p-closed { transition: opacity .35s; }
+.p-talk { opacity: 0; }
+.portrait.swap .p-closed { opacity: .2; }
+.portrait.breathing .p-img { animation: breathe 4s ease-in-out infinite; }
+@keyframes breathe { 50% { transform: scale(1.012); } }
+.p-tag {
+  position: absolute; left: 12px; bottom: 12px; display: flex; gap: 8px; align-items: center;
+  background: var(--paper); border: 3px solid var(--ink); border-radius: 10px; padding: 6px 10px; font-size: 15px;
+}
+.p-tag span { font-size: 12px; font-weight: 800; background: var(--yellow); border: 2px solid var(--ink); border-radius: 6px; padding: 1px 6px; }
+.portrait.speaking { box-shadow: 6px 6px 0 var(--ink), 0 0 0 5px var(--yellow); }
+
+.talk-side .bubble { margin-top: 0; }
+.talk-side .bubble::before {
+  top: 24px; left: -14px; border: 12px solid transparent; border-right-color: var(--ink); border-left: 0;
+}
+@media (max-width: 1100px) {
+  .talk-side .bubble { margin-top: 16px; }
+  .talk-side .bubble::before { top: -14px; left: 40px; border: 12px solid transparent; border-bottom-color: var(--ink); border-top: 0; }
+}
+.talk-side .log { max-height: 220px; }
+
+/* 시나리오 카드 사진 */
+.sc-photo { width: 48px; height: 48px; border-radius: 50%; border: 2px solid var(--ink); object-fit: cover; }
+
+/* 초기 세팅 */
+.modal-wide { width: min(620px, 94vw); }
+.setup-sum { list-style: none; padding: 0; margin: 0; border: 2px solid var(--ink); border-radius: 10px; }
+.setup-sum li { display: flex; justify-content: space-between; padding: 8px 12px; border-bottom: 1px dashed #bbb; }
+.setup-sum li:last-child { border-bottom: 0; }
+.setup-sum .total { background: var(--yellow-soft); font-weight: 800; }
+.setup-log { list-style: none; padding: 0; margin: 6px 0 0; max-height: 150px; overflow: auto; font-size: 13px; }
+.setup-log li { padding: 2px 0; }
+.setup-log li.fail { color: var(--danger); font-weight: 700; }
+code { background: var(--yellow-soft); border: 1px solid var(--ink); border-radius: 4px; padding: 0 4px; }

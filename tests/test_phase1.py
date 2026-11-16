@@ -62,13 +62,6 @@ def test_bad_line(client, fake_openai):
     assert client.get("/api/tts/line/nobody/opening", headers=H).status_code == 404
 
 
-def test_pregenerate(client, fake_openai):
-    est = client.get("/api/tts/pregenerate").json()
-    assert est["total"] == 21 and est["missing"] == 21 and est["estimate_usd"] > 0
-    r = client.post("/api/tts/pregenerate", headers=H).json()
-    assert r["made"] == 21 and r["missing"] == 0
-
-
 def test_say_runtime(client, fake_openai):
     r = client.post("/api/tts/say", json={"scenario_id": "kim", "text": "그래서?"}, headers=H).json()
     assert r["url"].startswith("/runtime/tts/")

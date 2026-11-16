@@ -76,22 +76,28 @@
 
       <!-- 3. 대화 -->
       <section class="view card talk" id="view-talk" hidden>
-        <div class="talk-head">
-          <div class="avatar big" id="talk-avatar">🙂</div>
-          <div class="talk-who">
-            <div class="talk-name" id="talk-name">이름</div>
-            <div class="muted" id="talk-goal"></div>
-          </div>
+        <div class="talk-top">
+          <div class="talk-goal" id="talk-goal"></div>
           <div class="turn-count" id="turn-count">답변 0 / 5</div>
         </div>
-        <div class="bubble" id="npc-bubble">…</div>
-        <div class="status" id="talk-status">
-          <span class="status-text" id="status-text">준비 중</span>
-          <span class="countdown" id="countdown" hidden>3</span>
-        </div>
-        <ol class="log" id="talk-log"></ol>
-        <div class="talk-actions">
-          <button class="btn btn-ghost" id="btn-stop" type="button">그만하기</button>
+        <div class="talk-grid">
+          <div class="portrait" id="portrait">
+            <div class="p-fallback" id="p-fallback">🙂</div>
+            <img class="p-img p-closed" id="p-closed" alt="">
+            <img class="p-img p-talk" id="p-talk" alt="">
+            <div class="p-tag"><b id="talk-name">이름</b><span id="p-expr">평온</span></div>
+          </div>
+          <div class="talk-side">
+            <div class="bubble" id="npc-bubble">…</div>
+            <div class="status" id="talk-status">
+              <span class="status-text" id="status-text">준비 중</span>
+              <span class="countdown" id="countdown" hidden>3</span>
+            </div>
+            <ol class="log" id="talk-log"></ol>
+            <div class="talk-actions">
+              <button class="btn btn-ghost" id="btn-stop" type="button">그만하기</button>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -220,10 +226,10 @@
         <p class="note">한도에 닿으면 서버가 OpenAI 호출을 하지 않습니다. OpenAI 대시보드의 프로젝트 예산도 함께 걸어두세요.</p>
       </section>
       <section class="settings-section">
-        <h3>상대 고정 음성 미리 만들기</h3>
-        <p class="note" id="pregen-info">확인 중…</p>
+        <h3>초기 세팅 (음성·인물 사진)</h3>
+        <p class="note" id="setup-info">확인 중…</p>
         <div class="field-row">
-          <button type="button" class="btn" id="btn-pregen">미리 만들기</button>
+          <button type="button" class="btn" id="btn-setup-open">확인 / 만들기</button>
           <button type="button" class="btn btn-ghost" id="btn-test-chat">비용 표시 테스트</button>
         </div>
         <p class="note" id="test-reply" hidden></p>
@@ -234,6 +240,32 @@
         <button type="button" class="btn btn-primary" id="btn-limits-save">저장</button>
       </div>
     </form>
+  </dialog>
+
+  <!-- 초기 세팅 -->
+  <dialog class="modal modal-wide" id="setup-modal">
+    <div class="modal-body">
+      <h2>처음 한 번, 상대를 준비합니다</h2>
+      <p>상대 인물의 <b>실사 사진</b>과 <b>고정 음성</b>이 아직 없습니다. 내 API 키로 한 번만 만들어 두면,
+        <code>assets/</code> 폴더를 GitHub에 커밋해서 이후에는 비용 없이 재사용합니다.</p>
+      <ul class="setup-sum">
+        <li><span>고정 음성</span><b id="setup-audio">-</b></li>
+        <li><span>인물 사진 (표정 5단계 × 입 다묾/벌림)</span><b id="setup-photo">-</b></li>
+        <li class="total"><span>예상 비용 (한 번만)</span><b id="setup-cost">-</b></li>
+      </ul>
+      <p class="note">사진은 장당 수십 초가 걸려 전체 10~20분 정도 예상됩니다. 이 창을 닫아도 페이지를 열어두면 계속 만듭니다.
+        세팅 비용은 일일 한도와 별도로 처리되며 비용 패널에는 기록됩니다.</p>
+      <div class="setup-progress" id="setup-progress" hidden>
+        <div class="bar"><div class="bar-fill yellow" id="setup-bar"></div></div>
+        <div class="limit-row"><span id="setup-now">준비 중</span><span id="setup-count">0 / 0</span></div>
+        <ol class="setup-log" id="setup-log"></ol>
+      </div>
+      <p class="error" id="setup-error" hidden></p>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" id="btn-setup-later">나중에</button>
+        <button type="button" class="btn btn-primary" id="btn-setup-run">지금 만들기</button>
+      </div>
+    </div>
   </dialog>
 
   <div class="toast" id="toast" hidden></div>

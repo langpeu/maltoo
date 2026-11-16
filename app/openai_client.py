@@ -4,12 +4,14 @@
 - 모든 유료 호출은 usage.check_limit() → 호출 → usage.record() 순서를 지킨다.
 """
 
+import base64
+
 from fastapi import HTTPException, Request
 from openai import (APIConnectionError, AuthenticationError, OpenAI,
                     PermissionDeniedError, RateLimitError)
 
 from . import usage
-from .config import model
+from .config import get_config, model
 
 KEY_HEADER = "X-OpenAI-Key"
 SESSION_HEADER = "X-Session-Id"
@@ -18,8 +20,9 @@ SESSION_HEADER = "X-Session-Id"
 class Caller:
     """요청 하나에 대한 OpenAI 호출 컨텍스트."""
 
-    def __init__(self, api_key: str, session_id: str | None):
+    def __init__(self, api_key: str, session_id: str | None, skip_limits: bool = False):
         self._api_key = api_key
+        self.skip_limits = skip_limits  # 초기 세팅 스크립트: 사용자가 예상 비용을 확인했으므로 한도 검사 생략
         self.key_id = usage.key_id_of(api_key)
         self.session_id = session_id
 
@@ -50,7 +53,8 @@ class Caller:
         u = resp.usage
         cost = usage.cost_chat(m, u.prompt_tokens, u.completion_tokens)
         usage.record(self.key_id, feature, m, cost, self.session_id,
-                     meta={"prompt_tokens": u.prompt_tokens, "completion_tokens": u.completion_tokens})
+                     meta={"prompt_tokens": u.prompt_tokens, "completion_tokens": u.completion_tokens},
+                     exempt=self.skip_limits)
         return resp.choices[0].message.content or ""
 
     # ---- 유료: 음성 합성 ----
@@ -62,7 +66,7 @@ class Caller:
             resp = self.client.audio.speech.create(
                 model=m, voice=voice, input=text, instructions=instructions, response_format="mp3")
         data = resp.read() if hasattr(resp, "read") else resp.content
-        usage.record(self.key_id, "tts", m, cost, self.session_id, meta={"chars": len(text)})
+        usage.record(self.key_id, "tts", m, cost, self.session_id, meta={"chars": len(text)}, exempt=self.skip_limits)
         return data
 
     # ---- 유료: 음성 인식 ----
@@ -78,10 +82,38 @@ class Caller:
         out_tok = getattr(u, "output_tokens", 0) or 0
         cost = usage.cost_transcribe(m, seconds=seconds, input_tokens=in_tok, output_tokens=out_tok)
         usage.record(self.key_id, "transcribe", m, cost, self.session_id,
-                     meta={"seconds": round(seconds, 1), "input_tokens": in_tok, "output_tokens": out_tok})
+                     meta={"seconds": round(seconds, 1), "input_tokens": in_tok, "output_tokens": out_tok},
+                     exempt=self.skip_limits)
         return (text or "").strip()
 
+    # ---- 유료: 이미지 (초기 세팅 스크립트에서만 사용) ----
+    def image_generate(self, prompt: str, cost: float) -> bytes:
+        m = model("image")
+        f = get_config()["portraits"]
+        self._check(cost)
+        with translate_errors():
+            resp = self.client.images.generate(model=m, prompt=prompt, size=f["size"], quality=f["quality"],
+                                               output_format=f["format"], output_compression=f["compression"], n=1)
+        usage.record(self.key_id, "image", m, cost, self.session_id, meta={"op": "generate"}, exempt=self.skip_limits)
+        return base64.b64decode(resp.data[0].b64_json)
+
+    def image_edit(self, image: bytes, prompt: str, cost: float, mask: bytes | None = None) -> bytes:
+        m = model("image")
+        f = get_config()["portraits"]
+        self._check(cost)
+        kwargs = dict(model=m, image=("base.webp", image, "image/webp"), prompt=prompt, size=f["size"],
+                      quality=f["quality"], output_format=f["format"], output_compression=f["compression"],
+                      input_fidelity="high", n=1)
+        if mask is not None:
+            kwargs["mask"] = ("mask.png", mask, "image/png")
+        with translate_errors():
+            resp = self.client.images.edit(**kwargs)
+        usage.record(self.key_id, "image", m, cost, self.session_id, meta={"op": "edit"}, exempt=self.skip_limits)
+        return base64.b64decode(resp.data[0].b64_json)
+
     def _check(self, estimate: float) -> None:
+        if self.skip_limits:
+            return
         try:
             usage.check_limit(self.key_id, estimate)
         except usage.LimitExceeded as e:

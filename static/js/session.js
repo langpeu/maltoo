@@ -21,22 +21,22 @@ export class Conversation {
   guard() { if (this.stopped) throw new Stopped(); }
 
   async speakFixed(line) {
-    this.ui.status("npc");
     const r = await api(`/api/tts/line/${this.s.id}/${line}`);
     this.guard();
+    this.ui.status("npc");
     this.ui.npcSays(r.text, { cached: r.cached });
     this.history.push({ speaker: "npc", text: r.text });
-    await playUrl(r.url, { onTick: () => this.ui.npcTick() });
+    await playUrl(r.url, { onTick: (t) => this.ui.npcTick(t) });
     this.ui.refreshUsage();
     this.guard();
   }
 
   async speakSay(text) {
-    this.ui.status("npc");
     this.ui.npcSays(text);
     const r = await api("/api/tts/say", { method: "POST", body: { scenario_id: this.s.id, text } });
     this.guard();
-    await playUrl(r.url, { onTick: () => this.ui.npcTick() });
+    this.ui.status("npc");
+    await playUrl(r.url, { onTick: (t) => this.ui.npcTick(t) });
     this.ui.refreshUsage();
     this.guard();
   }

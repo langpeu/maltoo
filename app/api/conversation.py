@@ -25,14 +25,6 @@ def list_scenarios():
 
 # ---------- 음성 합성 ----------
 
-def _fixed_lines():
-    for s in scenarios.all_scenarios():
-        for line in scenarios.FIXED_LINES:
-            text = scenarios.fixed_line(s, line)
-            key = cache.audio_key(text, s["voice"]["voice"], s["voice"]["instructions"])
-            yield s, line, text, key
-
-
 @router.get("/tts/line/{scenario_id}/{line}")
 def tts_line(scenario_id: str, line: str, caller: Caller | None = Depends(get_optional_caller)):
     """고정 대사: 캐시가 있으면 비용 0, 없으면 생성해서 assets/audio 에 저장(커밋 대상)."""
@@ -70,28 +62,6 @@ def tts_say(body: SayIn, caller: Caller = Depends(get_caller)):
     if not cache.runtime_path(key).exists():
         cache.save_runtime(key, caller.tts(text, v["voice"], v["instructions"]))
     return {"url": cache.runtime_url(key), "text": text}
-
-
-@router.get("/tts/pregenerate")
-def pregenerate_estimate():
-    missing = [(s, line, text) for s, line, text, key in _fixed_lines() if not cache.fixed_path(key).exists()]
-    total = sum(1 for _ in _fixed_lines())
-    cost = sum(usage.cost_tts(model("tts"), text) for _, _, text in missing)
-    return {"total": total, "missing": len(missing), "estimate_usd": cost}
-
-
-@router.post("/tts/pregenerate")
-def pregenerate(caller: Caller = Depends(get_caller)):
-    made = 0
-    for s, line, text, key in _fixed_lines():
-        if cache.fixed_path(key).exists():
-            continue
-        v = s["voice"]
-        data = caller.tts(text, v["voice"], v["instructions"])
-        cache.save_fixed(key, data, {"scenario": s["id"], "line": line, "text": text, "voice": v["voice"],
-                                     "instructions": v["instructions"], "model": model("tts")})
-        made += 1
-    return {"made": made, **pregenerate_estimate()}
 
 
 # ---------- 음성 인식 ----------

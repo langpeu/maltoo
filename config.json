@@ -12,14 +12,32 @@
     "image": "gpt-image-1.5"
   },
   "pricing_usd": {
-    "gpt-4o-mini": { "input_per_1m": 0.15, "output_per_1m": 0.60 },
-    "gpt-4o-mini-transcribe": { "per_minute": 0.003, "input_per_1m": 1.25, "output_per_1m": 5.00 },
-    "gpt-4o-mini-tts": { "input_per_1m": 0.60, "audio_output_per_1m": 12.00, "per_minute_estimate": 0.015 },
-    "gpt-image-1.5": { "per_image": { "low": 0.009, "medium": 0.034, "high": 0.133 } }
+    "gpt-4o-mini": {
+      "input_per_1m": 0.15,
+      "output_per_1m": 0.6
+    },
+    "gpt-4o-mini-transcribe": {
+      "per_minute": 0.003,
+      "input_per_1m": 1.25,
+      "output_per_1m": 5.0
+    },
+    "gpt-4o-mini-tts": {
+      "input_per_1m": 0.6,
+      "audio_output_per_1m": 12.0,
+      "per_minute_estimate": 0.015
+    },
+    "gpt-image-1.5": {
+      "per_image": {
+        "low": 0.009,
+        "medium": 0.034,
+        "high": 0.133
+      },
+      "edit_input_estimate": 0.006
+    }
   },
   "limits_usd": {
-    "daily": 0.50,
-    "monthly": 5.00,
+    "daily": 0.5,
+    "monthly": 5.0,
     "warn_ratio": 0.8
   },
   "krw_per_usd": 1335,
@@ -42,5 +60,11 @@
       "C": 0.0,
       "D": -0.05
     }
+  },
+  "portraits": {
+    "size": "1024x1024",
+    "quality": "medium",
+    "format": "webp",
+    "compression": 85
   }
 }

@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS usage (
     cost_usd    REAL    NOT NULL DEFAULT 0,
     saved_usd   REAL    NOT NULL DEFAULT 0, -- 캐시 재사용으로 아낀 금액
     cached      INTEGER NOT NULL DEFAULT 0,
+    exempt      INTEGER NOT NULL DEFAULT 0, -- 초기 세팅 비용: 표시는 하되 한도 계산에서 제외
     meta        TEXT
 );
 CREATE INDEX IF NOT EXISTS idx_usage_key_day   ON usage(key_id, day);
@@ -84,6 +85,10 @@ def db_path() -> Path:
 def init_db() -> None:
     with connect() as con:
         con.executescript(SCHEMA)
+        # 이전 버전 DB 마이그레이션
+        cols = {r["name"] for r in con.execute("PRAGMA table_info(usage)")}
+        if "exempt" not in cols:
+            con.execute("ALTER TABLE usage ADD COLUMN exempt INTEGER NOT NULL DEFAULT 0")
 
 
 @contextmanager

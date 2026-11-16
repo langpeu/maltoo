@@ -84,9 +84,10 @@ def _now():
     return datetime.now()
 
 
-def _sum(con, key_id: str, column: str, value: str) -> float:
+def _sum(con, key_id: str, column: str, value: str, limited_only: bool = False) -> float:
+    extra = " AND exempt = 0" if limited_only else ""
     row = con.execute(
-        f"SELECT COALESCE(SUM(cost_usd), 0) AS s FROM usage WHERE key_id = ? AND {column} = ?",
+        f"SELECT COALESCE(SUM(cost_usd), 0) AS s FROM usage WHERE key_id = ? AND {column} = ?{extra}",
         (key_id, value),
     ).fetchone()
     return float(row["s"])
@@ -97,8 +98,8 @@ def check_limit(key_id: str, estimate: float) -> None:
     now = _now()
     lim = limits()
     with db.connect() as con:
-        day_spent = _sum(con, key_id, "day", now.strftime("%Y-%m-%d"))
-        month_spent = _sum(con, key_id, "month", now.strftime("%Y-%m"))
+        day_spent = _sum(con, key_id, "day", now.strftime("%Y-%m-%d"), limited_only=True)
+        month_spent = _sum(con, key_id, "month", now.strftime("%Y-%m"), limited_only=True)
     if day_spent + estimate > lim["daily"]:
         raise LimitExceeded("daily", day_spent, lim["daily"], estimate)
     if month_spent + estimate > lim["monthly"]:
@@ -109,16 +110,16 @@ def check_limit(key_id: str, estimate: float) -> None:
 
 def record(key_id: str, feature: str, model: str | None, cost_usd: float,
            session_id: str | None = None, cached: bool = False, saved_usd: float = 0.0,
-           meta: dict | None = None) -> None:
+           meta: dict | None = None, exempt: bool = False) -> None:
     now = _now()
     with db.connect() as con:
         con.execute(
-            "INSERT INTO usage(ts, day, month, key_id, session_id, feature, model, cost_usd, saved_usd, cached, meta)"
-            " VALUES(?,?,?,?,?,?,?,?,?,?,?)",
+            "INSERT INTO usage(ts, day, month, key_id, session_id, feature, model, cost_usd, saved_usd, cached, meta, exempt)"
+            " VALUES(?,?,?,?,?,?,?,?,?,?,?,?)",
             (
                 now.isoformat(timespec="seconds"), now.strftime("%Y-%m-%d"), now.strftime("%Y-%m"),
                 key_id, session_id, feature, model, round(cost_usd, 8), round(saved_usd, 8),
-                1 if cached else 0, json.dumps(meta or {}, ensure_ascii=False),
+                1 if cached else 0, json.dumps(meta or {}, ensure_ascii=False), 1 if exempt else 0,
             ),
         )
 
@@ -129,6 +130,11 @@ def summary(key_id: str, session_id: str | None = None) -> dict:
     with db.connect() as con:
         today = _sum(con, key_id, "day", day)
         this_month = _sum(con, key_id, "month", month)
+        today_limited = _sum(con, key_id, "day", day, limited_only=True)
+        month_limited = _sum(con, key_id, "month", month, limited_only=True)
+        setup_spent = float(con.execute(
+            "SELECT COALESCE(SUM(cost_usd),0) s FROM usage WHERE key_id=? AND month=? AND exempt=1",
+            (key_id, month)).fetchone()["s"])
         session = 0.0
         if session_id:
             session = float(con.execute(
@@ -164,6 +170,9 @@ def summary(key_id: str, session_id: str | None = None) -> dict:
         "saved_usd": saved,
         "calls": calls,
         "limits": lim,
-        "daily_status": status(today, lim["daily"]),
-        "monthly_status": status(this_month, lim["monthly"]),
+        "today_limited_usd": today_limited,
+        "month_limited_usd": month_limited,
+        "setup_usd": setup_spent,
+        "daily_status": status(today_limited, lim["daily"]),
+        "monthly_status": status(month_limited, lim["monthly"]),
     }

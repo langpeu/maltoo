@@ -3,6 +3,9 @@ import { Mic } from "./audio/mic.js";
 import { Conversation } from "./session.js";
 import { clearBand, initBand, pushLevel } from "./ui/band.js";
 import { renderCost, resetCost } from "./ui/cost-panel.js";
+import {
+  exprFromEmotion, framesOf, hasPhoto, setBreathing, setExpression, setMouth, setPortraitFrames, setSpeaking, showCharacter,
+} from "./ui/portrait.js";
 
 const $ = (id) => document.getElementById(id);
 const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -44,11 +47,12 @@ let current = null;
 
 async function loadScenarios() {
   scenarios = await api("/api/scenarios");
+  try { setPortraitFrames((await api("/api/setup/status")).portraits_status); } catch { /* 사진 없음 */ }
   for (const kind of ["boss", "sub"]) {
     $(`grid-${kind}`).innerHTML = scenarios.filter((s) => s.kind === kind).map((s) => `
       <button class="scenario" type="button" data-id="${s.id}">
         <div class="sc-top">
-          <div class="sc-emoji">${s.character.emoji}</div>
+          ${hasPhoto(s.id) ? `<img class="sc-photo" src="${framesOf(s.id).calm.closed}" alt="">` : `<div class="sc-emoji">${s.character.emoji}</div>`}
           <div><div class="sc-name">${esc(s.character.name)}</div>
           <div class="sc-role">${s.character.age}세 · ${s.character.gender} · ${esc(s.character.role)}</div></div>
         </div>
@@ -65,7 +69,8 @@ document.addEventListener("click", (e) => {
 function openBrief(s) {
   current = s;
   const c = s.character;
-  $("brief-avatar").textContent = c.emoji;
+  $("brief-avatar").innerHTML = hasPhoto(s.id)
+    ? `<img class="sc-photo" style="width:100%;height:100%" src="${framesOf(s.id).calm.closed}" alt="">` : c.emoji;
   $("brief-kind").textContent = s.kind === "boss" ? "상사" : "부하 직원";
   $("brief-name").textContent = `${c.name} — ${s.title}`;
   $("brief-meta").textContent = `${c.age}세 · ${c.gender} · ${c.role}`;
@@ -113,8 +118,8 @@ let myTurns = 0;
 function startTalk() {
   const s = current;
   myTurns = 0;
-  $("talk-avatar").textContent = s.character.emoji;
-  $("talk-name").textContent = `${s.character.name} (${s.character.role})`;
+  showCharacter(s);
+  setBreathing(true);
   $("talk-goal").textContent = `🎯 ${s.goal}`;
   $("turn-count").textContent = "답변 0 / 5";
   $("npc-bubble").textContent = "…";
@@ -142,7 +147,7 @@ function setStatus(kind, text) {
   st.className = `status ${kind}`;
   $("status-text").textContent = text;
   $("countdown").hidden = kind !== "listen";
-  $("talk-avatar").classList.toggle("speaking", kind === "npc");
+  setSpeaking(kind === "npc");
 }
 
 function setGauges(emo, reason, progress, done) {
@@ -169,7 +174,11 @@ const talkUI = {
     $("npc-bubble").textContent = text;
     addLog("npc", `<small>${esc(current.character.name)}</small>${esc(text)}`);
   },
-  npcTick() { pushLevel(0.04 + Math.random() * 0.12, "npc"); },
+  npcTick({ level, ended }) {
+    if (ended) return setSpeaking(false);
+    pushLevel(level, "npc");
+    setMouth(level);
+  },
   listenTick({ level, threshold, spoke, remain }) {
     pushLevel(level, "me", threshold);
     if (spoke) {
@@ -192,7 +201,10 @@ const talkUI = {
     if (nag) meta.push(`재촉 ${nag}번 받음`);
     addLog("me", `<small>나 · ${meta.join(" · ")}</small>${esc(text)}`);
   },
-  turnResult(r) { setGauges(r.emotion, r.reason, r.goal_progress, r.checklist_done); },
+  turnResult(r) {
+    setGauges(r.emotion, r.reason, r.goal_progress, r.checklist_done);
+    setExpression(exprFromEmotion(r.emotion));
+  },
   refreshUsage,
   error(e) {
     toast(e.message || "오류가 발생했습니다.", 6000);
@@ -205,6 +217,7 @@ const talkUI = {
 
 function showResult(r) {
   convo = null;
+  setSpeaking(false);
   const map = {
     success: ["🟢 성공", "목표를 이뤘습니다!"],
     partial: ["🟡 부분 성공", "절반의 성과입니다."],
@@ -256,6 +269,7 @@ $("key-form").addEventListener("submit", async (e) => {
     resetCost();
     await refreshUsage();
     toast("키를 확인했습니다. 이 브라우저에만 저장됩니다.");
+    checkSetup();
   } catch (err) {
     showError($("key-error"), err.message);
   } finally {
@@ -265,16 +279,6 @@ $("key-form").addEventListener("submit", async (e) => {
 });
 
 // ---------- 설정 ----------
-async function refreshPregen() {
-  try {
-    const p = await api("/api/tts/pregenerate");
-    $("pregen-info").textContent = p.missing
-      ? `고정 대사 ${p.total}개 중 ${p.missing}개가 아직 없습니다. 예상 비용 $${p.estimate_usd.toFixed(4)} (한 번만 듭니다).`
-      : `고정 대사 ${p.total}개가 모두 준비되어 있습니다. 재생 비용 $0.`;
-    $("btn-pregen").disabled = !p.missing;
-  } catch { $("pregen-info").textContent = "확인하지 못했습니다."; }
-}
-
 $("btn-settings").addEventListener("click", async () => {
   showError($("settings-error"), "");
   try {
@@ -283,7 +287,7 @@ $("btn-settings").addEventListener("click", async () => {
     $("limit-monthly").value = cfg.limits.monthly;
   } catch { /* 무시 */ }
   updateKeyHints();
-  refreshPregen();
+  refreshSetupInfo();
   $("settings-modal").showModal();
 });
 $("btn-settings-close").addEventListener("click", () => $("settings-modal").close());
@@ -307,17 +311,6 @@ $("btn-key-delete").addEventListener("click", () => {
   openKeyModal();
   toast("이 브라우저에서 키를 삭제했습니다.");
 });
-$("btn-pregen").addEventListener("click", async () => {
-  const btn = $("btn-pregen");
-  btn.disabled = true;
-  $("pregen-info").textContent = "만드는 중… (1분 정도 걸릴 수 있습니다)";
-  try {
-    const r = await api("/api/tts/pregenerate", { method: "POST" });
-    toast(`고정 음성 ${r.made}개를 만들었습니다.`);
-  } catch (err) { showError($("settings-error"), err.message); }
-  await refreshPregen();
-  refreshUsage();
-});
 $("btn-test-chat").addEventListener("click", async () => {
   const btn = $("btn-test-chat");
   const out = $("test-reply");
@@ -332,9 +325,106 @@ $("btn-test-chat").addEventListener("click", async () => {
   } finally { btn.disabled = false; }
 });
 
+// ---------- 초기 세팅: 음성·인물 사진 ----------
+let setupRunning = false;
+
+const fmtUsd = (v) => `$${v.toFixed(2)}`;
+const fmtKrw = (v, rate) => `₩${Math.round(v * rate).toLocaleString("ko-KR")}`;
+let krwRate = 1335;
+
+async function refreshSetupInfo() {
+  try {
+    const st = await api("/api/setup/status");
+    $("setup-info").textContent = st.missing
+      ? `음성 ${st.audio.missing}개, 사진 ${st.portraits.missing}장이 아직 없습니다. 예상 ${fmtUsd(st.estimate_usd)} (${fmtKrw(st.estimate_usd, krwRate)}).`
+      : "음성과 인물 사진이 모두 준비되어 있습니다. assets/ 폴더를 GitHub에 커밋해 두면 다른 PC에서도 재사용합니다.";
+    return st;
+  } catch { $("setup-info").textContent = "확인하지 못했습니다."; return null; }
+}
+
+async function checkSetup({ force = false } = {}) {
+  if (setupRunning) { $("setup-modal").showModal(); return; }
+  const st = await api("/api/setup/status");
+  setPortraitFrames(st.portraits_status);
+  if (!st.missing && !force) return;
+  $("setup-audio").textContent = `${st.audio.missing}개 · ${fmtUsd(st.audio.estimate_usd)}`;
+  $("setup-photo").textContent = `${st.portraits.missing}장 · ${fmtUsd(st.portraits.estimate_usd)}`;
+  $("setup-cost").textContent = `${fmtUsd(st.estimate_usd)} (${fmtKrw(st.estimate_usd, krwRate)})`;
+  $("setup-progress").hidden = true;
+  showError($("setup-error"), "");
+  $("btn-setup-run").disabled = !st.missing;
+  $("btn-setup-run").textContent = st.missing ? "지금 만들기" : "모두 준비됨";
+  $("setup-modal").showModal();
+}
+
+function setupLog(text, fail = false) {
+  const li = document.createElement("li");
+  li.textContent = text;
+  if (fail) li.className = "fail";
+  $("setup-log").prepend(li);
+}
+
+async function runSetup() {
+  if (setupRunning) return;
+  setupRunning = true;
+  $("btn-setup-run").disabled = true;
+  $("btn-setup-later").textContent = "닫기 (계속 진행)";
+  $("setup-progress").hidden = false;
+  $("setup-log").innerHTML = "";
+  const st = await api("/api/setup/status");
+  const total = st.jobs.length;
+  let done = 0;
+  const failed = [];
+  const tick = (label) => {
+    $("setup-bar").style.width = `${(done / total) * 100}%`;
+    $("setup-count").textContent = `${done} / ${total}`;
+    if (label) $("setup-now").textContent = label;
+  };
+  tick("시작합니다…");
+
+  // 인물별로 묶어서 순서 유지(기본 사진 → 표정 → 입 벌림), 3명씩 동시에 진행
+  const chains = {};
+  for (const j of st.jobs) (chains[`${j.kind}:${j.kind === "audio" ? "all" : j.scenario_id}`] ||= []).push(j);
+  const queue = Object.values(chains);
+  const worker = async () => {
+    while (queue.length) {
+      const chain = queue.shift();
+      for (const j of chain) {
+        try {
+          tick(`만드는 중: ${j.label}`);
+          await api("/api/setup/job", { method: "POST", body: j });
+          done += 1;
+          setupLog(`✓ ${j.label}`);
+        } catch (e) {
+          done += 1;
+          failed.push(j);
+          setupLog(`✗ ${j.label} — ${e.message}`, true);
+          if (j.kind === "portrait") { done += chain.length - chain.indexOf(j) - 1; break; } // 기준 사진 실패 시 이 인물은 중단
+        } finally { tick(); }
+      }
+      refreshUsage();
+    }
+  };
+  await Promise.all([worker(), worker(), worker()]);
+
+  setupRunning = false;
+  $("btn-setup-later").textContent = "닫기";
+  tick(failed.length ? `완료 (실패 ${failed.length}건 — 다시 누르면 빠진 것만 이어서 만듭니다)` : "완료!");
+  $("btn-setup-run").disabled = false;
+  $("btn-setup-run").textContent = failed.length ? "빠진 것 다시 만들기" : "모두 준비됨";
+  await loadScenarios();
+  refreshUsage();
+  if (!failed.length) toast("준비 완료! assets/ 폴더를 GitHub에 커밋하면 다음부터는 재사용합니다.", 7000);
+}
+
+$("btn-setup-run").addEventListener("click", runSetup);
+$("btn-setup-later").addEventListener("click", () => $("setup-modal").close());
+$("btn-setup-open").addEventListener("click", () => { $("settings-modal").close(); checkSetup({ force: true }); });
+
 // ---------- 시작 ----------
 initBand($("band-canvas"));
 updateKeyHints();
 loadScenarios().catch(() => toast("시나리오를 불러오지 못했습니다."));
-if (!keyStore.get()) openKeyModal(); else refreshUsage();
+api("/api/config").then((c) => { krwRate = c.krw_per_usd; }).catch(() => {});
+if (!keyStore.get()) openKeyModal(); else { refreshUsage(); checkSetup().catch(() => {}); }
 setInterval(refreshUsage, 30000);
