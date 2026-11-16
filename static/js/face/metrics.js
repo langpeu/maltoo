@@ -65,7 +65,7 @@ export class FaceTracker {
     this.b = { ...DEFAULT_FACE_BASELINE, ...(baseline || {}) };
     this.onCheckpoint = onCheckpoint;
     this.onWorse = onWorse;      // 지금까지 중 가장 안 좋은 프레임이 갱신될 때 (사진 캡처용)
-    this.worst = { score: 0, t: -1e9 };
+    this.worst = { score: -1, t: -1e9 };
     this.frames = [];     // 이번 턴 프레임
     this.all = [];        // 기준선 계산용(측정 화면)
     this.checkpoints = [];
@@ -100,8 +100,10 @@ export class FaceTracker {
     if (phase !== "idle") {
       this.detect(f);
       const w = this.badness(f);
-      if (w.type && w.score >= 5 && w.score > this.worst.score + 2 && t - this.worst.t > 300) {
-        this.worst = { ...w, t, phase };
+      // 첫 얼굴 프레임은 무조건 남기고(표정이 무난했던 대화도 내 사진이 있도록), 이후 더 나쁜 순간이 오면 교체
+      const first = this.worst.score < 0;
+      if (first || (w.type && w.score > this.worst.score + 2 && t - this.worst.t > 300)) {
+        this.worst = { ...w, type: w.type || "neutral", score: Math.max(0, w.score), t, phase };
         this.onWorse && this.onWorse(this.worst);
       }
     }

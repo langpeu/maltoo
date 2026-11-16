@@ -140,7 +140,8 @@ function setupFace() {
     },
     onWorse: (w) => {
       const img = faceCam.capture(480);
-      if (img) worstFrame = { ...w, severity: w.score, icon: CP[w.type].icon, label: CP[w.type].label, img };
+      const info = CP[w.type] || { icon: "🙂", label: "대화 중 내 표정" };
+      if (img) worstFrame = { ...w, severity: w.score, icon: info.icon, label: info.label, img };
     },
   });
   faceCam.prepare(faceCfg).then((ok) => {
