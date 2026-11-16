@@ -41,7 +41,7 @@ def tts_line(scenario_id: str, line: str, cached_only: bool = False,
         if caller:
             usage.record(caller.key_id, "tts", model("tts"), 0.0, caller.session_id, cached=True,
                          saved_usd=usage.cost_tts(model("tts"), text), meta={"key": key})
-        return {"url": cache.fixed_url(key), "text": text, "cached": True}
+        return {"url": cache.fixed_url(key), "text": text, "cached": True, "mood": mood}
     if cached_only:
         raise HTTPException(404, {"code": "not_cached", "message": "아직 만들어 두지 않은 음성입니다."})
     if caller is None:
@@ -49,7 +49,7 @@ def tts_line(scenario_id: str, line: str, cached_only: bool = False,
     data = caller.tts(text, voice, instr)
     cache.save_fixed(key, data, {"scenario": s["id"], "line": line, "text": text, "voice": voice, "mood": mood,
                                  "instructions": instr, "model": model("tts")})
-    return {"url": cache.fixed_url(key), "text": text, "cached": False}
+    return {"url": cache.fixed_url(key), "text": text, "cached": False, "mood": mood}
 
 
 class SayIn(BaseModel):
@@ -69,7 +69,7 @@ def tts_say(body: SayIn, caller: Caller = Depends(get_caller)):
     key = cache.audio_key(text, voice, instr)
     if not cache.runtime_path(key).exists():
         cache.save_runtime(key, caller.tts(text, voice, instr))
-    return {"url": cache.runtime_url(key), "text": text}
+    return {"url": cache.runtime_url(key), "text": text, "mood": body.mood}
 
 
 # ---------- 음성 인식 ----------

@@ -168,3 +168,12 @@ def test_voice_emotion(client, fake_openai):
     assert a["url"] != b["url"]
     tts = [kw for k, kw in fake_openai if k == "tts"]
     assert "furious" in tts[-1]["instructions"]
+
+
+def test_voice_playback_mood(client, fake_openai):
+    """재생 감정 강조: 응답에 mood, 공개 설정에 감정별 음량·속도."""
+    cfg = client.get("/api/config").json()["voice_playback"]
+    assert cfg["moods"]["explosive"]["gain"] > cfg["moods"]["calm"]["gain"] > cfg["moods"]["resigned"]["gain"]
+    assert client.get("/api/tts/line/kim/nag2", headers=H).json()["mood"] == "angry"
+    r = client.post("/api/tts/say", json={"scenario_id": "kim", "text": "됐어.", "mood": "softened"}, headers=H).json()
+    assert r["mood"] == "softened"

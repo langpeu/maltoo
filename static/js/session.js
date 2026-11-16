@@ -5,6 +5,7 @@ import { api, sessionId } from "./api.js";
 import { playUrl } from "./audio/mic.js";
 import { analyzeFrame, ToneTracker } from "./audio/tone.js";
 import { exprFromEmotion } from "./ui/portrait.js";
+import { fxFor } from "./audio/voicefx.js";
 
 const ENDING_MOOD = { success: "softened", partial: "calm", fail: "angry", noresp: "angry", resign: "resigned", resigned: "resigned" };
 
@@ -52,7 +53,7 @@ export class Conversation {
       if (this.stopped) return;
       this.phase("listen");
       this.ui.npcReact(r.text);
-      await playUrl(r.url, { onTick: (t) => this.ui.npcTick(t) });
+      await playUrl(r.url, { onTick: (t) => this.ui.npcTick(t), fx: fxFor(r.mood) });
     } catch { /* 추임새는 없어도 진행 */ }
   }
 
@@ -84,7 +85,7 @@ export class Conversation {
     }
     this.guard();
     this.history.push({ speaker: "npc", text });
-    await this.deliver(text, r && r.url);
+    await this.deliver(text, r && r.url, r && r.mood);
   }
 
   // 실시간 대사: 음성 생성, 실패하면 글자로
@@ -100,16 +101,16 @@ export class Conversation {
       this.ui.ttsFailed(e);
     }
     this.guard();
-    await this.deliver(text, r && r.url);
+    await this.deliver(text, r && r.url, r ? r.mood : mood);
   }
 
-  async deliver(text, url) {
+  async deliver(text, url, mood) {
     this.phase("listen");
     this.ui.status("npc");
     if (url) {
       this.ui.npcSays(text);
       try {
-        await playUrl(url, { onTick: (t) => this.ui.npcTick(t) });
+        await playUrl(url, { onTick: (t) => this.ui.npcTick(t), fx: fxFor(mood) });
         this.ui.refreshUsage();
         this.guard();
         return;

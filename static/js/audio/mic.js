@@ -128,10 +128,17 @@ export class Mic {
 // 상대 음성 재생 + 실제 음량 측정 (입 모양·파형용)
 let playCtx = null;
 
-export function playUrl(url, { onTick } = {}) {
+// fx: { gain, rate } — 감정 강조 (voicefx.js). 속도를 바꿀 때 음높이도 같이 바뀌게 둔다(언성이 올라가는 느낌).
+export function playUrl(url, { onTick, fx } = {}) {
   return new Promise((resolve, reject) => {
     const a = new Audio();
     a.src = url;
+    const gain = fx && fx.gain > 0 ? fx.gain : 1;
+    const rate = fx && fx.rate > 0 ? fx.rate : 1;
+    if (rate !== 1) {
+      a.preservesPitch = a.mozPreservesPitch = a.webkitPreservesPitch = false;
+      a.playbackRate = rate;
+    }
     let analyser = null;
     let buf = null;
     try {
@@ -141,9 +148,30 @@ export function playUrl(url, { onTick } = {}) {
       analyser = playCtx.createAnalyser();
       analyser.fftSize = 1024;
       buf = new Float32Array(analyser.fftSize);
-      src.connect(analyser);
+      let node = src;
+      if (gain !== 1) {
+        const g = playCtx.createGain();
+        g.gain.value = gain;
+        node.connect(g);
+        node = g;
+        if (gain > 1) {
+          // 크게 키울 때 소리가 깨지지 않도록 압축 → 찢어지는 대신 '밀어붙이는' 소리
+          const comp = playCtx.createDynamicsCompressor();
+          comp.threshold.value = -14;
+          comp.knee.value = 8;
+          comp.ratio.value = 6;
+          comp.attack.value = 0.003;
+          comp.release.value = 0.15;
+          node.connect(comp);
+          node = comp;
+        }
+      }
+      node.connect(analyser);
       analyser.connect(playCtx.destination);
-    } catch { analyser = null; }
+    } catch {
+      analyser = null;
+      if (gain < 1) a.volume = gain;
+    }
 
     const level = () => {
       if (!analyser) return a.paused ? 0 : 0.05 + Math.random() * 0.1;

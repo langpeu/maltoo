@@ -168,5 +168,44 @@
     "resigned": "Current emotion: has given up and decided to quit. Quiet, flat and cold, tired, slow, with a heavy final exhale. No anger left.",
     "hurt": "Current emotion: hurt and sulking. Voice drops, slightly shaky, defensive, a sad sigh."
   },
-  "voice_style_suffix": "Speak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress."
+  "voice_style_suffix": "Speak only the given Korean text, exactly as written, as a real person in a tense workplace conversation — not a narrator. Let the emotion show through volume, pace, breath and stress.",
+  "voice_playback": {
+    "_comment": "재생할 때 감정별로 음량(gain 배수)·속도(rate)를 조절. 속도를 올리면 음높이도 살짝 올라간다. 설정의 '감정 강조' 세기(약하게 0.5 / 보통 1 / 강하게 1.5)를 곱해 적용",
+    "moods": {
+      "softened": {
+        "gain": 0.8,
+        "rate": 0.95
+      },
+      "resigned": {
+        "gain": 0.7,
+        "rate": 0.9
+      },
+      "hurt": {
+        "gain": 0.85,
+        "rate": 0.96
+      },
+      "calm": {
+        "gain": 1.0,
+        "rate": 1.0
+      },
+      "annoyed": {
+        "gain": 1.4,
+        "rate": 1.04
+      },
+      "angry": {
+        "gain": 2.0,
+        "rate": 1.08
+      },
+      "explosive": {
+        "gain": 2.8,
+        "rate": 1.12
+      }
+    },
+    "strengths": {
+      "off": 0,
+      "low": 0.5,
+      "normal": 1,
+      "strong": 1.5
+    }
+  }
 }

@@ -6,6 +6,7 @@ import { analyzeFrame, computeBaseline, ToneTracker } from "./audio/tone.js";
 import { drawLandmarks, FaceCam } from "./face/camera.js";
 import { computeFaceBaseline, FaceTracker, PHASE_LABEL } from "./face/metrics.js";
 import { renderCost, resetCost } from "./ui/cost-panel.js";
+import { setVoiceFxConfig, setVoiceFxStrength, voiceFxStrength } from "./audio/voicefx.js";
 import {
   exprFromEmotion, framesOf, hasPhoto, setBreathing, setExpression, setMouth, setPortraitFrames, setSpeaking, showCharacter,
 } from "./ui/portrait.js";
@@ -1217,7 +1218,18 @@ api("/api/config").then((c) => {
   krwRate = c.krw_per_usd;
   faceCfg = c.face;
   if (c.difficulty) difficultyCfg = c.difficulty;
+  if (c.voice_playback) setVoiceFxConfig(c.voice_playback);
 }).catch(() => {});
+
+// 상대 목소리 감정 강조 세기
+function renderVoiceFx() {
+  document.querySelectorAll("#voicefx-pick button").forEach((b) => b.classList.toggle("on", b.dataset.fx === voiceFxStrength()));
+}
+document.querySelectorAll("#voicefx-pick button").forEach((b) => b.addEventListener("click", () => {
+  setVoiceFxStrength(b.dataset.fx);
+  renderVoiceFx();
+}));
+renderVoiceFx();
 function startApp() {
   if (!keyStore.get()) openKeyModal();
   else { refreshUsage(); checkSetup().catch(() => {}); }

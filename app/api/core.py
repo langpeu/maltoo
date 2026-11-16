@@ -26,6 +26,7 @@ def public_config():
         "face": cfg.get("face", {}),
         "difficulty": {k: {"label": v["label"], "answer_seconds": v["answer_seconds"]}
                        for k, v in cfg.get("difficulty", {}).items()},
+        "voice_playback": {k: v for k, v in cfg.get("voice_playback", {}).items() if not k.startswith("_")},
     }
 
 
