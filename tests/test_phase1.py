@@ -239,3 +239,12 @@ def test_history_not_reply_only_json():
             if m["role"] == "assistant":
                 assert not m["content"].lstrip().startswith("{"), m
         assert "goal_progress" in msgs[-1]["content"] and "emotion" in msgs[-1]["content"]
+
+
+def test_checklist_other_shapes():
+    from app.prompts import character
+    from app import scenarios
+    cl = scenarios.get("kim")["checklist"]
+    assert character.match_checklist([True, False, True], cl) == [cl[0], cl[2]]
+    assert character.match_checklist([{"item": cl[1], "done": True}, {"index": 3, "done": False}], cl) == [cl[1]]
+    assert character.match_checklist(["1) 내 기여를 구체적으로 밝히기"], cl) == [cl[0]]

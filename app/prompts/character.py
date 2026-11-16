@@ -18,7 +18,7 @@ OUTPUT_SPEC = """반드시 아래 JSON 객체 하나만 출력한다. 다른 텍
   "emotion": {"anger": 0-100, "trust": 0-100, "defensiveness": 0-100},
   "reason": "이번 과장 발언이 상대 감정에 준 영향 한 줄 (한국어)",
   "goal_progress": 0-100 (지금까지 대화 전체 기준 목표 달성도),
-  "checklist_done": [지금까지 달성된 체크리스트 항목 번호, 예: 1, 3],
+  "checklist_done": [지금까지 달성된 체크리스트 항목 번호, 예: 1, 3 — 일부라도 말했으면 넣는다],
   "checkpoints": [
     {"type": "aggressive" | "excuse" | "cold" | "sarcasm" | "good",
      "text_span": "과장 발언에서 그대로 복사한 짧은 구절",
@@ -30,6 +30,7 @@ OUTPUT_SPEC = """반드시 아래 JSON 객체 하나만 출력한다. 다른 텍
   "team_issue_addressed": true | false | null,
   "ending": null | "success" | "partial" | "fail"
 }
+goal_progress 와 checklist_done 은 서로 맞춘다: 달성도가 0보다 크면 그 근거가 된 항목 번호를 checklist_done 에 반드시 넣는다 (예: 3개 중 2개 달성이면 [1, 2], 약 60~70).
 mentions 는 과장이 너 말고 다른 회사 인물을 언급했을 때만 넣는다 (없으면 빈 배열). 험담·비난·불평은 negative.
 team_issue_addressed 는 윤 대리 시나리오에서만: 과장이 실수 문제와 팀원들의 불만을 분명히 짚었으면 true, 덮고 넘어갔으면 false. 다른 시나리오는 null.
 checkpoints 는 0~3개. text_span 은 반드시 과장 발언 원문에 있는 그대로의 구절이어야 한다.
@@ -125,8 +126,16 @@ def _norm(x: str) -> str:
 def match_checklist(raw, checklist: list[str]) -> list[str]:
     """gpt 가 준 체크리스트 달성 표시(번호·원문·바꿔 쓴 문구)를 실제 항목으로 맞춘다."""
     from difflib import SequenceMatcher
+    raw = list(raw or [])
+    # [true, false, true] 처럼 항목 순서대로 참/거짓으로 답한 경우
+    if raw and all(isinstance(x, bool) for x in raw):
+        return [c for c, ok in zip(checklist, raw) if ok]
     out = []
-    for x in raw or []:
+    for x in raw:
+        if isinstance(x, dict):  # {"item": "...", "done": true} / {"index": 1}
+            if x.get("done") is False or x.get("achieved") is False:
+                continue
+            x = x.get("index", x.get("id", x.get("item", x.get("text", x.get("name")))))
         hit = None
         if isinstance(x, bool):
             continue
