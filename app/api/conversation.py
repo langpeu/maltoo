@@ -106,6 +106,7 @@ class TurnIn(BaseModel):
     session_id: str = ""
     prev_emotion: dict | None = None   # 직전 턴 상대 감정 (게임 수치 계산용)
     game_session: dict | None = None   # 이번 판 누적 감액 {cut, recovered}
+    goal_done: list[str] = []          # 지금까지 달성한 체크리스트 항목 (유지용)
 
 
 @router.post("/turn")
@@ -117,10 +118,14 @@ def turn(body: TurnIn, caller: Caller = Depends(get_caller)):
     user_text = body.user_text.strip()
     if body.nag_count:
         user_text = f"{user_text}\n(참고: 과장은 {body.nag_count}번 재촉을 받은 뒤에야 대답했다)"
+    ctx = world.prompt_context(s)
+    done_before = [c for c in body.goal_done if c in s["checklist"]]
+    if done_before:
+        ctx += "\n[이미 달성한 체크리스트] " + " / ".join(done_before) + " (checklist_done 에 계속 포함한다)"
     msgs = character.build_messages(s, [h.model_dump() for h in body.history], user_text, turn_index, body.tone, body.face,
-                                     body.difficulty, world.prompt_context(s))
+                                     body.difficulty, ctx)
     raw = caller.chat(msgs, max_tokens=700, feature="chat", response_format={"type": "json_object"})
-    parsed = character.parse(raw, s, turn_index, body.user_text.strip(), set(world.names()))
+    parsed = character.parse(raw, s, turn_index, body.user_text.strip(), set(world.names()), body.goal_done)
     game = world.apply_turn(s, parsed, body.prev_emotion, body.tone, body.nag_count, body.game_session,
                             seed=f"{body.session_id}:{turn_index}")
     if game.get("ending_override"):

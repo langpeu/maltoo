@@ -17,8 +17,8 @@ OUTPUT_SPEC = """반드시 아래 JSON 객체 하나만 출력한다. 다른 텍
   "reply": "상대 인물의 다음 대사 (한국어, 1~3문장, 실제 말하듯이)",
   "emotion": {"anger": 0-100, "trust": 0-100, "defensiveness": 0-100},
   "reason": "이번 과장 발언이 상대 감정에 준 영향 한 줄 (한국어)",
-  "goal_progress": 0-100,
-  "checklist_done": ["달성된 체크리스트 항목 문구를 그대로"],
+  "goal_progress": 0-100 (지금까지 대화 전체 기준 목표 달성도),
+  "checklist_done": [지금까지 달성된 체크리스트 항목 번호, 예: 1, 3],
   "checkpoints": [
     {"type": "aggressive" | "excuse" | "cold" | "sarcasm" | "good",
      "text_span": "과장 발언에서 그대로 복사한 짧은 구절",
@@ -55,7 +55,7 @@ def system_prompt(s: dict, turn_index: int, difficulty: str = "normal", world_ct
 - 말투: {c['speech_style']}
 [상황] {s['situation']}
 [사용자의 목표] {s['goal']}
-[체크리스트] {', '.join(s['checklist'])}
+[체크리스트] {' / '.join(f"{i + 1}) {x}" for i, x in enumerate(s['checklist']))}
 [실패 조건] {', '.join(s['fail_conditions'])}
 [{difficulty_line(difficulty)}]
 {world_ctx}
@@ -109,7 +109,46 @@ def _clamp(v, lo=0, hi=100, default=50):
 CP_TYPES = ("aggressive", "excuse", "cold", "sarcasm", "good")
 
 
-def parse(raw: str, s: dict, turn_index: int, user_text: str = "", valid_ids: set | None = None) -> dict:
+def _norm(x: str) -> str:
+    return "".join(ch for ch in str(x) if ch.isalnum())
+
+
+def match_checklist(raw, checklist: list[str]) -> list[str]:
+    """gpt 가 준 체크리스트 달성 표시(번호·원문·바꿔 쓴 문구)를 실제 항목으로 맞춘다."""
+    from difflib import SequenceMatcher
+    out = []
+    for x in raw or []:
+        hit = None
+        if isinstance(x, bool):
+            continue
+        if isinstance(x, (int, float)) or (isinstance(x, str) and x.strip().isdigit()):
+            i = int(x) - 1
+            hit = checklist[i] if 0 <= i < len(checklist) else None
+        elif isinstance(x, str) and x.strip():
+            nx = _norm(x)
+            for c in checklist:
+                nc = _norm(c)
+                if nx == nc or (nx and (nx in nc or nc in nx)) or SequenceMatcher(None, nx, nc).ratio() >= 0.6:
+                    hit = c
+                    break
+        if hit and hit not in out:
+            out.append(hit)
+    return [c for c in checklist if c in out]  # 원래 순서
+
+
+def goal_state(s: dict, gpt_progress: int, done: list[str], prev_done: list[str] | None, ending: str | None) -> tuple[int, list[str]]:
+    """목표 달성도: 이미 달성한 항목은 유지하고, 체크리스트 비율보다 낮게 보이지 않게, 성공이면 100."""
+    cl = s["checklist"]
+    allp = [c for c in cl if c in set(done) | set(prev_done or [])]
+    ratio = round(100 * len(allp) / len(cl)) if cl else 0
+    p = max(gpt_progress, ratio if len(allp) < len(cl) else max(ratio - 10, 0))
+    if ending == "success":
+        p, allp = 100, list(cl)
+    return min(p, 100), allp
+
+
+def parse(raw: str, s: dict, turn_index: int, user_text: str = "", valid_ids: set | None = None,
+          prev_done: list[str] | None = None) -> dict:
     try:
         data = json.loads(raw)
     except json.JSONDecodeError:
@@ -124,7 +163,8 @@ def parse(raw: str, s: dict, turn_index: int, user_text: str = "", valid_ids: se
         ending = None
     if ending is None and turn_index >= MAX_TURNS:
         ending = "partial"
-    done = [x for x in (data.get("checklist_done") or []) if x in s["checklist"]]
+    done = match_checklist(data.get("checklist_done"), s["checklist"])
+    progress, done = goal_state(s, _clamp(data.get("goal_progress"), default=0), done, prev_done, ending)
     cps = []
     for c in (data.get("checkpoints") or [])[:3]:
         if not isinstance(c, dict) or c.get("type") not in CP_TYPES:
@@ -141,7 +181,7 @@ def parse(raw: str, s: dict, turn_index: int, user_text: str = "", valid_ids: se
             "defensiveness": _clamp(emo.get("defensiveness")),
         },
         "reason": (data.get("reason") or "").strip(),
-        "goal_progress": _clamp(data.get("goal_progress"), default=0),
+        "goal_progress": progress,
         "checklist_done": done,
         "checkpoints": cps,
         "mentions": _mentions(data.get("mentions"), valid_ids or set(), s["id"]),

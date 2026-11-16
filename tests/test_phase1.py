@@ -188,3 +188,26 @@ def test_custom_line_audio(client, fake_openai, tmp_path):
     r = client.get("/api/tts/line/kim/opening", headers=H).json()
     assert r["url"] == "/assets/audio/custom/kim/opening.mp3" and r["custom"] and r["mood"] == "calm"
     assert not [k for k, _ in fake_openai if k == "tts"]
+
+
+def test_goal_checklist_matching_and_carry(client, fake_openai):
+    """체크리스트: 번호·바꿔 쓴 문구도 인정하고, 이전 턴 달성 항목은 유지, 비율보다 낮게 표시하지 않음."""
+    from app.prompts import character
+    from app import scenarios
+    s = scenarios.get("kim")
+    cl = s["checklist"]
+    assert character.match_checklist([1, "3"], cl) == [cl[0], cl[2]]
+    assert character.match_checklist(["내 기여를 구체적으로 밝혔다"], cl) == [cl[0]]       # 바꿔 쓴 문구
+    assert character.match_checklist(["관계 해치지 않는 제안"], cl) == [cl[1]]
+    assert character.match_checklist(["없는 항목", 9, True], cl) == []
+    p, done = character.goal_state(s, 5, [cl[1]], [cl[0]], None)       # 이전 달성 유지
+    assert done == [cl[0], cl[1]] and p >= 66
+    assert character.goal_state(s, 40, [], [], "success") == (100, cl)  # 성공이면 100
+
+    from conftest import TURN_OVERRIDE
+    TURN_OVERRIDE.update({"goal_progress": 0, "checklist_done": [2]})
+    body = {"scenario_id": "kim", "history": [], "user_text": "제가 3주간 만든 보고서입니다.", "goal_done": [cl[0]]}
+    d = client.post("/api/turn", json=body, headers=H).json()
+    assert d["checklist_done"] == [cl[0], cl[1]] and d["goal_progress"] >= 66
+    sys_prompt = [kw for k, kw in fake_openai if k == "chat"][-1]["messages"][0]["content"]
+    assert "1) 내 기여를 구체적으로 밝히기" in sys_prompt and "[이미 달성한 체크리스트]" in sys_prompt

@@ -198,6 +198,7 @@ export class Conversation {
           method: "POST",
           body: { scenario_id: this.s.id, history: prior, user_text: myText, nag_count: nag, tone, face,
                   difficulty: this.difficulty, session_id: this.sessionId,
+                  goal_done: (this.lastResult && this.lastResult.checklist_done) || [],
                   prev_emotion: this.prevEmotion, game_session: this.gameSession },
         });
         this.guard();
