@@ -35,6 +35,16 @@ function go(view) {
   $("state-panel").hidden = !(view === "talk" || view === "result");
   scrollTo({ top: 0, behavior: "smooth" });
 }
+// 왼쪽 위 로고·말투 → 처음 화면(상대 고르기). 대화 중이면 한 번 묻는다.
+function goHome() {
+  if (!$("view-talk").hidden && !confirm("대화를 그만두고 처음 화면으로 갈까요?")) return;
+  stopConversation();
+  closeCamera();
+  document.querySelectorAll("dialog[open]").forEach((d) => d.close());
+  go("select");
+}
+$("brand-home").addEventListener("click", goHome);
+$("brand-home").addEventListener("keydown", (e) => { if (e.key === "Enter") goHome(); });
 document.addEventListener("click", (e) => {
   const t = e.target.closest("[data-go]");
   if (t) { stopConversation(); go(t.dataset.go); }
