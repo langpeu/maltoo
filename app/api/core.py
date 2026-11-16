@@ -1,9 +1,12 @@
 """Phase 0 라우터: 공개 설정, 키 확인, 비용 집계, 한도 설정, 연결 테스트."""
 
+import json
+from datetime import datetime
+
 from fastapi import APIRouter, Depends, HTTPException, Request
 from pydantic import BaseModel
 
-from .. import usage
+from .. import db, usage
 from ..config import get_config
 from ..openai_client import SESSION_HEADER, Caller, get_caller
 
@@ -61,3 +64,33 @@ def test_chat(caller: Caller = Depends(get_caller)):
         feature="chat",
     )
     return {"reply": text.strip(), "usage": usage.summary(caller.key_id, caller.session_id)}
+
+
+# ---------- 평소 목소리(기준선) ----------
+
+class BaselineIn(BaseModel):
+    tone: dict
+
+
+@router.get("/baseline")
+def get_baseline():
+    with db.connect() as con:
+        row = con.execute("SELECT tone, created_at FROM baseline ORDER BY id DESC LIMIT 1").fetchone()
+    if not row or not row["tone"]:
+        return {"tone": None}
+    return {"tone": json.loads(row["tone"]), "created_at": row["created_at"]}
+
+
+@router.post("/baseline")
+def save_baseline(body: BaselineIn):
+    t = body.tone
+    need = ("db_med", "db_p90", "pitch_med", "range_st", "rate")
+    if not all(isinstance(t.get(k), (int, float)) for k in need):
+        raise HTTPException(400, {"code": "bad_baseline", "message": "측정값이 올바르지 않습니다. 다시 측정해 주세요."})
+    if not (50 <= t["pitch_med"] <= 450):
+        raise HTTPException(400, {"code": "bad_baseline", "message": "목소리 높이를 인식하지 못했습니다. 조용한 곳에서 다시 측정해 주세요."})
+    tone = {k: t[k] for k in need} | {"measured": True}
+    with db.connect() as con:
+        con.execute("INSERT INTO baseline(created_at, tone) VALUES(?, ?)",
+                    (datetime.now().isoformat(timespec="seconds"), json.dumps(tone)))
+    return {"tone": tone}

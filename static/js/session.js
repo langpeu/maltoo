@@ -3,12 +3,14 @@
 
 import { api, sessionId } from "./api.js";
 import { playUrl } from "./audio/mic.js";
+import { analyzeFrame, ToneTracker } from "./audio/tone.js";
 
 class Stopped extends Error {}
 
 export class Conversation {
-  constructor(scenario, { mic, ui }) {
+  constructor(scenario, { mic, ui, baseline = null }) {
     this.s = scenario;
+    this.baseline = baseline;
     this.mic = mic;
     this.ui = ui;
     this.history = [];
@@ -111,10 +113,26 @@ export class Conversation {
       for (;;) {
         // 1) 3초 안에 대답 (재촉 최대 2회)
         let nag = 0;
-        let rec;
+        let rec, tracker;
+        const turnAudio = { blob: null }; // 체크포인트 핀에서 "이 구간 듣기"용
         for (;;) {
           this.ui.status("listen");
-          rec = await this.mic.listen({ onTick: (t) => this.ui.listenTick(t) });
+          tracker = new ToneTracker(this.baseline, {
+            threshold: this.mic.threshold,
+            onCheckpoint: (c) => this.ui.toneCheckpoint(c, { ref: turnAudio, t: c.t / 1000 }),
+          });
+          let lastLive = 0;
+          rec = await this.mic.listen({
+            onTick: (t) => {
+              const f = tracker.push(analyzeFrame(t.buf, t.sampleRate), t.elapsed);
+              this.ui.listenTick({ ...t, st: f.voiced && tracker.pitchRef ? f.st : null,
+                                   hot: f.db > tracker.b.db_p90 + 4 });
+              if (t.spoke && t.elapsed - lastLive > 150) {
+                lastLive = t.elapsed;
+                this.ui.toneLive(tracker.live(t.elapsed));
+              }
+            },
+          });
           this.guard();
           if (rec.spoke) break;
           nag += 1;
@@ -138,7 +156,10 @@ export class Conversation {
         const tr = await upload("/api/transcribe", fd);
         this.guard();
         const myText = tr.text || "";
-        this.ui.meSays(myText || "(알아듣지 못함)", { nag, seconds: rec.seconds });
+        turnAudio.blob = rec.blob;
+        const tone = tracker.summary({ latency_s: (tracker.speechStart || 0) / 1000, nag });
+        this.ui.toneLive({ arousal: tone.arousal, warmth: tone.warmth });
+        const myLog = this.ui.meSays(myText || "(알아듣지 못함)", { nag, seconds: rec.seconds, tone });
         this.ui.refreshUsage();
 
         // 3) 상대 응답 + 판정
@@ -146,14 +167,14 @@ export class Conversation {
         this.history.push({ speaker: "me", text: myText });
         const r = await api("/api/turn", {
           method: "POST",
-          body: { scenario_id: this.s.id, history: prior, user_text: myText, nag_count: nag },
+          body: { scenario_id: this.s.id, history: prior, user_text: myText, nag_count: nag, tone },
         });
         this.guard();
         await reacting;
         this.guard();
         this.lastResult = r;
         this.mood = Conversation.moodOf(r.emotion);
-        this.ui.turnResult(r);
+        this.ui.turnResult(r, myLog);
         if (r.ending) {
           await this.speakEnding(r.ending, r.reply);
           return this.finish(r);

@@ -63,6 +63,12 @@ class FakeOpenAI:
                                     "reason": "변명처럼 들려서 분노가 올랐다",
                                     "goal_progress": 20,
                                     "checklist_done": ["사실을 차분히 전달하기", "없는 항목"],
+                                    "checkpoints": [
+                                        {"type": "good", "text_span": "2주 전에", "note": "사실을 구체적으로 짚었다"},
+                                        {"type": "aggressive", "text_span": "원문에 없는 말", "note": "x"},
+                                        {"type": "weird", "text_span": "보고", "note": "x"},
+                                    ],
+                                    "tone_feedback": "말은 차분했지만 끝 억양이 뚝 떨어져 단정적으로 들렸다",
                                     "ending": None,
                                 }, ensure_ascii=False)
                         choices = [_C()]

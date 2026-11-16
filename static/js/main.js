@@ -1,7 +1,8 @@
 import { api, keyStore } from "./api.js";
 import { Mic } from "./audio/mic.js";
 import { Conversation } from "./session.js";
-import { clearBand, initBand, pushLevel } from "./ui/band.js";
+import { addPin, clearBand, initBand, pushLevel } from "./ui/band.js";
+import { analyzeFrame, computeBaseline, ToneTracker } from "./audio/tone.js";
 import { renderCost, resetCost } from "./ui/cost-panel.js";
 import {
   exprFromEmotion, framesOf, hasPhoto, setBreathing, setExpression, setMouth, setPortraitFrames, setSpeaking, showCharacter,
@@ -25,7 +26,7 @@ function updateKeyHints() {
   $("settings-key-hint").textContent = keyStore.hint();
 }
 function go(view) {
-  for (const v of ["select", "brief", "talk", "result"]) $(`view-${v}`).hidden = v !== view;
+  for (const v of ["select", "brief", "baseline", "talk", "result"]) $(`view-${v}`).hidden = v !== view;
   $("state-panel").hidden = !(view === "talk" || view === "result");
   scrollTo({ top: 0, behavior: "smooth" });
 }
@@ -63,7 +64,12 @@ async function loadScenarios() {
 }
 document.addEventListener("click", (e) => {
   const card = e.target.closest(".scenario");
-  if (card) openBrief(scenarios.find((s) => s.id === card.dataset.id));
+  if (!card) return;
+  const s = scenarios.find((x) => x.id === card.dataset.id);
+  if (!baseline && !baselineSkipped) {
+    current = s;
+    openBaseline("before-brief");
+  } else openBrief(s);
 });
 
 function openBrief(s) {
@@ -80,6 +86,7 @@ function openBrief(s) {
   $("brief-checklist").innerHTML = s.checklist.map((x) => `<li>${esc(x)}</li>`).join("");
   $("brief-fail").textContent = `실패 조건: ${s.fail_conditions.join(" / ")}`;
   $("brief-hint").textContent = "";
+  renderBaselineLine();
   go("brief");
 }
 
@@ -100,7 +107,8 @@ $("btn-start").addEventListener("click", async () => {
     await mic.open();
     $("brief-hint").textContent = "주변 소음을 확인하는 중입니다. 1초만 조용히 해주세요…";
     await mic.calibrate();
-    startTalk();
+    if (!baseline && !baselineSkipped) openBaseline("before-talk");
+    else startTalk();
   } catch (e) {
     $("brief-hint").textContent = e.name === "NotAllowedError"
       ? "마이크 권한이 거부되었습니다. 주소창 왼쪽 자물쇠 아이콘에서 허용해 주세요."
@@ -131,7 +139,10 @@ function startTalk() {
   go("talk");
 
   talkUI._ttsWarned = false;
-  convo = new Conversation(s, { mic, ui: talkUI });
+  $("tone-base").textContent = baseline ? "평소 목소리 기준" : "기준 미측정";
+  setMeters({ arousal: 50, warmth: 50 });
+  $("tone-note").textContent = "말하는 동안 실시간으로 움직입니다.";
+  convo = new Conversation(s, { mic, ui: talkUI, baseline });
   convo.run();
 }
 
@@ -141,7 +152,185 @@ function addLog(cls, html) {
   li.innerHTML = html;
   $("talk-log").appendChild(li);
   li.scrollIntoView({ block: "nearest" });
+  return li;
 }
+
+// ---------- 톤 표시 ----------
+function setMeters({ arousal, warmth }) {
+  $("m-arousal").style.left = `${arousal}%`;
+  $("m-warmth").style.left = `${warmth}%`;
+  if (arousal >= 70) $("tone-note").textContent = "목소리가 격앙되게 들립니다. 한 박자 늦추고 낮춰 보세요.";
+  else if (warmth <= 30) $("tone-note").textContent = "차갑게 들립니다. 문장 끝을 살짝 올려 보세요.";
+}
+
+const END_LABEL = { falling_sharp: "끝 억양 뚝 ⤵", falling: "끝 억양 내림", flat: "끝 억양 평평", rising: "끝 억양 올림 ⤴" };
+function toneLine(t) {
+  const parts = [];
+  if (t.has_baseline) {
+    if (Math.abs(t.loud_db) >= 2) parts.push(`음량 ${t.loud_db > 0 ? "+" : ""}${t.loud_db}dB`);
+    if (Math.abs(t.pitch_shift_st) >= 1.5) parts.push(`음높이 ${t.pitch_shift_st > 0 ? "+" : ""}${t.pitch_shift_st}반음`);
+  }
+  if (Math.abs(t.rate_ratio - 1) >= 0.15) parts.push(`속도 ${t.rate_ratio}배`);
+  parts.push(END_LABEL[t.end] || "");
+  const icons = (t.checkpoints || []).map((c) => ({ loud: "🔊", high: "📈", fast: "⏩", fall: "⤵", stress: "💥", sigh: "😮‍💨" }[c.type])).join("");
+  return `🎙 ${parts.filter(Boolean).join(" · ")}${icons ? " · " + icons : ""}`;
+}
+
+const TEXT_CP = { aggressive: "💢 공격적", excuse: "🛡 변명조", cold: "🧊 차가움", sarcasm: "😏 비꼼", good: "✅ 좋은 표현" };
+function markTextCheckpoints(li, cps) {
+  const said = li.querySelector(".said");
+  if (!said || !cps.length) return;
+  let html = esc(said.textContent);
+  for (const c of cps) {
+    const span = esc(c.text_span || "");
+    if (span && html.includes(span)) html = html.replace(span, `<mark class="hl ${c.type}" title="${esc(c.note || "")}">${span}</mark>`);
+  }
+  said.innerHTML = html;
+  const ul = document.createElement("ul");
+  ul.className = "text-cps";
+  ul.innerHTML = cps.map((c) => `<li>${TEXT_CP[c.type] || c.type} — ${esc(c.note || "")}</li>`).join("");
+  li.appendChild(ul);
+}
+
+// ---------- 평소 목소리 ----------
+let baseline = null;
+let baselineSkipped = false;
+let blMode = "before-talk";
+let blCapture = null;
+
+async function loadBaseline() {
+  try { baseline = (await api("/api/baseline")).tone; } catch { baseline = null; }
+  renderBaselineLine();
+}
+
+function renderBaselineLine() {
+  const t = baseline
+    ? `🎙 평소 목소리: 측정됨 (음높이 약 ${Math.round(baseline.pitch_med)}Hz) · <a id="link-bl">다시 측정</a>`
+    : `🎙 평소 목소리: 아직 측정 안 함 — 시작하면 30초 측정부터 합니다.`;
+  $("brief-baseline").innerHTML = t;
+  const a = $("link-bl");
+  if (a) a.onclick = async () => {
+    try { await mic.open(); await mic.calibrate(); openBaseline("before-talk"); }
+    catch (e) { $("brief-hint").textContent = `마이크를 열 수 없습니다: ${e.message}`; }
+  };
+  $("settings-baseline").textContent = baseline
+    ? `측정됨 · 음높이 ${Math.round(baseline.pitch_med)}Hz · 속도 ${baseline.rate}음절/초` : "아직 측정하지 않았습니다.";
+}
+
+let camStream = null;
+async function openCamera() {
+  try {
+    camStream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480, facingMode: "user" } });
+    $("bl-video").srcObject = camStream;
+    $("bl-cam-off").hidden = true;
+  } catch {
+    $("bl-cam-off").hidden = false;
+    $("bl-cam-off").textContent = "📷 카메라를 쓸 수 없습니다 (목소리만 측정)";
+  }
+}
+function closeCamera() {
+  if (camStream) camStream.getTracks().forEach((t) => t.stop());
+  camStream = null;
+  $("bl-video").srcObject = null;
+}
+function highlightLine(progress) {
+  const items = [...document.querySelectorAll("#bl-lines li")];
+  const k = Math.min(items.length - 1, Math.floor(progress * items.length));
+  items.forEach((li, i) => { li.classList.toggle("now", i === k); li.classList.toggle("done", i < k); });
+}
+
+function openBaseline(mode) {
+  blMode = mode;
+  highlightLine(0);
+  document.querySelectorAll("#bl-lines li").forEach((li) => li.classList.remove("now", "done"));
+  openCamera();
+  $("bl-status").textContent = '준비되면 "측정 시작"을 누르세요';
+  $("bl-sec").textContent = "0 / 10초";
+  $("bl-bar").style.width = "0%";
+  $("bl-result").hidden = true;
+  showError($("bl-error"), "");
+  $("btn-bl-start").disabled = false;
+  $("btn-bl-done").disabled = true;
+  go("baseline");
+}
+
+$("btn-bl-start").addEventListener("click", async () => {
+  showError($("bl-error"), "");
+  $("btn-bl-start").disabled = true;
+  try {
+    await mic.open();
+    if (!mic.calibrated) {
+      $("bl-status").textContent = "주변 소음을 확인하는 중입니다. 1초만 조용히 해주세요…";
+      await mic.calibrate();
+    }
+  } catch (e) {
+    $("btn-bl-start").disabled = false;
+    return showError($("bl-error"), `마이크를 열 수 없습니다: ${e.message}`);
+  }
+  $("bl-status").textContent = "🎙 듣고 있습니다. 편안하게 읽어주세요…";
+  const tracker = new ToneTracker(null, { threshold: mic.threshold });
+  const TARGET = 10; // 유성음 10초 모이면 자동 완료
+  blCapture = mic.capture({
+    maxMs: 30000,
+    onTick: (t) => {
+      const f = tracker.push(analyzeFrame(t.buf, t.sampleRate), t.elapsed);
+      const voiced = tracker.frames.filter((x) => x.voiced).length * 0.03;
+      $("bl-sec").textContent = `${voiced.toFixed(1)} / ${TARGET}초`;
+      $("bl-bar").style.width = `${Math.min(100, (voiced / TARGET) * 100)}%`;
+      $("bl-level").style.width = `${Math.min(100, t.level * 400)}%`;
+      $("btn-bl-done").disabled = voiced < 6;
+      highlightLine(Math.min(0.99, voiced / TARGET));
+      if (voiced >= TARGET) blCapture.stop();
+      void f;
+    },
+  });
+  const cap = blCapture;
+  await cap.done;
+  if (cap.skipped) return;
+  await finishBaseline(tracker);
+});
+
+$("btn-bl-done").addEventListener("click", () => blCapture && blCapture.stop());
+
+async function finishBaseline(tracker) {
+  $("btn-bl-done").disabled = true;
+  const b = computeBaseline(tracker.frames);
+  if (!b) {
+    $("btn-bl-start").disabled = false;
+    $("bl-status").textContent = "다시 시도해 주세요";
+    return showError($("bl-error"), "목소리가 충분히 들리지 않았습니다. 마이크 가까이에서 조금 더 길게 읽어주세요.");
+  }
+  try {
+    baseline = (await api("/api/baseline", { method: "POST", body: { tone: b } })).tone;
+  } catch (e) {
+    $("btn-bl-start").disabled = false;
+    return showError($("bl-error"), e.message);
+  }
+  $("bl-status").textContent = "✅ 측정 완료";
+  $("bl-result").innerHTML = `
+    <li>평소 음높이<b>${Math.round(b.pitch_med)}Hz</b></li>
+    <li>음높이 변화 폭<b>${b.range_st}반음</b></li>
+    <li>말 속도<b>${b.rate}음절/초</b></li>`;
+  $("bl-result").hidden = false;
+  renderBaselineLine();
+  setTimeout(afterBaseline, 1500);
+}
+
+function afterBaseline() {
+  closeCamera();
+  if (blMode === "before-talk" && current) startTalk();
+  else if (blMode === "before-brief" && current) {
+    toast(baseline ? "내 기본값을 저장했습니다." : "일반 기본값으로 분석합니다. 설정에서 언제든 측정할 수 있습니다.", 4000);
+    openBrief(current);
+  } else go("select");
+}
+
+
+$("btn-bl-skip").addEventListener("click", () => {
+  if (blCapture) { blCapture.skipped = true; blCapture.stop(); }
+  baselineSkipped = true;
+  afterBaseline();
+});
 
 function setStatus(kind, text) {
   const st = $("talk-status");
@@ -192,8 +381,8 @@ const talkUI = {
     pushLevel(level, "npc");
     setMouth(level);
   },
-  listenTick({ level, threshold, spoke, remain }) {
-    pushLevel(level, "me", threshold);
+  listenTick({ level, threshold, spoke, remain, st, hot }) {
+    pushLevel(level, "me", threshold, { st, hot });
     if (spoke) {
       $("countdown").hidden = true;
       $("status-text").textContent = "🎙 듣고 있습니다… (멈추면 1.5초 뒤 종료)";
@@ -207,14 +396,21 @@ const talkUI = {
   nagged(n) {
     addLog("nag", `<small>⏰ 3초 안에 대답하지 않음 (재촉 ${n}/2)</small>`);
   },
-  meSays(text, { nag, seconds }) {
+  meSays(text, { nag, seconds, tone }) {
     myTurns += 1;
     $("turn-count").textContent = `답변 ${myTurns} / 5`;
     const meta = [`${(seconds || 0).toFixed(1)}초`];
     if (nag) meta.push(`재촉 ${nag}번 받음`);
-    addLog("me", `<small>나 · ${meta.join(" · ")}</small>${esc(text)}`);
+    return addLog("me", `<small>나 · ${meta.join(" · ")}</small><span class="said">${esc(text)}</span>` +
+      (tone ? `<span class="tone-line">${esc(toneLine(tone))}</span>` : ""));
   },
-  turnResult(r) {
+  toneCheckpoint(c, audio) {
+    addPin({ icon: c.icon, title: c.label, note: c.note, audio });
+  },
+  toneLive(sc) { setMeters(sc); },
+  turnResult(r, li) {
+    if (li) markTextCheckpoints(li, r.checkpoints || []);
+    if (r.tone_feedback) $("tone-note").textContent = r.tone_feedback;
     setGauges(r.emotion, r.reason, r.goal_progress, r.checklist_done);
     setExpression(exprFromEmotion(r.emotion));
   },
@@ -282,7 +478,7 @@ $("key-form").addEventListener("submit", async (e) => {
     resetCost();
     await refreshUsage();
     toast("키를 확인했습니다. 이 브라우저에만 저장됩니다.");
-    checkSetup();
+    checkSetup().catch(() => {});
   } catch (err) {
     showError($("key-error"), err.message);
   } finally {
@@ -304,6 +500,12 @@ $("btn-settings").addEventListener("click", async () => {
   $("settings-modal").showModal();
 });
 $("btn-settings-close").addEventListener("click", () => $("settings-modal").close());
+$("btn-bl-remeasure").addEventListener("click", async () => {
+  $("settings-modal").close();
+  stopConversation();
+  try { await mic.open(); await mic.calibrate(); } catch (e) { return toast(`마이크를 열 수 없습니다: ${e.message}`); }
+  openBaseline("settings");
+});
 $("btn-limits-save").addEventListener("click", async () => {
   try {
     await api("/api/settings/limits", {
@@ -440,9 +642,11 @@ $("btn-setup-later").addEventListener("click", () => $("setup-modal").close());
 $("btn-setup-open").addEventListener("click", () => { $("settings-modal").close(); checkSetup({ force: true }); });
 
 // ---------- 시작 ----------
-initBand($("band-canvas"));
+initBand($("band-canvas"), $("band-tip"));
+loadBaseline();
 updateKeyHints();
 loadScenarios().catch(() => toast("시나리오를 불러오지 못했습니다."));
 api("/api/config").then((c) => { krwRate = c.krw_per_usd; }).catch(() => {});
-if (!keyStore.get()) openKeyModal(); else { refreshUsage(); checkSetup().catch(() => {}); }
+if (!keyStore.get()) openKeyModal();
+else { refreshUsage(); checkSetup().catch(() => {}); }
 setInterval(refreshUsage, 30000);

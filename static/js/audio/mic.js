@@ -44,6 +44,7 @@ export class Mic {
     samples.sort((a, b) => a - b);
     const noise = samples[Math.floor(samples.length * 0.8)] || 0.005;
     this.threshold = Math.min(0.08, Math.max(0.015, noise * 3.5));
+    this.calibrated = true;
     return { noise, threshold: this.threshold };
   }
 
@@ -88,7 +89,8 @@ export class Mic {
         }
 
         const remain = spoke ? null : Math.max(0, startTimeoutMs - elapsed);
-        onTick && onTick({ level: lv, threshold: this.threshold, spoke, remain, elapsed });
+        onTick && onTick({ level: lv, threshold: this.threshold, spoke, remain, elapsed,
+                           buf: this.buf, sampleRate: this.ctx.sampleRate });
 
         if (!spoke && elapsed >= startTimeoutMs) return finish({ spoke: false });
         if (spoke && now - lastVoice >= endSilenceMs) return finish({ spoke: true, seconds: elapsed / 1000 });
@@ -97,6 +99,23 @@ export class Mic {
 
       rec.start(250);
     });
+  }
+
+  // 평소 목소리 측정용: 정해진 시간(또는 stop() 호출 전)까지 프레임 전달
+  capture({ maxMs = 30000, onTick } = {}) {
+    let stop;
+    const done = new Promise((resolve) => {
+      const t0 = performance.now();
+      const timer = setInterval(() => {
+        const elapsed = performance.now() - t0;
+        const lv = this.level();
+        onTick && onTick({ level: lv, threshold: this.threshold, elapsed, buf: this.buf, sampleRate: this.ctx.sampleRate });
+        if (elapsed >= maxMs) finish();
+      }, 30);
+      const finish = () => { clearInterval(timer); resolve(); };
+      stop = finish;
+    });
+    return { done, stop: () => stop() };
   }
 
   close() {
