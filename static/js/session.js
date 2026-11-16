@@ -8,8 +8,9 @@ import { analyzeFrame, ToneTracker } from "./audio/tone.js";
 class Stopped extends Error {}
 
 export class Conversation {
-  constructor(scenario, { mic, ui, baseline = null }) {
+  constructor(scenario, { mic, ui, baseline = null, face = null }) {
     this.s = scenario;
+    this.face = face; // { cam, tracker } | null
     this.baseline = baseline;
     this.mic = mic;
     this.ui = ui;
@@ -37,6 +38,7 @@ export class Conversation {
     try {
       const r = await api(`/api/tts/line/${this.s.id}/${id}?cached_only=true`);
       if (this.stopped) return;
+      this.phase("listen");
       this.ui.npcReact(r.text);
       await playUrl(r.url, { onTick: (t) => this.ui.npcTick(t) });
     } catch { /* 추임새는 없어도 진행 */ }
@@ -53,6 +55,8 @@ export class Conversation {
   }
 
   stop() { this.stopped = true; }
+
+  phase(p) { if (this.face) this.face.cam.phase = p; }
 
   guard() { if (this.stopped) throw new Stopped(); }
 
@@ -86,6 +90,7 @@ export class Conversation {
   }
 
   async deliver(text, url) {
+    this.phase("listen");
     this.ui.status("npc");
     if (url) {
       this.ui.npcSays(text);
@@ -109,6 +114,7 @@ export class Conversation {
 
   async run() {
     try {
+      if (this.face) this.face.tracker.beginTurn();
       await this.speakFixed("opening");
       for (;;) {
         // 1) 3초 안에 대답 (재촉 최대 2회)
@@ -117,6 +123,7 @@ export class Conversation {
         const turnAudio = { blob: null }; // 체크포인트 핀에서 "이 구간 듣기"용
         for (;;) {
           this.ui.status("listen");
+          this.phase("silence");
           tracker = new ToneTracker(this.baseline, {
             threshold: this.mic.threshold,
             onCheckpoint: (c) => this.ui.toneCheckpoint(c, { ref: turnAudio, t: c.t / 1000 }),
@@ -124,6 +131,7 @@ export class Conversation {
           let lastLive = 0;
           rec = await this.mic.listen({
             onTick: (t) => {
+              if (t.spoke) this.phase("speak");
               const f = tracker.push(analyzeFrame(t.buf, t.sampleRate), t.elapsed);
               this.ui.listenTick({ ...t, st: f.voiced && tracker.pitchRef ? f.st : null,
                                    hot: f.db > tracker.b.db_p90 + 4 });
@@ -148,6 +156,9 @@ export class Conversation {
         }
 
         // 2) 음성 인식 (동시에 상대 추임새를 바로 재생해서 공백을 없앰)
+        this.phase("idle");
+        const face = this.face ? this.face.tracker.summary() : null;
+        if (this.face) this.face.tracker.beginTurn();
         this.ui.status("analyze");
         const reacting = this.react();
         const fd = new FormData();
@@ -159,7 +170,7 @@ export class Conversation {
         turnAudio.blob = rec.blob;
         const tone = tracker.summary({ latency_s: (tracker.speechStart || 0) / 1000, nag });
         this.ui.toneLive({ arousal: tone.arousal, warmth: tone.warmth });
-        const myLog = this.ui.meSays(myText || "(알아듣지 못함)", { nag, seconds: rec.seconds, tone });
+        const myLog = this.ui.meSays(myText || "(알아듣지 못함)", { nag, seconds: rec.seconds, tone, face });
         this.ui.refreshUsage();
 
         // 3) 상대 응답 + 판정
@@ -167,7 +178,7 @@ export class Conversation {
         this.history.push({ speaker: "me", text: myText });
         const r = await api("/api/turn", {
           method: "POST",
-          body: { scenario_id: this.s.id, history: prior, user_text: myText, nag_count: nag, tone },
+          body: { scenario_id: this.s.id, history: prior, user_text: myText, nag_count: nag, tone, face },
         });
         this.guard();
         await reacting;

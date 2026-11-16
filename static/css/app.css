@@ -390,3 +390,20 @@ code { background: var(--yellow-soft); border: 1px solid var(--ink); border-radi
 .read-list li.now { background: var(--yellow-soft); border-width: 3px; }
 .read-list li.done { opacity: .5; }
 .log .text-cps li { border: 0; padding: 0; max-width: none; background: none; margin: 0; }
+
+/* ========== Phase 3: 표정 ========== */
+.selfview { position: absolute; right: 12px; bottom: 12px; width: 30%; aspect-ratio: 4 / 3;
+  border: 3px solid var(--ink); border-radius: 10px; overflow: hidden; background: #222; box-shadow: 3px 3px 0 var(--ink); }
+.selfview video { width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); display: block; }
+.selfview[hidden], .self-show[hidden] { display: none; }
+.self-flag { position: absolute; left: 6px; top: 4px; font-size: 26px; text-shadow: 0 0 4px #fff; }
+.self-hide { position: absolute; right: 4px; bottom: 4px; font: inherit; font-size: 11px; font-weight: 800;
+  border: 2px solid var(--ink); border-radius: 6px; background: var(--paper); cursor: pointer; padding: 1px 6px; }
+.self-show { position: absolute; right: 12px; bottom: 12px; font: inherit; font-size: 12px; font-weight: 800;
+  border: 2px solid var(--ink); border-radius: 8px; background: var(--paper); cursor: pointer; padding: 4px 8px; }
+.captures { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; margin-bottom: 16px; }
+.capture { border: 2px solid var(--ink); border-radius: 10px; overflow: hidden; font-size: 12px; background: var(--paper); }
+.capture img { width: 100%; display: block; }
+.capture div { padding: 6px 8px; line-height: 1.4; }
+.capture a { color: var(--ink); font-weight: 800; }
+.face-line { display: block; font-size: 12px; color: var(--muted); }

@@ -88,7 +88,7 @@
           <div class="bl-cam">
             <video id="bl-video" autoplay muted playsinline></video>
             <div class="bl-cam-off" id="bl-cam-off">📷 카메라 꺼짐</div>
-            <p class="small muted" id="bl-cam-note">얼굴이 화면 가운데 오고, 밝은 곳이면 좋습니다. (표정 기본값은 다음 업데이트에서 함께 측정)</p>
+            <p class="small muted" id="bl-cam-note">얼굴이 화면 가운데 오고, 밝은 곳이면 좋습니다. 읽는 동안 평소 표정도 함께 측정합니다. 영상은 저장하거나 보내지 않습니다.</p>
           </div>
           <ol class="read-list" id="bl-lines">
             <li data-k="평서">안녕하세요. 저는 랑프두잇 과장입니다.</li>
@@ -124,6 +124,12 @@
             <img class="p-img p-closed" id="p-closed" alt="">
             <img class="p-img p-talk" id="p-talk" alt="">
             <div class="p-tag"><b id="talk-name">이름</b><span id="p-expr">평온</span></div>
+            <div class="selfview" id="selfview" hidden>
+              <video id="self-video" autoplay muted playsinline></video>
+              <span class="self-flag" id="self-flag"></span>
+              <button class="self-hide" id="btn-self-hide" type="button" title="연습 중 내 얼굴을 보면 평소와 다르게 행동하기 쉽습니다">숨기기</button>
+            </div>
+            <button class="self-show" id="btn-self-show" type="button" hidden>📷 내 화면 보기</button>
           </div>
           <div class="talk-side">
             <div class="bubble" id="npc-bubble">…</div>
@@ -150,6 +156,10 @@
           <b id="result-progress-text">0%</b>
         </div>
         <ul class="checklist" id="result-checklist"></ul>
+        <div id="result-captures-wrap" hidden>
+          <h3>📸 표정 하이라이트 <small class="muted">(이 브라우저에만 있고 서버로 보내지 않습니다)</small></h3>
+          <div class="captures" id="result-captures"></div>
+        </div>
         <h3>대화 기록</h3>
         <ol class="log" id="result-log"></ol>
         <p class="muted small">말투·톤·표정 상세 분석과 교정 안내는 다음 단계에서 추가됩니다.</p>
@@ -174,6 +184,8 @@
         <div class="meter"><span>차분</span><div class="meter-track"><div class="meter-dot" id="m-arousal"></div></div><span>격앙</span></div>
         <div class="meter"><span>차가움</span><div class="meter-track warm"><div class="meter-dot" id="m-warmth"></div></div><span>따뜻함</span></div>
         <p class="reason small" id="tone-note">말하는 동안 실시간으로 움직입니다.</p>
+        <div class="panel-head tone-head"><h2>🙂 내 표정</h2><span class="small muted" id="face-base"></span></div>
+        <p class="reason small" id="face-note">카메라를 켜면 표정도 함께 분석합니다.</p>
       </section>
       <section class="card panel-block" id="cost-panel">
         <div class="panel-head">

@@ -3,11 +3,13 @@
 import json
 from datetime import datetime
 
+import httpx
+
 from fastapi import APIRouter, Depends, HTTPException, Request
 from pydantic import BaseModel
 
 from .. import db, usage
-from ..config import get_config
+from ..config import ROOT, get_config
 from ..openai_client import SESSION_HEADER, Caller, get_caller
 
 router = APIRouter(prefix="/api")
@@ -21,6 +23,7 @@ def public_config():
         "models": cfg["models"],
         "krw_per_usd": cfg["krw_per_usd"],
         "limits": usage.limits(),
+        "face": cfg.get("face", {}),
     }
 
 
@@ -69,28 +72,66 @@ def test_chat(caller: Caller = Depends(get_caller)):
 # ---------- 평소 목소리(기준선) ----------
 
 class BaselineIn(BaseModel):
-    tone: dict
+    tone: dict | None = None
+    face: dict | None = None
 
 
 @router.get("/baseline")
 def get_baseline():
     with db.connect() as con:
-        row = con.execute("SELECT tone, created_at FROM baseline ORDER BY id DESC LIMIT 1").fetchone()
-    if not row or not row["tone"]:
-        return {"tone": None}
-    return {"tone": json.loads(row["tone"]), "created_at": row["created_at"]}
+        row = con.execute("SELECT tone, face, created_at FROM baseline ORDER BY id DESC LIMIT 1").fetchone()
+    if not row:
+        return {"tone": None, "face": None}
+    return {"tone": json.loads(row["tone"]) if row["tone"] else None,
+            "face": json.loads(row["face"]) if row["face"] else None,
+            "created_at": row["created_at"]}
+
+
+FACE_KEYS = ("brow", "frown", "press", "smile", "asym", "nose_ratio", "blink_per_min")
+
+
+def _clean_face(f: dict | None) -> dict | None:
+    if not f:
+        return None
+    if not all(isinstance(f.get(k), (int, float)) for k in FACE_KEYS):
+        raise HTTPException(400, {"code": "bad_face", "message": "표정 측정값이 올바르지 않습니다."})
+    return {k: f[k] for k in FACE_KEYS} | {"measured": True}
 
 
 @router.post("/baseline")
 def save_baseline(body: BaselineIn):
-    t = body.tone
+    t = body.tone or {}
     need = ("db_med", "db_p90", "pitch_med", "range_st", "rate")
     if not all(isinstance(t.get(k), (int, float)) for k in need):
         raise HTTPException(400, {"code": "bad_baseline", "message": "측정값이 올바르지 않습니다. 다시 측정해 주세요."})
     if not (50 <= t["pitch_med"] <= 450):
         raise HTTPException(400, {"code": "bad_baseline", "message": "목소리 높이를 인식하지 못했습니다. 조용한 곳에서 다시 측정해 주세요."})
     tone = {k: t[k] for k in need} | {"measured": True}
+    face = _clean_face(body.face)
     with db.connect() as con:
-        con.execute("INSERT INTO baseline(created_at, tone) VALUES(?, ?)",
-                    (datetime.now().isoformat(timespec="seconds"), json.dumps(tone)))
-    return {"tone": tone}
+        con.execute("INSERT INTO baseline(created_at, tone, face) VALUES(?, ?, ?)",
+                    (datetime.now().isoformat(timespec="seconds"), json.dumps(tone),
+                     json.dumps(face) if face else None))
+    return {"tone": tone, "face": face}
+
+
+# ---------- 표정 분석 모델 ----------
+
+@router.post("/face-model")
+def ensure_face_model():
+    """얼굴 인식 모델을 한 번만 받아 assets/models 에 저장 (GitHub 에 커밋해서 재사용). 키 불필요·무료."""
+    cfg = get_config()["face"]
+    path = ROOT / cfg["local_model"]
+    if not path.exists():
+        try:
+            r = httpx.get(cfg["model_url"], timeout=60, follow_redirects=True)
+            r.raise_for_status()
+            if len(r.content) < 100_000:
+                raise ValueError("파일이 너무 작습니다")
+        except Exception as e:  # noqa: BLE001
+            raise HTTPException(502, {"code": "face_model", "message": f"표정 분석 모델을 받지 못했습니다: {type(e).__name__}"})
+        path.parent.mkdir(parents=True, exist_ok=True)
+        tmp = path.with_suffix(".tmp")
+        tmp.write_bytes(r.content)
+        tmp.replace(path)
+    return {"url": "/" + cfg["local_model"].replace("\\", "/"), "bytes": path.stat().st_size}

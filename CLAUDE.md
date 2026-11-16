@@ -37,6 +37,7 @@ maltoo/
 ├─ assets/              # ★ 커밋 대상 캐시
 │  ├─ audio/            # 고정 대사 mp3 + manifest.json
 │  ├─ brand/            # 랑프두잇 로고 (logo.jpg)
+│  ├─ models/           # face_landmarker.task (처음 실행 시 자동 다운로드)
 │  ├─ characters/       # <인물id>/<표정>.webp, <표정>_talk.webp + manifest.json + _mouth_mask.png
 │  └─ endings/          # 사직서·인사고과 통보 장면
 └─ tests/
@@ -65,7 +66,8 @@ maltoo/
 - **고정 대사 종류**: `scenarios.fixed_lines()` — opening·nag1·nag2, `react_<angry|neutral|soft>_<n>`(추임새, `cached_only`로만 재생·없으면 생략), `end_<success|partial|fail|noresp|resign>`(결말, 있으면 GPT 대사 대신 사용). 추임새 그룹은 직전 턴 감정으로 결정(시작값 `reaction_start`).
 - **초기 세팅**: 키 입력 시 `/api/setup/status`로 고정 음성·인물 사진 존재를 확인하고, 없으면 앱에서 생성한다. 생성물(`assets/`)은 사용자가 GitHub에 커밋해서 재사용한다. 앱 실행 중에는 사진을 새로 만들지 않는다.
 - **인물 사진**: 실사. 외모는 `scenarios.json`의 `appearance_prompt`(영어, 얼굴형·눈·눈썹·코·입·피부·머리·나이 흔적·체격·옷·소품·인상 항목별)와 `expression_notes`(인물별 표정)로 지정, 7명 공통 촬영 조건은 `portraits.PHOTO_SPEC`. 화면용 한국어 요약은 `appearance`. calm 기본 사진 → 표정 4종 edit → 표정별 입 벌림 edit(입 주변 마스크). 이미지 모델은 `gpt-image-1-mini`(사용자 지정) — `input_fidelity=high` 미지원이라 생략하고, 편집 프롬프트에 외모를 다시 명시해 얼굴을 유지한다. 입 움직임은 재생 음량으로 `_talk` 사진 투명도를 조절한다.
-- **영상 비전송**: 카메라 프레임은 서버로 보내지 않는다. 수치 요약만 전송. 캡처 이미지는 로컬 `captures/`에만.
+- **영상 비전송**: 카메라 프레임은 서버로 보내지 않는다. 수치 요약만 전송. 체크포인트 순간 캡처는 브라우저 메모리에만 두고 결과 화면에서 사용자가 직접 저장.
+- **표정 분석**: MediaPipe tasks-vision 1.2.3 을 `static/vendor/mediapipe/`에 포함(CDN 미사용). 얼굴 모델은 `/api/face-model`이 처음 한 번 `assets/models/face_landmarker.task`로 받아 저장(커밋해서 재사용). 계산 로직은 `static/js/face/metrics.js`(순수, `node tests/js/face.test.mjs`로 검증), 카메라 연결은 `face/camera.js`. 구간(phase): listen(상대 발화·추임새)·silence(3초 카운트)·speak(내 발화). 체크포인트 😠찌푸림 🙄눈 굴림 👀시선 회피 😏비웃음 😤입술 꽉 😒입꼬리 내림 ⬆️턱 듦, 요약에 무표정·깜빡임. 표정 기준값은 "내 캐릭터 확인"에서 목소리와 함께 측정해 `baseline.face`에 저장. 요약은 `/api/turn`의 `face`로 보내 `prompts/face.py`가 설명으로 바꾼다.
 - **모델/가격 하드코딩 금지**: 모두 `config.json`에서 읽는다.
 - **캐시 키에 모델 이름 미포함**: 오디오 = hash(대사 + voice + instructions), 이미지 = hash(인물 + 표정 + 프롬프트). 모델·생성일은 manifest에 기록.
 - **기준선 보정**: 톤·표정 지표는 사용자 baseline 대비 비율로 계산·전달.
@@ -100,9 +102,9 @@ maltoo/
 - [x] 하단 파형 + 음높이 선 + 즉시 체크포인트, 내 톤 미터
 
 ### Phase 3 — 표정 분석
-- [ ] MediaPipe Face Landmarker 연동 (blendshapes, head pose, gaze)
-- [ ] 듣는 중/침묵 중/말하는 중 구간별 집계, 표정 체크포인트
-- [ ] 피크 순간 로컬 캡처, 내 화면 숨기기 옵션
+- [x] MediaPipe Face Landmarker 연동 (blendshapes, head pose, gaze)
+- [x] 듣는 중/침묵 중/말하는 중 구간별 집계, 표정 체크포인트
+- [x] 피크 순간 로컬 캡처, 내 화면 숨기기 옵션
 
 ### Phase 4 — 실시간 패널 · 인물 이미지
 - [x] 턴별 통합 분석 JSON → 상대 감정 게이지, 목표 체크리스트, 대사 체크포인트(💢🛡🧊😏✅)·톤 피드백 (인물 언급 감지는 Phase 5)

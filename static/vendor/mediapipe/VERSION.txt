@@ -1,0 +1,4 @@
+@mediapipe/tasks-vision 1.2.3 (Apache-2.0)
+vision_bundle.mjs + wasm/vision_wasm_internal.{js,wasm}
+얼굴 모델(face_landmarker.task)은 처음 쓸 때 로컬 서버가 config.json 의 face.model_url 에서 받아
+assets/models/face_landmarker.task 에 저장한다 (GitHub 에 커밋해서 재사용).

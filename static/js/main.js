@@ -3,6 +3,8 @@ import { Mic } from "./audio/mic.js";
 import { Conversation } from "./session.js";
 import { addPin, clearBand, initBand, pushLevel } from "./ui/band.js";
 import { analyzeFrame, computeBaseline, ToneTracker } from "./audio/tone.js";
+import { FaceCam } from "./face/camera.js";
+import { computeFaceBaseline, FaceTracker, PHASE_LABEL } from "./face/metrics.js";
 import { renderCost, resetCost } from "./ui/cost-panel.js";
 import {
   exprFromEmotion, framesOf, hasPhoto, setBreathing, setExpression, setMouth, setPortraitFrames, setSpeaking, showCharacter,
@@ -96,6 +98,54 @@ let convo = null;
 
 function stopConversation() {
   if (convo) { convo.stop(); convo = null; }
+  faceCam.stop();
+}
+
+// ---------- 표정 ----------
+let captures = [];
+let selfHidden = false;
+
+function setupFace() {
+  $("selfview").hidden = true;
+  $("btn-self-show").hidden = true;
+  $("face-base").textContent = faceBaseline ? "평소 표정 기준" : "기준 미측정";
+  if (!faceCam.on) {
+    $("face-note").textContent = "카메라가 꺼져 있어 표정은 분석하지 않습니다.";
+    return null;
+  }
+  faceCam.attach($("self-video"));
+  $("selfview").hidden = selfHidden;
+  $("btn-self-show").hidden = !selfHidden;
+  $("face-note").textContent = "표정 분석을 준비하는 중…";
+  const tracker = new FaceTracker(faceBaseline, {
+    onCheckpoint: (c) => {
+      addPin({ icon: c.icon, title: `${c.label}${PHASE_LABEL[c.phase] ? " · " + PHASE_LABEL[c.phase] : ""}`, note: c.note });
+      $("face-note").textContent = `${c.icon} ${c.note}`;
+      $("self-flag").textContent = c.icon;
+      setTimeout(() => { if ($("self-flag").textContent === c.icon) $("self-flag").textContent = ""; }, 2500);
+      const img = faceCam.capture();
+      if (img && captures.length < 12) captures.push({ ...c, img });
+    },
+  });
+  faceCam.prepare(faceCfg).then((ok) => {
+    if (!ok) { $("face-note").textContent = "표정 분석 모델을 불러오지 못했습니다. (인터넷 연결 확인) 목소리만 분석합니다."; return; }
+    $("face-note").textContent = "표정을 보고 있습니다. 평소처럼 대화하세요.";
+    faceCam.start(tracker, { fps: faceCfg.fps });
+  });
+  return { cam: faceCam, tracker };
+}
+
+$("btn-self-hide").addEventListener("click", () => { selfHidden = true; $("selfview").hidden = true; $("btn-self-show").hidden = false; });
+$("btn-self-show").addEventListener("click", () => { selfHidden = false; $("selfview").hidden = false; $("btn-self-show").hidden = true; });
+
+const FACE_ICON = { frown: "😠", roll: "🙄", away: "👀", smirk: "😏", press: "😤", mouthdown: "😒", chinup: "⬆️" };
+function faceLine(f) {
+  if (!f || !f.has_face) return "";
+  const byPhase = {};
+  for (const c of f.checkpoints || []) (byPhase[c.phase] ||= []).push(FACE_ICON[c.type]);
+  const parts = Object.entries(byPhase).map(([p, icons]) => `${{ listen: "듣는 중", silence: "기다리는 중", speak: "말하는 중" }[p] || p} ${icons.join("")}`);
+  if (f.expressionless) parts.push("무표정");
+  return `🙂 표정: ${parts.length ? parts.join(" · ") : "평소와 비슷"}`;
 }
 
 $("btn-start").addEventListener("click", async () => {
@@ -105,6 +155,8 @@ $("btn-start").addEventListener("click", async () => {
   try {
     $("brief-hint").textContent = "마이크 권한을 허용해 주세요…";
     await mic.open();
+    $("brief-hint").textContent = "카메라를 켜는 중…";
+    await openCamera(null);
     $("brief-hint").textContent = "주변 소음을 확인하는 중입니다. 1초만 조용히 해주세요…";
     await mic.calibrate();
     if (!baseline && !baselineSkipped) openBaseline("before-talk");
@@ -119,7 +171,7 @@ $("btn-start").addEventListener("click", async () => {
 });
 
 $("btn-retry").addEventListener("click", () => current && openBrief(current));
-$("btn-stop").addEventListener("click", () => { stopConversation(); go("brief"); });
+$("btn-stop").addEventListener("click", () => { stopConversation(); closeCamera(); go("brief"); });
 
 let myTurns = 0;
 
@@ -140,9 +192,11 @@ function startTalk() {
 
   talkUI._ttsWarned = false;
   $("tone-base").textContent = baseline ? "평소 목소리 기준" : "기준 미측정";
+  captures = [];
+  const face = setupFace();
   setMeters({ arousal: 50, warmth: 50 });
   $("tone-note").textContent = "말하는 동안 실시간으로 움직입니다.";
-  convo = new Conversation(s, { mic, ui: talkUI, baseline });
+  convo = new Conversation(s, { mic, ui: talkUI, baseline, face });
   convo.run();
 }
 
@@ -199,7 +253,11 @@ let blMode = "before-talk";
 let blCapture = null;
 
 async function loadBaseline() {
-  try { baseline = (await api("/api/baseline")).tone; } catch { baseline = null; }
+  try {
+    const r = await api("/api/baseline");
+    baseline = r.tone;
+    faceBaseline = r.face;
+  } catch { baseline = null; }
   renderBaselineLine();
 }
 
@@ -214,24 +272,23 @@ function renderBaselineLine() {
     catch (e) { $("brief-hint").textContent = `마이크를 열 수 없습니다: ${e.message}`; }
   };
   $("settings-baseline").textContent = baseline
-    ? `측정됨 · 음높이 ${Math.round(baseline.pitch_med)}Hz · 속도 ${baseline.rate}음절/초` : "아직 측정하지 않았습니다.";
+    ? `측정됨 · 음높이 ${Math.round(baseline.pitch_med)}Hz · 속도 ${baseline.rate}음절/초 · 표정 ${faceBaseline ? "측정됨" : "없음"}` : "아직 측정하지 않았습니다.";
 }
 
-let camStream = null;
-async function openCamera() {
-  try {
-    camStream = await navigator.mediaDevices.getUserMedia({ video: { width: 640, height: 480, facingMode: "user" } });
-    $("bl-video").srcObject = camStream;
-    $("bl-cam-off").hidden = true;
-  } catch {
-    $("bl-cam-off").hidden = false;
-    $("bl-cam-off").textContent = "📷 카메라를 쓸 수 없습니다 (목소리만 측정)";
-  }
+const faceCam = new FaceCam();
+let faceCfg = null;
+let faceBaseline = null;
+
+async function openCamera(videoEl) {
+  const ok = await faceCam.open();
+  if (videoEl) faceCam.attach(videoEl);
+  if (ok && faceCfg && faceCam.status !== "ready") faceCam.prepare(faceCfg); // 모델은 미리 받아둠
+  return ok;
 }
 function closeCamera() {
-  if (camStream) camStream.getTracks().forEach((t) => t.stop());
-  camStream = null;
+  faceCam.close();
   $("bl-video").srcObject = null;
+  $("self-video").srcObject = null;
 }
 function highlightLine(progress) {
   const items = [...document.querySelectorAll("#bl-lines li")];
@@ -243,7 +300,10 @@ function openBaseline(mode) {
   blMode = mode;
   highlightLine(0);
   document.querySelectorAll("#bl-lines li").forEach((li) => li.classList.remove("now", "done"));
-  openCamera();
+  $("bl-cam-off").hidden = true;
+  openCamera($("bl-video")).then((ok) => {
+    if (!ok) { $("bl-cam-off").hidden = false; $("bl-cam-off").textContent = "📷 카메라를 쓸 수 없습니다 (목소리만 측정)"; }
+  });
   $("bl-status").textContent = '준비되면 "측정 시작"을 누르세요';
   $("bl-sec").textContent = "0 / 10초";
   $("bl-bar").style.width = "0%";
@@ -269,6 +329,15 @@ $("btn-bl-start").addEventListener("click", async () => {
   }
   $("bl-status").textContent = "🎙 듣고 있습니다. 편안하게 읽어주세요…";
   const tracker = new ToneTracker(null, { threshold: mic.threshold });
+  const faceTr = new FaceTracker(null);
+  if (faceCam.on) {
+    $("bl-status").textContent = "🎙 듣고 있습니다. 편안하게 읽어주세요… (표정 분석 준비 중)";
+    faceCam.prepare(faceCfg).then((ok) => {
+      if (!ok) return;
+      faceCam.phase = "idle";
+      faceCam.start(faceTr, { fps: faceCfg.fps });
+    });
+  }
   const TARGET = 10; // 유성음 10초 모이면 자동 완료
   blCapture = mic.capture({
     maxMs: 30000,
@@ -286,13 +355,14 @@ $("btn-bl-start").addEventListener("click", async () => {
   });
   const cap = blCapture;
   await cap.done;
+  faceCam.stop();
   if (cap.skipped) return;
-  await finishBaseline(tracker);
+  await finishBaseline(tracker, faceTr);
 });
 
 $("btn-bl-done").addEventListener("click", () => blCapture && blCapture.stop());
 
-async function finishBaseline(tracker) {
+async function finishBaseline(tracker, faceTr) {
   $("btn-bl-done").disabled = true;
   const b = computeBaseline(tracker.frames);
   if (!b) {
@@ -301,7 +371,10 @@ async function finishBaseline(tracker) {
     return showError($("bl-error"), "목소리가 충분히 들리지 않았습니다. 마이크 가까이에서 조금 더 길게 읽어주세요.");
   }
   try {
-    baseline = (await api("/api/baseline", { method: "POST", body: { tone: b } })).tone;
+    const fb = faceTr ? computeFaceBaseline(faceTr.all) : null;
+    const saved = await api("/api/baseline", { method: "POST", body: { tone: b, face: fb } });
+    baseline = saved.tone;
+    faceBaseline = saved.face;
   } catch (e) {
     $("btn-bl-start").disabled = false;
     return showError($("bl-error"), e.message);
@@ -310,14 +383,18 @@ async function finishBaseline(tracker) {
   $("bl-result").innerHTML = `
     <li>평소 음높이<b>${Math.round(b.pitch_med)}Hz</b></li>
     <li>음높이 변화 폭<b>${b.range_st}반음</b></li>
-    <li>말 속도<b>${b.rate}음절/초</b></li>`;
+    <li>말 속도<b>${b.rate}음절/초</b></li>
+    <li>표정 기본값<b>${faceBaseline ? "측정됨" : "없음"}</b></li>
+    <li>평소 미소<b>${faceBaseline ? Math.round(faceBaseline.smile * 100) + "%" : "-"}</b></li>
+    <li>눈 깜빡임<b>${faceBaseline ? faceBaseline.blink_per_min + "회/분" : "-"}</b></li>`;
   $("bl-result").hidden = false;
   renderBaselineLine();
   setTimeout(afterBaseline, 1500);
 }
 
 function afterBaseline() {
-  closeCamera();
+  faceCam.stop();
+  if (!(blMode === "before-talk" && current)) closeCamera();
   if (blMode === "before-talk" && current) startTalk();
   else if (blMode === "before-brief" && current) {
     toast(baseline ? "내 기본값을 저장했습니다." : "일반 기본값으로 분석합니다. 설정에서 언제든 측정할 수 있습니다.", 4000);
@@ -396,13 +473,14 @@ const talkUI = {
   nagged(n) {
     addLog("nag", `<small>⏰ 3초 안에 대답하지 않음 (재촉 ${n}/2)</small>`);
   },
-  meSays(text, { nag, seconds, tone }) {
+  meSays(text, { nag, seconds, tone, face }) {
     myTurns += 1;
     $("turn-count").textContent = `답변 ${myTurns} / 5`;
     const meta = [`${(seconds || 0).toFixed(1)}초`];
     if (nag) meta.push(`재촉 ${nag}번 받음`);
     return addLog("me", `<small>나 · ${meta.join(" · ")}</small><span class="said">${esc(text)}</span>` +
-      (tone ? `<span class="tone-line">${esc(toneLine(tone))}</span>` : ""));
+      (tone ? `<span class="tone-line">${esc(toneLine(tone))}</span>` : "") +
+      (face && face.has_face ? `<span class="face-line">${esc(faceLine(face))}</span>` : ""));
   },
   toneCheckpoint(c, audio) {
     addPin({ icon: c.icon, title: c.label, note: c.note, audio });
@@ -427,6 +505,13 @@ const talkUI = {
 function showResult(r) {
   convo = null;
   setSpeaking(false);
+  faceCam.stop();
+  closeCamera();
+  $("result-captures-wrap").hidden = !captures.length;
+  $("result-captures").innerHTML = captures.map((c, i) => `
+    <div class="capture"><img src="${c.img}" alt="">
+      <div>${c.icon} <b>${esc(c.label)}</b><br>${esc(PHASE_LABEL[c.phase] || "")}
+      · <a href="${c.img}" download="maltoo-${i + 1}.jpg">저장</a></div></div>`).join("");
   const map = {
     success: ["🟢 성공", "목표를 이뤘습니다!"],
     partial: ["🟡 부분 성공", "절반의 성과입니다."],
@@ -646,7 +731,7 @@ initBand($("band-canvas"), $("band-tip"));
 loadBaseline();
 updateKeyHints();
 loadScenarios().catch(() => toast("시나리오를 불러오지 못했습니다."));
-api("/api/config").then((c) => { krwRate = c.krw_per_usd; }).catch(() => {});
+api("/api/config").then((c) => { krwRate = c.krw_per_usd; faceCfg = c.face; }).catch(() => {});
 if (!keyStore.get()) openKeyModal();
 else { refreshUsage(); checkSetup().catch(() => {}); }
 setInterval(refreshUsage, 30000);

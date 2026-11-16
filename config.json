@@ -76,5 +76,10 @@
     "compression": 85,
     "input_fidelity": null,
     "_comment": "input_fidelity: gpt-image-1-mini 는 low 만 지원 → null(생략). gpt-image-1/1.5 로 바꾸면 \"high\" 권장"
+  },
+  "face": {
+    "model_url": "https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task",
+    "local_model": "assets/models/face_landmarker.task",
+    "fps": 12
   }
 }

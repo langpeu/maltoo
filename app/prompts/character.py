@@ -7,6 +7,7 @@ gpt-4o-mini 는 상대 인물을 연기하고 감정·목표 진행을 판단만
 import json
 
 from ..config import get_config
+from .face import describe as describe_face
 from .tone import describe as describe_tone
 
 MAX_TURNS = 5
@@ -23,7 +24,7 @@ OUTPUT_SPEC = """반드시 아래 JSON 객체 하나만 출력한다. 다른 텍
      "text_span": "과장 발언에서 그대로 복사한 짧은 구절",
      "note": "왜 그렇게 들리는지 + 어떻게 바꾸면 좋은지 한 줄 (한국어)"}
   ],
-  "tone_feedback": "이번 발언의 목소리 톤이 상대에게 어떻게 들렸는지 한 줄 (한국어, 톤 측정값 근거)",
+  "tone_feedback": "이번 발언의 목소리 톤과 표정이 상대에게 어떻게 보이고 들렸는지 한 줄 (한국어, 측정값 근거)",
   "ending": null | "success" | "partial" | "fail"
 }
 checkpoints 는 0~3개. text_span 은 반드시 과장 발언 원문에 있는 그대로의 구절이어야 한다.
@@ -47,8 +48,9 @@ def system_prompt(s: dict, turn_index: int) -> str:
 [체크리스트] {', '.join(s['checklist'])}
 [실패 조건] {', '.join(s['fail_conditions'])}
 
-판단 규칙 (말 + 목소리 톤):
-- 과장의 대사 뒤에 [목소리 톤 측정]이 붙어 있다. 같은 말이라도 톤이 공격적이면(언성 상승, 끝 억양 뚝, 빠름, 강세, 한숨) 상대는 기분 나쁘게 받아들인다.
+판단 규칙 (말 + 목소리 톤 + 표정):
+- 과장의 대사 뒤에 [목소리 톤 측정]과 [표정 측정]이 붙어 있다. 같은 말이라도 톤이 공격적이면(언성 상승, 끝 억양 뚝, 빠름, 강세, 한숨) 상대는 기분 나쁘게 받아들인다.
+- 표정도 너는 보고 있다. 네가 말하는 동안 과장이 눈을 굴리거나 찌푸리거나 비웃었다면 말보다 그게 더 기분 나쁘다. 시선 회피는 자신감 없음·회피로, 턱을 든 것은 거만함으로 받아들인다. 대사에서 직접 지적해도 된다 (예: "지금 눈 굴렸어?").
 - 말은 공손해도 톤이 거칠면 감정(anger)을 올리고, 그 이유를 reason 에 톤까지 짚어서 쓴다.
 - 반대로 차분하고 끝 억양이 부드러우면 신뢰(trust)를 올린다.
 - 인물의 대사(reply)도 톤에 반응할 수 있다. 예: "지금 나한테 짜증 내는 거야?"
@@ -66,7 +68,7 @@ def system_prompt(s: dict, turn_index: int) -> str:
 
 
 def build_messages(s: dict, history: list[dict], user_text: str, turn_index: int,
-                   tone: dict | None = None) -> list[dict]:
+                   tone: dict | None = None, face: dict | None = None) -> list[dict]:
     msgs = [{"role": "system", "content": system_prompt(s, turn_index)}]
     if not history or history[0].get("text") != s["opening"]:
         msgs.append({"role": "assistant", "content": json.dumps({"reply": s["opening"]}, ensure_ascii=False)})
@@ -78,6 +80,8 @@ def build_messages(s: dict, history: list[dict], user_text: str, turn_index: int
     content = user_text or "(말이 없음)"
     if tone:
         content += "\n\n[목소리 톤 측정]\n" + describe_tone(tone)
+    if face:
+        content += "\n\n[표정 측정 — 상대(너)가 보고 있는 과장의 얼굴]\n" + describe_face(face)
     msgs.append({"role": "user", "content": content})
     return msgs
 
