@@ -1,0 +1,26 @@
+# 개인 데이터 (절대 커밋 금지)
+data.db
+*.db-journal
+captures/
+recordings/
+
+# 비밀 정보
+.env
+.env.*
+!.env.example
+*.key
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# OS / 에디터
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# 주의: assets/ (음성·이미지 캐시)는 의도적으로 커밋합니다.
