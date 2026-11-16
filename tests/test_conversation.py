@@ -192,8 +192,8 @@ def test_custom_line_audio(client, fake_openai, tmp_path):
 
 def test_goal_checklist_matching_and_carry(client, fake_openai):
     """체크리스트: 번호·바꿔 쓴 문구도 인정하고, 이전 턴 달성 항목은 유지, 비율보다 낮게 표시하지 않음."""
-    from app.prompts import character
     from app import scenarios
+    from app.prompts import character
     s = scenarios.get("kim")
     cl = s["checklist"]
     assert character.match_checklist([1, "3"], cl) == [cl[0], cl[2]]
@@ -215,9 +215,10 @@ def test_goal_checklist_matching_and_carry(client, fake_openai):
 
 def test_goal_progress_robust():
     """'40%' 같은 문자열, goal 객체 모양, 직전 달성도 유지."""
-    from app.prompts import character
-    from app import scenarios
     import json
+
+    from app import scenarios
+    from app.prompts import character
     s = scenarios.get("kim")
     r = character.parse(json.dumps({"reply": "음", "goal_progress": "40%", "checklist_done": [1]}), s, 1)
     assert r["goal_progress"] == 40
@@ -234,8 +235,8 @@ def test_goal_progress_robust():
 
 def test_history_not_reply_only_json():
     """이전 상대 대사를 {"reply":...} JSON 으로 넣으면 모델이 reply 만 답하게 된다 → 평문 + 출력 형식 안내."""
-    from app.prompts import character
     from app import scenarios
+    from app.prompts import character
     s = scenarios.get("kim")
     hist = [{"speaker": "npc", "text": s["opening"]}, {"speaker": "me", "text": "네"}, {"speaker": "npc", "text": "그래서?"}]
     for h in ([], hist):
@@ -247,8 +248,8 @@ def test_history_not_reply_only_json():
 
 
 def test_checklist_other_shapes():
-    from app.prompts import character
     from app import scenarios
+    from app.prompts import character
     cl = scenarios.get("kim")["checklist"]
     assert character.match_checklist([True, False, True], cl) == [cl[0], cl[2]]
     assert character.match_checklist([{"item": cl[1], "done": True}, {"index": 3, "done": False}], cl) == [cl[1]]

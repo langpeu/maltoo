@@ -1,0 +1,32 @@
+[project]
+name = "maltoo"
+version = "0.1.0"
+description = "말투 — 직장 갈등 대화로 말투·목소리 톤·표정을 연습하는 웹서비스 (랑프두잇)"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.110",
+    "uvicorn>=0.29",
+    "openai>=1.40",
+    "httpx>=0.27",
+    "python-multipart>=0.0.9",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.6",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+extend-exclude = ["static/vendor", "assets"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+ignore = ["E501", "B008", "B904", "B905", "B007", "E731"]  # 긴 줄(한국어 문구), FastAPI Depends 기본값 등 허용

@@ -6,7 +6,7 @@
 """
 
 import json
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from functools import lru_cache
 
 import httpx
@@ -97,7 +97,7 @@ def save_line(s: dict, line: str, data: bytes, voice: dict, text: str) -> None:
     m[f"{s['id']}/{line}"] = {"source": "elevenlabs", "model": c["model_id"], "voice_id": voice.get("voice_id"),
                              "voice_name": voice.get("name", ""), "script": text,
                              "voice_settings": c.get("voice_settings", {}),
-                             "created": datetime.now(timezone.utc).isoformat(timespec="seconds")}
+                             "created": datetime.now(UTC).isoformat(timespec="seconds")}
     mp = _manifest_path()
     with open(mp, "w", encoding="utf-8") as f:
         json.dump(dict(sorted(m.items())), f, ensure_ascii=False, indent=2)

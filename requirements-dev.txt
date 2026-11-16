@@ -1,0 +1,4 @@
+# 개발용: 테스트·린트
+-r requirements.txt
+pytest>=8.0
+ruff>=0.6

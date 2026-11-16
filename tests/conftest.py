@@ -42,8 +42,8 @@ class FakeOpenAI:
         class _Models:
             def list(self_inner):
                 if outer.api_key.endswith("BAD!"):
-                    from openai import AuthenticationError
                     import httpx
+                    from openai import AuthenticationError
                     req = httpx.Request("GET", "https://api.openai.com/v1/models")
                     raise AuthenticationError("bad key", response=httpx.Response(401, request=req), body=None)
                 return []

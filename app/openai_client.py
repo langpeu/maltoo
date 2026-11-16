@@ -7,8 +7,14 @@
 import base64
 
 from fastapi import HTTPException, Request
-from openai import (APIConnectionError, AuthenticationError, BadRequestError, OpenAI,
-                    PermissionDeniedError, RateLimitError)
+from openai import (
+    APIConnectionError,
+    AuthenticationError,
+    BadRequestError,
+    OpenAI,
+    PermissionDeniedError,
+    RateLimitError,
+)
 
 from . import usage
 from .config import get_config, model

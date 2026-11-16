@@ -369,8 +369,10 @@ pip install -r requirements.txt
 python main.py
 # 브라우저가 자동으로 http://127.0.0.1:8000 을 엽니다 (Chrome / Edge 권장)
 
-# 테스트
+# 테스트 · 린트 (개발용 도구 설치 후)
+pip install -r requirements-dev.txt
 pytest
+ruff check .
 ```
 
 - 마이크·카메라 권한이 필요합니다 (`localhost`에서 동작).

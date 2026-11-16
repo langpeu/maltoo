@@ -1,5 +1,4 @@
 import pytest
-
 from conftest import TURN_OVERRIDE
 
 KEY = "sk-test-0000abcd"
@@ -129,6 +128,7 @@ def test_review_grade(client, ending, cut, progress, grade, meeting):
 def test_ending_follows_checklist():
     """마지막 턴에 핵심 항목(마지막) 포함 한 개 빼고 다 채웠으면 성공, 전부 채우면 바로 성공."""
     import json
+
     from app import scenarios
     from app.prompts import character
     s = scenarios.get("kim")

@@ -146,7 +146,8 @@ maltoo/
 ## 실행 · 테스트
 
 ```bash
-pip install -r requirements.txt
+pip install -r requirements-dev.txt   # 실행만 할 때는 requirements.txt
 python main.py          # http://localhost:8000
-pytest
+pytest                  # 테스트 파일은 기능 이름: test_conversation / test_world / test_report / test_usage_and_key …
+ruff check .            # 린트 (설정은 pyproject.toml)
 ```
