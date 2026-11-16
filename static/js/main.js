@@ -128,8 +128,14 @@ function setupFace() {
       $("face-note").textContent = `${c.icon} ${c.note}`;
       $("self-flag").textContent = c.icon;
       setTimeout(() => { if ($("self-flag").textContent === c.icon) $("self-flag").textContent = ""; }, 2500);
-      const img = faceCam.capture();
-      if (img && captures.length < 12) captures.push({ ...c, img });
+      const img = faceCam.capture(480);
+      if (!img) return;
+      if (captures.length < 12) captures.push({ ...c, img });
+      else {
+        // 12장이 차면 가장 덜 심각한 사진을 더 심각한 새 사진으로 바꾼다 (최악의 표정은 꼭 남김)
+        const i = captures.reduce((mi, x, j) => (x.severity < captures[mi].severity ? j : mi), 0);
+        if (c.severity > captures[i].severity) captures[i] = { ...c, img };
+      }
     },
   });
   faceCam.prepare(faceCfg).then((ok) => {
@@ -726,13 +732,21 @@ async function finishWorld(r) {
   return game;
 }
 
+function worstCapture() {
+  return captures.reduce((w, c) => (!w || (c.severity || 0) > (w.severity || 0) ? c : w), null);
+}
+
 function renderGameResult(r, fin) {
   const box = $("game-result");
   if (!fin) { box.hidden = true; return; }
   const name = current.character.name;
   let img = "", html = "";
+  let caption = "";
   if (fin.kind === "boss") {
-    img = "/assets/endings/review.webp";
+    // 인사고과 사진: 이번 대화에서 가장 안 좋았던 내 표정 (브라우저 메모리의 캡처, 서버 전송 없음)
+    const worst = worstCapture();
+    img = worst ? worst.img : "/assets/endings/review.webp";
+    if (worst) caption = `<figcaption>${worst.icon} ${esc(worst.label)} · ${esc(PHASE_LABEL[worst.phase] || "")}<br><small>가장 안 좋았던 내 표정</small></figcaption>`;
     const diff = fin.salary_after - fin.salary_before;
     html = `<h2><span class="grade ${fin.grade}">${fin.grade}</span>인사고과 ${fin.grade}등급</h2>
       <p class="big">연봉 ${won(fin.salary_before)} → ${won(fin.salary_after)} 원
@@ -754,7 +768,8 @@ function renderGameResult(r, fin) {
       <p>${fin.resign_risk >= 60 ? "이직을 진지하게 고민하고 있습니다. 다음 대화가 중요합니다." : fin.resign_risk >= 30 ? "아직 버티고 있지만 마음이 떠나고 있습니다." : "팀에 남을 생각입니다."}</p>`;
   }
   box.className = `game-result ${img ? "" : "noimg"}`;
-  box.innerHTML = (img ? `<img src="${img}" alt="" onerror="this.remove(); this.parentNode && this.parentNode.classList.add('noimg')">` : "") + `<div>${html}</div>`;
+  const imgTag = img ? `<img src="${img}" alt="" onerror="this.remove(); this.parentNode && this.parentNode.classList.add('noimg')">` : "";
+  box.innerHTML = (caption ? `<figure class="worst-face">${imgTag}${caption}</figure>` : imgTag) + `<div>${html}</div>`;
   box.hidden = false;
 }
 

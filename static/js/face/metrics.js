@@ -112,12 +112,32 @@ export class FaceTracker {
     };
   }
 
+  // 체크포인트 심각도 0~100: 표정 종류의 무게(상대가 느끼는 불쾌감) × 그 순간 평소 대비 강도.
+  // 결과 화면에서 '가장 안 좋았던 표정' 사진을 고를 때 쓴다.
+  severity(type, f) {
+    const W = { roll: 1.0, smirk: 0.95, frown: 0.85, chinup: 0.8, press: 0.75, mouthdown: 0.7, away: 0.6 };
+    const m = f.m || {};
+    const b = this.b;
+    const over = (v, base, span) => Math.max(0, Math.min(1, ((v || 0) - (base || 0)) / span));
+    const k = {
+      frown: over(m.brow, b.brow, 0.6),
+      mouthdown: over(m.frown, b.frown, 0.6),
+      press: over(m.press, b.press, 0.6),
+      smirk: over(m.asym, b.asym, 0.5),
+      away: Math.max(over(m.lookSide, 0, 1), over(m.lookDown, 0, 1), over(Math.abs(m.yaw || 0), 0, 0.4)),
+      chinup: b.nose_ratio && m.noseRatio ? over(b.nose_ratio - m.noseRatio, 0, b.nose_ratio * 0.4) : 0.5,
+      roll: 0.8,
+    }[type] ?? 0.5;
+    return Math.round((W[type] || 0.5) * (60 + 40 * k));
+  }
+
   cp(type, f) {
     const gap = { frown: 3000, roll: 1500, away: 4000, smirk: 3000, press: 3000, mouthdown: 3000, chinup: 4000 }[type];
     if (this.lastCp[type] != null && f.t - this.lastCp[type] < gap) return;
     this.lastCp[type] = f.t;
     const where = PHASE_LABEL[f.phase];
     const c = { type, t: f.t, phase: f.phase, icon: CP[type].icon, label: CP[type].label,
+                severity: this.severity(type, f),
                 note: (where ? `${where} ` : "") + CP[type].note };
     this.checkpoints.push(c);
     this.onCheckpoint && this.onCheckpoint(c);

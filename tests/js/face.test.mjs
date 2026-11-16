@@ -57,4 +57,11 @@ const tr3 = new FaceTracker(B);
 feed(tr3, { from: 0, ms: 4000, phase: "speak" });
 assert.equal(tr3.summary().expressionless, true);
 
+// 심각도: 0~100, 같은 표정이면 더 강할수록 높고, 눈 굴림이 시선 회피보다 무겁다
+const tr4 = new FaceTracker(B);
+const weak = tr4.severity("frown", { m: { brow: B.brow + 0.3 } });
+const strong = tr4.severity("frown", { m: { brow: B.brow + 0.6 } });
+assert.ok(strong > weak && strong <= 100 && weak > 0);
+assert.ok(tr4.severity("roll", { m: {} }) > tr4.severity("away", { m: { lookSide: 0.6 } }));
+
 console.log("face tests ok");

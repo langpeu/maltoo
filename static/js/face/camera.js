@@ -175,8 +175,8 @@ export function drawLandmarks(canvas, landmarks, state) {
   let sw = w, sh = h, ox = 0, oy = 0;
   if (cr > vr) { sh = w / vr; oy = (h - sh) / 2; } else { sw = h * vr; ox = (w - sw) / 2; }
   const pt = (i) => ({ x: w - (ox + landmarks[i].x * sw), y: oy + landmarks[i].y * sh });
-  g.fillStyle = state === "ok" ? "rgba(255, 205, 74, .95)" : "rgba(224, 49, 49, .9)";
+  g.fillStyle = state === "ok" ? "rgba(255, 205, 74, .5)" : "rgba(224, 49, 49, .5)";
   for (const i of OUTLINE) { if (!landmarks[i]) continue; const p = pt(i); g.fillRect(p.x - 1.5, p.y - 1.5, 3, 3); }
-  g.fillStyle = state === "ok" ? "rgba(80, 255, 140, .95)" : "rgba(224, 49, 49, .9)";
+  g.fillStyle = state === "ok" ? "rgba(80, 255, 140, .5)" : "rgba(224, 49, 49, .5)";
   for (const i of FEATURES) { if (!landmarks[i]) continue; const p = pt(i); g.beginPath(); g.arc(p.x, p.y, 2.4, 0, Math.PI * 2); g.fill(); }
 }

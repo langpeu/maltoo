@@ -392,7 +392,7 @@ code { background: var(--yellow-soft); border: 1px solid var(--ink); border-radi
 .log .text-cps li { border: 0; padding: 0; max-width: none; background: none; margin: 0; }
 
 /* ========== Phase 3: 표정 ========== */
-.selfview { position: absolute; right: 12px; bottom: 12px; width: 30%; aspect-ratio: 4 / 3;
+.selfview { position: absolute; right: 12px; bottom: 12px; width: 36%; aspect-ratio: 4 / 3;
   border: 3px solid var(--ink); border-radius: 10px; overflow: hidden; background: #222; box-shadow: 3px 3px 0 var(--ink); }
 .selfview video { width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); display: block; }
 .selfview[hidden], .self-show[hidden] { display: none; }
@@ -517,6 +517,10 @@ code { background: var(--yellow-soft); border: 1px solid var(--ink); border-radi
   display: grid; grid-template-columns: 220px 1fr; gap: 16px; align-items: center; background: #fffdf5; }
 .game-result.noimg { grid-template-columns: 1fr; }
 .game-result img { width: 100%; border: 3px solid var(--ink); border-radius: 12px; display: block; }
+.worst-face { margin: 0; position: relative; }
+.worst-face img { aspect-ratio: 4 / 3; object-fit: cover; }
+.worst-face figcaption { position: absolute; left: 8px; right: 8px; bottom: 8px; background: rgba(0,0,0,.72); color: #fff; border-radius: 8px; padding: 6px 8px; font-weight: 800; font-size: 14px; line-height: 1.35; }
+.worst-face figcaption small { color: var(--yellow); font-weight: 700; }
 .game-result h2 { margin: 0 0 6px; font-size: 22px; font-weight: 900; }
 .grade { display: inline-grid; place-items: center; width: 56px; height: 56px; font-size: 32px; font-weight: 900;
   border: var(--line); border-radius: 12px; margin-right: 10px; vertical-align: middle; }
